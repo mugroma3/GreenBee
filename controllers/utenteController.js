@@ -47,7 +47,9 @@ module.exports = {
      * utenteController.create()
      */
     create: function (req, res) {
-        var utente = new utenteModel({			admin : req.body.admin,			nome : req.body.nome,			punti : req.body.punti,			accessi : req.body.accessi,			transazioni : req.body.transazioni
+        var utente = new utenteModel({
+			admin : req.body.admin,
+			nome : req.body.nome
         });
 
         utente.save(function (err, utente) {
@@ -79,7 +81,12 @@ module.exports = {
                 });
             }
 
-            utente.admin = req.body.admin ? req.body.admin : utente.admin;			utente.nome = req.body.nome ? req.body.nome : utente.nome;			utente.punti = req.body.punti ? req.body.punti : utente.punti;			utente.accessi = req.body.accessi ? req.body.accessi : utente.accessi;			utente.transazioni = req.body.transazioni ? req.body.transazioni : utente.transazioni;			
+            utente.admin = req.body.admin ? req.body.admin : utente.admin;
+			utente.nome = req.body.nome ? req.body.nome : utente.nome;
+			utente.punti = req.body.punti ? req.body.punti : utente.punti;
+			utente.accessi = req.body.accessi ? req.body.accessi : utente.accessi;
+			utente.transazioni = req.body.transazioni ? req.body.transazioni : utente.transazioni;
+			
             utente.save(function (err, utente) {
                 if (err) {
                     return res.status(500).json({

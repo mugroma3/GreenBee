@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 
 var utenteSchema = new Schema({
-	'admin' : { type: Boolean, default: false },
-	'nome' : { type: String, unique: true },
+	'admin' : { type: Boolean, default: false  },
+	'nome' : { type: String, unique: true, required: true },
 	'punti' : { type: Number, default: 0 },
 	'accessi' : [{
 		'ingresso': Date,

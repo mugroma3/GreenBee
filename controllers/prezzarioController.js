@@ -47,7 +47,9 @@ module.exports = {
      * prezzarioController.create()
      */
     create: function (req, res) {
-        var prezzario = new prezzarioModel({			prodotto : req.body.prodotto,			costo : req.body.costo
+        var prezzario = new prezzarioModel({
+			prodotto : req.body.prodotto,
+			costo : req.body.costo
         });
 
         prezzario.save(function (err, prezzario) {
@@ -79,7 +81,9 @@ module.exports = {
                 });
             }
 
-            prezzario.prodotto = req.body.prodotto ? req.body.prodotto : prezzario.prodotto;			prezzario.costo = req.body.costo ? req.body.costo : prezzario.costo;			
+            prezzario.prodotto = req.body.prodotto ? req.body.prodotto : prezzario.prodotto;
+			prezzario.costo = req.body.costo ? req.body.costo : prezzario.costo;
+			
             prezzario.save(function (err, prezzario) {
                 if (err) {
                     return res.status(500).json({
