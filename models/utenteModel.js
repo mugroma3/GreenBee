@@ -6,13 +6,14 @@ var utenteSchema = new Schema({
 	'nome' : { type: String, unique: true, required: true },
 	'punti' : { type: Number, default: 0 },
 	'accessi' : [{
-		'ingresso': Date,
+		'ingresso': { type: Date, required: true, default: Date.now() },
 		'uscita': Date }],
 	'transazioni' : [{
-		'tipoTransazione': String, //TODO inserire default: vendo/acquisto
-		'oggetto': String,
-		'quantita': Number,
-		'Data': { type: Date, default: Date.now()
+		'tipoTransazione': { type: String, enum: ['acquisto', 'vendo'] },//TODO verificare inserire default: vendo/acquisto
+		'oggetto': { type: String, required: true },
+		'quantita': { type: Number, required: true },
+		'Data': { type: Date, default: Date.now(),
+		'Orto': [String]
 		}}]
 });
 
