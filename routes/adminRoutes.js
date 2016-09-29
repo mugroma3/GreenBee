@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userModel = require('../models/utenteModel');
+var utenteController = require('../controllers/utenteController');
 
 router.get('/', function (req, res) {
     res.render('adminIndex', { title: 'Express', user : req.user});
@@ -32,11 +33,11 @@ router.post('/addUser', function (req, res) {
         admin: req.body.admin
     };
     utenteController.create(options, function(answer){
-        switch (anwser[0]){
+        switch (answer[0]){
             case 201: res.render('addedUser', { title: 'Utente Aggiunto', user : req.user, userAdded: answer[1]}); break;
-            case 404: res.status(anwser[0]).json({message:anwser[1]}); break;
-            case 500: res.status(anwser[0]).json({message: anwser[1], error: anwser[2]}); break;
-            default: res.status(anwser[0]).json({message: anwser[1], error: anwser[2]}); break;
+            case 404: res.status(answer[0]).json({message:answer[1]}); break;
+            case 500: res.status(answer[0]).json({message: answer[1], error: answer[2]}); break;
+            default: res.status(answer[0]).json({message: answer[1], error: answer[2]}); break;
         }
     });
 });

@@ -1,12 +1,13 @@
 
 module.exports = {
 
-    generate: function (req, res, anwser) {
-        switch (anwser[0]){
-            case 200: res.status(anwser[0]).json(anwser[1]);
-            case 201: res.status(anwser[0]).json(anwser[1]);
-            case 404: res.status(anwser[0]).json({message:anwser[1]});
-            case 500: res.status(anwser[0]).json({message: anwser[1], error: anwser[2]});
+    generate: function (req, res, answer) {
+        switch (answer[0]){
+            case 200: res.status(answer[0]).json(answer[1]); break;
+            case 201: res.status(answer[0]).json(answer[1]); break;
+            case 404: res.status(answer[0]).json({message:answer[1]}); break;
+            case 500: res.status(answer[0]).json({message: answer[1], error: answer[2]}); break;
+            default: res.status(answer[0]).json({message: answer[1], error: answer[2]});
         }
     }
 
