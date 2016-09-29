@@ -28,7 +28,7 @@ utenteSchema.methods.serializeUser = function(user, done){
 	done(null, user._id);
 };
 
-utenteSchema.method.sunserializeUser = function(id, done){
+utenteSchema.methods.deserializeUser = function(id, done){
 	utenteSchema.findById(id, function(err, utenteSchema)
 	{
 		done(err, user);
