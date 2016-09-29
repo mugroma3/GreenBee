@@ -20,6 +20,21 @@ var utenteSchema = new Schema({
 		}}]
 });
 
+utenteSchema.methods.verifyPassword = function(pwd){
+	return pwd == this.password;
+};
+
+utenteSchema.methods.serializeUser = function(user, done){
+	done(null, user._id);
+};
+
+utenteSchema.method.sunserializeUser = function(id, done){
+	utenteSchema.findById(id, function(err, utenteSchema)
+	{
+		done(err, user);
+	});
+};
+
 utenteSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('utente', utenteSchema);
