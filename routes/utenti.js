@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var utenteController = require('../controllers/utenteController.js');
 
+var REST = require('../utils/REST');
+
 /*
  * GET lista tutti gli utenti
  */
@@ -27,14 +29,32 @@ router.get('/listaAccessi/:id', function (req, res) {
  * POST nuovo utente (nome, username e password obbligatori)
  */
 router.post('/', function (req, res) {
-    utenteController.create(req, res);
+    var options = {
+        nome: req.body.nome,
+        username: req.body.username,
+        password: req.body.password,
+        admin: req.body.admin
+    };
+    utenteController.create(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 /*
  * PUT update utente tramite id nell'url
  */
 router.put('/:id', function (req, res) {
-    utenteController.update(req, res);
+    var options = {
+        id: req.params.id,
+        nome: req.body.nome,
+        admin: req.body.admin,
+        punti: req.body.punti,
+        username: req.body.username,
+        password: req.body.password
+    };
+    utenteController.update(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 /*

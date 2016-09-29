@@ -1,6 +1,4 @@
 var utenteModel = require('../models/utenteModel.js');
-var utenteFacade = require('../facades/utenteFacade');
-var REST = require('../utils/REST');
 
 /**
  * utenteController.js
@@ -48,18 +46,43 @@ module.exports = {
     /**
      * utenteController.create()
      */
-    create: function (req, res) {
-        var risposta = utenteFacade.create(req.body.nome, req.body.username, req.body.password, req.body.admin);
-        console.log("LA risposta");
-        console.log(risposta);
-        return REST.generate(req, res, risposta);
+    create: function (userData, callback) { 
+        var utente = new utenteModel(userData);
+
+        utente.save(function (err, utente) {
+            if (err) {
+                callback([500, "Error when creating utente", err]);
+            }
+            callback([201, utente]);
+        });
     },
 
     /**
      * utenteController.update()
      */
-    update: function (req, res) {
-        return REST.generate(req, res, utenteFacade.update(req.params.id, req.body.nome, req.body.punti, req.body.admin));
+    update: function (userData, callback) {
+        utenteModel.findOne({_id: id}, function (err, utente) {
+            if (err) {
+                callback([500, 'Error when getting utente', err]);
+            }
+            if (!utente) {
+                callback([404, 'No such utente']);
+            }
+
+            utente.admin = admin ? admin : utente.admin;
+            utente.nome = nome ? nome : utente.nome;
+            utente.punti = punti ? punti : utente.punti;
+            utente.accessi = accessi ? accessi : utente.accessi;
+            utente.transazioni = transazioni ? transazioni : utente.transazioni;
+
+            utente.save(function (err, utente) {
+                if (err) {
+                    callback([500, 'Error when updating utente.', err]);
+                }
+
+                callback([200, utente]);
+            });
+        });
     },
 
     /**
