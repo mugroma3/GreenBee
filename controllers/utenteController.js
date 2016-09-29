@@ -46,59 +46,41 @@ module.exports = {
     /**
      * utenteController.create()
      */
-    create: function (req, res) {
-        var utente = new utenteModel({
-			admin: req.body.admin,
-            nome: req.body.nome,
-            username:  req.body.username,
-            password: req.body.password
-
-        });
+    create: function (userData, callback) { 
+        var utente = new utenteModel(userData);
 
         utente.save(function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating utente',
-                    error: err
-                });
+                callback([500, "Error when creating utente", err]);
             }
-            return res.status(201).json(utente);
+            callback([201, utente]);
         });
     },
 
     /**
      * utenteController.update()
      */
-    update: function (req, res) {
-        var id = req.params.id;
+    update: function (userData, callback) {
         utenteModel.findOne({_id: id}, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente',
-                    error: err
-                });
+                callback([500, 'Error when getting utente', err]);
             }
             if (!utente) {
-                return res.status(404).json({
-                    message: 'No such utente'
-                });
+                callback([404, 'No such utente']);
             }
 
-            utente.admin = req.body.admin ? req.body.admin : utente.admin;
-			utente.nome = req.body.nome ? req.body.nome : utente.nome;
-			utente.punti = req.body.punti ? req.body.punti : utente.punti;
-			utente.accessi = req.body.accessi ? req.body.accessi : utente.accessi;
-			utente.transazioni = req.body.transazioni ? req.body.transazioni : utente.transazioni;
-			
+            utente.admin = admin ? admin : utente.admin;
+            utente.nome = nome ? nome : utente.nome;
+            utente.punti = punti ? punti : utente.punti;
+            utente.accessi = accessi ? accessi : utente.accessi;
+            utente.transazioni = transazioni ? transazioni : utente.transazioni;
+
             utente.save(function (err, utente) {
                 if (err) {
-                    return res.status(500).json({
-                        message: 'Error when updating utente.',
-                        error: err
-                    });
+                    callback([500, 'Error when updating utente.', err]);
                 }
 
-                return res.json(utente);
+                callback([200, utente]);
             });
         });
     },
