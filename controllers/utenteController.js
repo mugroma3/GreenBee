@@ -191,6 +191,10 @@ module.exports = {
                             message: 'devi prima entrare'
                         })
                     }
+                }else{
+                    return res.status(500).json({
+                        message: 'devi prima entrare'
+                    });
                 }
 
                 utente.accessi[len-1].uscita = Date.now();
