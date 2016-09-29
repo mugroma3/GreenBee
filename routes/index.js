@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
+var magazzinoModel = require('../models/magazzinoModel');
 
 /* GET home page. */
 router.get('/',function (req, res, next) {
@@ -32,7 +33,18 @@ router.get('/market',
       res.redirect('/login');
     },
     function (req, res) {
-      res.render('market', {user: req.user});
+        magazzinoModel.find(function (err, magazzinos) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting magazzino.',
+                    error: err
+                });
+            } else {
+                res.render('market', {user: req.user, magazzino: magazzinos});
+            }
+
+        });
+
 });
 
 module.exports = router;

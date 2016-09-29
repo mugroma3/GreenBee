@@ -2,5 +2,10 @@ extends layout
 
 block content
     .container
-        h1 Protected Page
-        p #{user.transazioni}
+        h1 Storico di #{user.nome}
+        p #{user.transazioni[0]}
+        p #{user.transazioni[1]}
+
+        h1 Mercato a disposizione
+        p #{magazzino[0]}
+        p #{magazzino[1]}
