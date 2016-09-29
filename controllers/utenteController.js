@@ -48,8 +48,11 @@ module.exports = {
      */
     create: function (req, res) {
         var utente = new utenteModel({
-			admin : req.body.admin,
-			nome : req.body.nome
+			admin: req.body.admin,
+            nome: req.body.nome,
+            username:  req.body.username,
+            password: req.body.password
+
         });
 
         utente.save(function (err, utente) {
@@ -117,9 +120,9 @@ module.exports = {
     },
 
     /**
-     * utenteController.createAccesso()
+     * utenteController.addIngresso()
      */
-    createAccesso: function (req, res) {
+    addIngresso: function (req, res) {
         var id = req.params.id;
         utenteModel.findOne({_id: id}, function (err, utente) {
             if (err) {
@@ -134,7 +137,7 @@ module.exports = {
                 });
             }
             else{
-                utente.accessi.add( { 'ingresso': Date.now(), 'uscita': null } );
+                utente.accessi.addIngresso( { 'ingresso': Date.now(), 'uscita': null } );
                 return res.json(utente);
             }
 
@@ -166,9 +169,9 @@ module.exports = {
     },
 
     /**
-     * utenteController.createTransazione()
+     * utenteController.addTransazione()
      */
-    createTransazione: function (req, res) {
+    addTransazione: function (req, res) {
         var id = req.params.id;
         utenteModel.findOne({_id: id}, function (err, utente) {
             if (err) {
@@ -183,7 +186,8 @@ module.exports = {
                 });
             }
             else{
-                utente.transazioni.push({'tipoTransazione': req.body.tipoTransazione,
+                utente.transazioni.push({
+                    'tipoTransazione': req.body.tipoTransazione,
                     'oggetto': req.body.oggetto,
                     'quantita': req.body.quantita
                 })
