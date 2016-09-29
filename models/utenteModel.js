@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
 
 var utenteSchema = new Schema({
 	'admin' : { type: Boolean, default: false  },
@@ -18,5 +19,7 @@ var utenteSchema = new Schema({
 		'Orto': [String]
 		}}]
 });
+
+utenteSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('utente', utenteSchema);

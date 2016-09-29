@@ -13,6 +13,9 @@ var api = require('./routes/apiRoutes');
 
 var app = express();
 
+var passport = require('passport');
+var expressSession = require('express-session');
+var localStrategy = require('passport-local').Strategy;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -24,6 +27,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Configure Passport
+app.use(expressSession({secret: 'MugLab',
+                        resave: false,
+                        saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 
