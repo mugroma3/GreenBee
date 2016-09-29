@@ -5,11 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/ortoBioDB'); //Localhost/nomeDB
 
 var routes = require('./routes/index');
 var api = require('./routes/apiRoutes');
+var routesAdmin = require('./routes/adminRoutes');
+var routesUser = require('./routes/userRoutes');
 
 var app = express();
 
@@ -37,6 +40,24 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
+
+app.use('/admin', function(req,res,next){
+  if(req.isAuthenticated()) {
+    if (req.user.admin) {
+      return next();
+    }
+  }
+  res.redirect('/');
+});
+app.use('/admin', routesAdmin);
+
+app.use('/user', function(req,res,next){
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+});
+app.use('/user', routesUser);
 
 api.setApp(app);  //setting rest-api calls
 

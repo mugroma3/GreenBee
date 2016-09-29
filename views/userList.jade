@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    .container
+        p Ciao #{user.nome}
+        h1 Ecco gli utenti registrati al tuo orto
+        h4
+            a(href="/admin/addUser") Aggiungi un utente
+
+        #{listaUtenti[0]}
+        #{listaUtenti[1]}
