@@ -10,58 +10,58 @@ router.get('/', function (req, res) {
 });
 
 /*
- * GET tramite id utente
+ * GET tramite id utente nell'url
  */
 router.get('/:id', function (req, res) {
     utenteController.show(req, res);
 });
 
 /*
- * GET lista accessi dell'utente tramite id
+ * GET lista accessi dell'utente tramite id nell'url
  */
 router.get('/listaAccessi/:id', function (req, res) {
     utenteController.listIngressi(req, res);
 });
 
 /*
- * POST
+ * POST nuovo utente (nome, username e password obbligatori)
  */
 router.post('/', function (req, res) {
     utenteController.create(req, res);
 });
 
 /*
- * PUT
+ * PUT update utente tramite id nell'url
  */
 router.put('/:id', function (req, res) {
     utenteController.update(req, res);
 });
 
 /*
- * PUT aggiungi transazione
+ * PUT aggiungi transazione a utente, id nell'url
  */
-router.put('/addTransazione/:id', function (req, res) { //TODO controlla
-    utenteController.addTransazione(req, res);
-});
-
-/*
- * PUT aggiungi ingresso
- */
-router.put('/addIngresso/:id', function (req, res) { //TODO controlla
-    utenteController.addIngresso(req, res);
-});
-
-//TODO sistema aggiungi uscita
-/*
- * PUT aggiungi uscita
-x
 router.put('/addTransazione/:id', function (req, res) {
     utenteController.addTransazione(req, res);
 });
-*/
 
 /*
- * DELETE
+ * PUT aggiungi ingresso a utente, id nell'url
+ */
+router.put('/addIngresso/:id', function (req, res) {
+    utenteController.addIngresso(req, res);
+});
+
+/*
+ * PUT aggiungi uscita a utente, nell'url
+ *
+ */
+router.put('/addUscita/:id', function (req, res) {
+    utenteController.addUscita(req, res);
+});
+
+
+/*
+ * DELETE dell'untente tramite id, nell'url
  */
 router.delete('/:id', function (req, res) {
     utenteController.remove(req, res);

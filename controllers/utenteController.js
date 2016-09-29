@@ -123,6 +123,7 @@ module.exports = {
      * utenteController.addIngresso()
      */
     addIngresso: function (req, res) {
+        //verifica che l'utente esista
         var id = req.params.id;
         utenteModel.findOne({_id: id}, function (err, utente) {
             if (err) {
@@ -136,13 +137,74 @@ module.exports = {
                     message: 'No such utente'
                 });
             }
+            //se l'utente esiste..
             else{
-                utente.accessi.addIngresso( { 'ingresso': Date.now(), 'uscita': null } );
-                return res.json(utente);
-            }
+                //verifica che la lista abbia almeno 1 oggetto
+                if(utente.accessi.length > 0) {
+                    //verifica che sia uscito l'ultima volta
+                    if (utente.accessi[utente.accessi.length - 1].uscita == null) {
+                        return res.status(500).json({
+                            message: 'devi prima uscire'
+                        })
+                    }
+                }
 
-        });
-    },
+                utente.accessi.push( { 'ingresso': Date.now() } );
+                utente.save(function (err, utente) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when updating utente.',
+                            error: err
+                        });
+                    }
+                    return res.json(utente);
+                });
+                }
+    })},
+
+    /**
+     * utenteController.addUscita()
+     */
+    addUscita: function (req, res) {
+        //verifica che l'utente esista
+        var id = req.params.id;
+        utenteModel.findOne({_id: id}, function (err, utente) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting utente.',
+                    error: err
+                });
+            }
+            if (!utente) {
+                return res.status(404).json({
+                    message: 'No such utente'
+                });
+            }
+            //se l'utente esiste..
+            else{
+                //verifica che la lista abbia almeno 1 oggetto
+                if(utente.accessi.length > 0) {
+                    var len = utente.accessi.length;
+                    //verifica che stia dentro
+                    if (utente.accessi[len - 1].uscita != null) {
+                        return res.status(500).json({
+                            message: 'devi prima entrare'
+                        })
+                    }
+                }
+
+                utente.accessi[len-1].uscita = Date.now();
+                utente.save(function (err, utente) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when updating utente.',
+                            error: err
+                        });
+                    }
+                    return res.json(utente);
+                });
+            }
+        })},
 
     /**
      * utenteController.listIngressi()
@@ -190,7 +252,7 @@ module.exports = {
                     'tipoTransazione': req.body.tipoTransazione,
                     'oggetto': req.body.oggetto,
                     'quantita': req.body.quantita
-                })
+                });
                 utente.save(function (err, utente) {
                     if (err) {
                         return res.status(500).json({
