@@ -3,7 +3,9 @@ var Schema   = mongoose.Schema;
 
 var utenteSchema = new Schema({
 	'admin' : { type: Boolean, default: false  },
-	'nome' : { type: String, unique: true, required: true },
+	'nome' : { type: String, required: true },
+	'username' : {type: String, unique: true, required: true },
+	'password' : { type: String, required: true },
 	'punti' : { type: Number, default: 0 },
 	'accessi' : [{
 		'ingresso': { type: Date, required: true, default: Date.now() },
