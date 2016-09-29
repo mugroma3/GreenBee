@@ -11,7 +11,7 @@ var utenteSchema = new Schema({
 		'ingresso': { type: Date, required: true, default: Date.now() },
 		'uscita': Date }],
 	'transazioni' : [{
-		'tipoTransazione': { type: String, enum: ['acquisto', 'vendo'] },//TODO verificare inserire default: vendo/acquisto
+		'tipoTransazione': { type: String, enum: ['acquisto', 'vendo'] },
 		'oggetto': { type: String, required: true },
 		'quantita': { type: Number, required: true },
 		'Data': { type: Date, default: Date.now(),
