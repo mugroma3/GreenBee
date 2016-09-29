@@ -1,4 +1,6 @@
 var utenteModel = require('../models/utenteModel.js');
+var utenteFacade = require('../facades/utenteFacade');
+var REST = require('../utils/REST');
 
 /**
  * utenteController.js
@@ -47,60 +49,17 @@ module.exports = {
      * utenteController.create()
      */
     create: function (req, res) {
-        var utente = new utenteModel({
-			admin: req.body.admin,
-            nome: req.body.nome,
-            username:  req.body.username,
-            password: req.body.password
-
-        });
-
-        utente.save(function (err, utente) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating utente',
-                    error: err
-                });
-            }
-            return res.status(201).json(utente);
-        });
+        var risposta = utenteFacade.create(req.body.nome, req.body.username, req.body.password, req.body.admin);
+        console.log("LA risposta");
+        console.log(risposta);
+        return REST.generate(req, res, risposta);
     },
 
     /**
      * utenteController.update()
      */
     update: function (req, res) {
-        var id = req.params.id;
-        utenteModel.findOne({_id: id}, function (err, utente) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente',
-                    error: err
-                });
-            }
-            if (!utente) {
-                return res.status(404).json({
-                    message: 'No such utente'
-                });
-            }
-
-            utente.admin = req.body.admin ? req.body.admin : utente.admin;
-			utente.nome = req.body.nome ? req.body.nome : utente.nome;
-			utente.punti = req.body.punti ? req.body.punti : utente.punti;
-			utente.accessi = req.body.accessi ? req.body.accessi : utente.accessi;
-			utente.transazioni = req.body.transazioni ? req.body.transazioni : utente.transazioni;
-			
-            utente.save(function (err, utente) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when updating utente.',
-                        error: err
-                    });
-                }
-
-                return res.json(utente);
-            });
-        });
+        return REST.generate(req, res, utenteFacade.update(req.params.id, req.body.nome, req.body.punti, req.body.admin));
     },
 
     /**

@@ -26,7 +26,7 @@ router.get('/addUser', function (req, res) {
 });
 
 router.post('/addUser', function (req, res) {
-    utenteFacade.create(req.body.nome, req.body.username, req.body.password, req.body.admin)
+    //utenteFacade.create(req.body.nome, req.body.username, req.body.password, req.body.admin)
 });
 
 module.exports = router;
