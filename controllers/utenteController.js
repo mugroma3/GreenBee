@@ -114,5 +114,90 @@ module.exports = {
             }
             return res.status(204).json();
         });
+    },
+
+    /**
+     * utenteController.createAccesso()
+     */
+    createAccesso: function (req, res) {
+        var id = req.params.id;
+        utenteModel.findOne({_id: id}, function (err, utente) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting utente.',
+                    error: err
+                });
+            }
+            if (!utente) {
+                return res.status(404).json({
+                    message: 'No such utente'
+                });
+            }
+            else{
+                utente.accessi.add( { 'ingresso': Date.now(), 'uscita': null } );
+                return res.json(utente);
+            }
+
+        });
+    },
+
+    /**
+     * utenteController.listIngressi()
+     */
+    listIngressi: function (req, res) {
+        var id = req.params.id;
+        utenteModel.findOne({_id: id}, function (err, utente) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting utente.',
+                    error: err
+                });
+            }
+            if (!utente) {
+                return res.status(404).json({
+                    message: 'No such utente'
+                });
+            }
+            else{
+                return res.json(utente.accessi);
+            }
+
+        });
+    },
+
+    /**
+     * utenteController.createTransazione()
+     */
+    createTransazione: function (req, res) {
+        var id = req.params.id;
+        utenteModel.findOne({_id: id}, function (err, utente) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting utente.',
+                    error: err
+                });
+            }
+            if (!utente) {
+                return res.status(404).json({
+                    message: 'No such utente'
+                });
+            }
+            else{
+                utente.transazioni.push({'tipoTransazione': req.body.tipoTransazione,
+                    'oggetto': req.body.oggetto,
+                    'quantita': req.body.quantita
+                })
+                utente.save(function (err, utente) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when updating utente.',
+                            error: err
+                        });
+                    }
+                    return res.json(utente);
+                });
+            }
+
+        });
     }
 };
