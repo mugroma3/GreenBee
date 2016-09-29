@@ -16,6 +16,7 @@ var app = express();
 var passport = require('passport');
 var expressSession = require('express-session');
 var localStrategy = require('passport-local').Strategy;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -38,6 +39,30 @@ app.use(passport.session());
 app.use('/', routes);
 
 api.setApp(app);  //setting rest-api calls
+
+//passport config
+var utenteModel = require('./models/utenteModel');
+passport.use(new localStrategy(
+    function(username, password, done){
+      utenteModel.findOne({username: username}, function (err, utente) {
+        if (err) {
+          return done(err)
+        }
+        if (!utente) {
+          return done(null, false);
+        }
+        if(!utente.verifyPassword(password)){
+          return done(null, false);
+        }
+        return done(null, utente);
+      });
+    }
+));
+
+
+
+passport.serializeUser(utenteModel.serializeUser());
+passport.deserializeUser(utenteModel.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
