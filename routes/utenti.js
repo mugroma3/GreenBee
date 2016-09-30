@@ -44,6 +44,16 @@ router.get('/listaAccessi/:id', function (req, res) {
 });
 
 /*
+ * GET lista transazioni dell'utente tramite id nell'url
+ */
+router.get('/listaTransazioni/:id', function (req, res) {
+    var options = {id: req.params.id};
+    utenteController.listIngressi(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
+/*
  * POST nuovo utente (nome, username e password sono obbligatori)
  */
 router.post('/', function (req, res) {
@@ -79,12 +89,12 @@ router.put('/:id', function (req, res) {
  * PUT aggiungi transazione a utente, id nell'url
  */
 router.put('/addTransazione/:id', function (req, res) {
-    var userData = {
+    var options = {
         tipoTransazione : req.body.tipoTransazione,
         oggetto : req.body.oggetto,
-        quantita : req.body.quantita
+        quantita : req.body.quantita,
+        user: {id: req.params.id}
     };
-    userData.user.id = req.params.id;
     utenteController.addTransazione(options, function(answer){
         REST.generate(req, res, answer);
     });
