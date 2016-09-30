@@ -1,6 +1,14 @@
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 
-var centralinaSchema = new Schema({	'ph' : Number,	'irraggiamentoSolare' : Number,	'batteria' : Number,	'temperatura' : Number,	'data' : Date});
+var sensoreModel = require('./sensoreModel');
+
+var centralinaSchema = new Schema({
+	'name': {type: String, required: true },
+	'battery_lvl': Number,
+	'luminosity': Number,
+	'Data' : Date,
+	'ble_servers': [sensoreModel]
+});
 
 module.exports = mongoose.model('centralina', centralinaSchema);
