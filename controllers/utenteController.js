@@ -241,6 +241,8 @@ module.exports = {
             }
             else{
                 utente.orto.push(userData.ortaggio);
+                //utenteModel.update({ _id: userData.id }, {$addToSet: { 'orto': userData.ortaggio} }); //TODO aggiustare sta merda
+                //console.log(utente.orto);
                 utente.save(function (err, utente) {
                     if (err) {
                         callback([500, 'Error when updating utente', err]);
