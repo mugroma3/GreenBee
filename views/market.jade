@@ -3,10 +3,14 @@ extends layout
 block content
     script.
         function incrementa(id){
-            document.getElementById('\''+id+'\'').value++;
+            var current = document.getElementById(id);
+            if (current.value < current.max)
+                document.getElementById(id).value++;
         }
         function decrementa(id) {
-            document.getElementById('\''+id+'\'').value--;
+            var current = document.getElementById(id);
+            if(current.value > 1)
+                document.getElementById(id).value--;
         }
     .container
         .row
@@ -27,16 +31,18 @@ block content
                                             td #{oggetto.nome}
                                             td #{oggetto.quantita}
                                             td
-                                                form
-                                                    button(type='button' onclick='incrementa(#{oggetto._id})').btn.btn-default
-                                                        span(aria-hidden="true").glyphicon.glyphicon-minus
-                                                    input(type='number' id='#{oggetto._id}' value='0' name='quantity' min='1' max='#{oggetto.quantita}')
-                                                    button(type='button' onclick='decrementa(#{oggetto._id})').btn.btn-default
-                                                        span(aria-hidden="true").glyphicon.glyphicon-plus
-                                                    button(type='submit').btn.btn-danger
-                                                        text BUY
+                                                form.form-inline
+                                                    .from-group
+                                                        .input-group
+                                                            button(type='button' onclick='decrementa("#{oggetto._id}")').btn.btn-default
+                                                                span(onclick='decrementa("#{oggetto._id}")' aria-hidden="true").glyphicon.glyphicon-minus
+                                                            input(type='number' id='#{oggetto._id}' value='1' name='quantity' min='1' max='#{oggetto.quantita}')
+                                                            button(type='button' onclick='incrementa("#{oggetto._id}")').btn.btn-default
+                                                                span(aria-hidden="true").glyphicon.glyphicon-plus
+                                                        button(type='submit').btn.btn-danger.pull-right
+                                                            text BUY
             .col-xs-6.col-sm-6.col-md-6.col-lg-6
-                button.btn.btn-info.active.center-block
+                button.btn.btn-success.active.center-block
                     text.h2 VENDI
                 br
                 br
