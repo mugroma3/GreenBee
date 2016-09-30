@@ -38,7 +38,7 @@ questo json è chiamato status_signal. il formato è:
     {
         "name": [stringa del nome della centralina],
         "ble_servers": [Lista di oggetti ble server, ogni oggetto sensore è costruito così 
-            {"id": [stringa di 12 caratteri],
+            {"id_ble": [stringa di 12 caratteri],
              "reachable": [stringa "yes"/"no"  indica se è stato possibile raggiungere questo sensore. se "no" probabilmente il sensore ha finito la batteria],
              "temperature": [numero floating point con temperatura celsius],
              "humidity_gnd": [numero fp con valore umidità terreno],
@@ -53,7 +53,7 @@ questo json è chiamato status_signal. il formato è:
     
 per fare un esempio:
 
-    { "name": "aabbccddeeff", "ble_servers": [{"id": "112233445566", "reachable": "yes", "temperature": 27.7, "humidity_gnd": 34, "battery_lvl": 40, "humidity_air": 1000, "ph": 2}, {"id": "998877665544", "reachable": "no", "temperature": -1, "humidity_gnd": -1, "battery_lvl": -1, "humidity_air": -1, "ph": -1}], "battery_lvl": 32, "luminosity": 55}
+    { "name": "aabbccddeeff", "ble_servers": [{"id_ble": "112233445566", "reachable": "yes", "temperature": 27.7, "humidity_gnd": 34, "battery_lvl": 40, "humidity_air": 1000, "ph": 2}, {"id_ble": "998877665544", "reachable": "no", "temperature": -1, "humidity_gnd": -1, "battery_lvl": -1, "humidity_air": -1, "ph": -1}], "battery_lvl": 32, "luminosity": 55}
     
 in ogni status_signal verranno inviati tutti i ble_server che la centralina conosce, in questo modo è possibile vedere velocemente quali server ble risultano spenti
 
