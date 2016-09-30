@@ -86,6 +86,19 @@ router.put('/:id', function (req, res) {
 });
 
 /*
+ * PUT update utente tramite id nell'url
+ */
+router.put('/addOrtaggio/:id', function (req, res) {
+    var options = {
+        id: req.params.id,
+        ortaggio: req.body.ortaggio
+    };
+    utenteController.addOrtaggio(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
+/*
  * PUT aggiungi transazione a utente, id nell'url
  */
 router.put('/addTransazione/:id', function (req, res) {

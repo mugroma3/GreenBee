@@ -7,7 +7,7 @@ var utenteSchema = new Schema({
 	'nome' : { type: String, required: true },
 	'username' : {type: String, unique: true, required: true },
 	'password' : { type: String, required: true },
-	'telegramID' : { type: Number, index: true },
+	'telegramID' : { type: Number, unique: true, index: true },
 	'punti' : { type: Number, default: 0 },
 	'ultimoAccesso' : { type: Schema.Types.ObjectId },
 	'accessi' : [{
@@ -17,9 +17,9 @@ var utenteSchema = new Schema({
 		'tipoTransazione': { type: String, enum: ['acquisto', 'vendo'] },
 		'oggetto': { type: String, required: true },
 		'quantita': { type: Number, required: true },
-		'Data': { type: Date, default: Date.now(),
-		'Orto': [String]
-		}}]
+		'Data': { type: Date, default: Date.now()}
+		}],
+	'orto': [String]
 });
 
 utenteSchema.methods.verifyPassword = function(pwd){

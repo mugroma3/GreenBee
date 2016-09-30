@@ -5,8 +5,10 @@ TODO:
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE e magazzino
 8) WebUI Admin Prezzario (listAll, modify e aggiungi)
 9) Aggiungere bootstrap a tutte le view
-10) Fare le api utente con ricerca da telegramID
+10) Fare le api utente con ricerca, addIngresso, addUscita, addTransazione tramite telegramID
 11) Escludere alcuni campi nelle stampe dei JSON.... ATTENZIONE!
+13) aggiungere addOrtaggi e removeOrtaggi e gestire l'array senza duplicati
+14) modifica market con menu a tendina per ortaggi
 
 
 Credo non manchi altro al progetto...

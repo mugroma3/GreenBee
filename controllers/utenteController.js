@@ -225,5 +225,30 @@ module.exports = {
                 callback([200, utente.transazioni]);
             }
         });
+    },
+
+    /**
+     * utenteController.addOrtaggio()
+     */
+    addOrtaggio: function (userData, callback) {
+        //verifica che l'utente esista
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+            if (err) {
+                callback([500, 'Error when getting utente.', err]);
+            }
+            if (!utente) {
+                callback([404, 'Utente inesistente', err]);
+            }
+            else{
+                utente.orto.push(userData.ortaggio);
+                utente.save(function (err, utente) {
+                    if (err) {
+                        callback([500, 'Error when updating utente', err]);
+                    }
+                    callback([200, utente]);
+                });
+            }
+        });
+
     }
 };
