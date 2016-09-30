@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to #{title}
+    p Good #{user.username}
+    a(href='/user/logout') Logout
+    br
+    a(href='/user/market') Market
+    if(user.admin)
+        br
+        a(href='/admin') Portale Amministratore
