@@ -10,36 +10,27 @@ module.exports = {
     /**
      * utenteController.list()
      */
-    list: function (req, res) {
+    list: function (userData, callback) {
         utenteModel.find(function (err, utentes) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente.',
-                    error: err
-                });
+                callback([500, "Error when getting utenti.", err]);
             }
-            return res.json(utentes);
+            callback([200, utentes]);
         });
     },
 
     /**
      * utenteController.show()
      */
-    show: function (req, res) {
-        var id = req.params.id;
-        utenteModel.findOne({_id: id}, function (err, utente) {
+    show: function (userData, callback) {
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente.',
-                    error: err
-                });
+                callback([500, "Error when getting utente.", err]);
             }
             if (!utente) {
-                return res.status(404).json({
-                    message: 'No such utente'
-                });
+                callback([404, 'No such utente']);
             }
-            return res.json(utente);
+            callback([200, utente]);
         });
     },
 
@@ -88,16 +79,12 @@ module.exports = {
     /**
      * utenteController.remove()
      */
-    remove: function (req, res) {
-        var id = req.params.id;
-        utenteModel.findByIdAndRemove(id, function (err, utente) {
+    remove: function (userData, callback) {
+        utenteModel.findByIdAndRemove(userData.id, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when deleting the utente.',
-                    error: err
-                });
+                callback([500, 'Error when deleting the utente.', err]);
             }
-            return res.status(204).json();
+            callback([204]);
         });
     },
 
@@ -195,22 +182,16 @@ module.exports = {
     /**
      * utenteController.listIngressi()
      */
-    listIngressi: function (req, res) {
-        var id = req.params.id;
-        utenteModel.findOne({_id: id}, function (err, utente) {
+    listIngressi: function (userData, callback) {
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente.',
-                    error: err
-                });
+                callback([500, 'Error when getting utente', err]);
             }
             if (!utente) {
-                return res.status(404).json({
-                    message: 'No such utente'
-                });
+                callback([404, 'No such utente']);
             }
             else{
-                return res.json(utente.accessi);
+                callback([200, utente.accessi]);
             }
 
         });
@@ -219,37 +200,27 @@ module.exports = {
     /**
      * utenteController.addTransazione()
      */
-    addTransazione: function (req, res) {
-        var id = req.params.id;
-        utenteModel.findOne({_id: id}, function (err, utente) {
+    addTransazione: function (userData, callback) {
+        utenteModel.findOne({_id: userData.user.id}, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente.',
-                    error: err
-                });
+                callback([500, 'Error when getting utente', err]);
             }
             if (!utente) {
-                return res.status(404).json({
-                    message: 'No such utente'
-                });
+                callback([404, 'No such utente']);
             }
             else{
                 utente.transazioni.push({
-                    'tipoTransazione': req.body.tipoTransazione,
-                    'oggetto': req.body.oggetto,
-                    'quantita': req.body.quantita
+                    'tipoTransazione': userData.tipoTransazione,
+                    'oggetto': userData.oggetto,
+                    'quantita': userData.quantita
                 });
                 utente.save(function (err, utente) {
                     if (err) {
-                        return res.status(500).json({
-                            message: 'Error when updating utente.',
-                            error: err
-                        });
+                        callback([500, 'Error when updating utente', err]);
                     }
-                    return res.json(utente);
+                    callback([200, utente]);
                 });
             }
-
         });
     }
 };

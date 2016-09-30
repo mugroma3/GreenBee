@@ -8,21 +8,29 @@ var REST = require('../utils/REST');
  * GET lista tutti gli utenti
  */
 router.get('/', function (req, res) {
-    utenteController.list(req, res);
+    utenteController.list(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 /*
  * GET tramite id utente nell'url
  */
 router.get('/:id', function (req, res) {
-    utenteController.show(req, res);
+    var options = {id: req.params.id};
+    utenteController.show(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 /*
  * GET lista accessi dell'utente tramite id nell'url
  */
 router.get('/listaAccessi/:id', function (req, res) {
-    utenteController.listIngressi(req, res);
+    var options = {id: req.params.id};
+    utenteController.listIngressi(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 /*
@@ -61,7 +69,15 @@ router.put('/:id', function (req, res) {
  * PUT aggiungi transazione a utente, id nell'url
  */
 router.put('/addTransazione/:id', function (req, res) {
-    utenteController.addTransazione(req, res);
+    var userData = {
+        tipoTransazione : req.body.tipoTransazione,
+        oggetto : req.body.oggetto,
+        quantita : req.body.quantita
+    };
+    userData.user.id = req.params.id;
+    utenteController.addTransazione(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 /*
@@ -77,14 +93,6 @@ router.put('/addIngresso/:id', function (req, res) {
  */
 router.put('/addUscita/:id', function (req, res) {
     utenteController.addUscita(req, res);
-});
-
-
-/*
- * DELETE dell'untente tramite id, nell'url
- */
-router.delete('/:id', function (req, res) {
-    utenteController.remove(req, res);
 });
 
 module.exports = router;

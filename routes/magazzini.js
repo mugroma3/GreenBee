@@ -30,11 +30,4 @@ router.put('/:id', function (req, res) {
     magazzinoController.update(req, res);
 });
 
-/*
- * DELETE
- */
-router.delete('/:id', function (req, res) {
-    magazzinoController.remove(req, res);
-});
-
 module.exports = router;

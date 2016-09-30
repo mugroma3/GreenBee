@@ -47,7 +47,9 @@ module.exports = {
      * magazzinoController.create()
      */
     create: function (req, res) {
-        var magazzino = new magazzinoModel({			nome : req.body.nome,			quantita : req.body.quantita
+        var magazzino = new magazzinoModel({
+			nome : req.body.nome,
+			quantita : req.body.quantita
         });
 
         magazzino.save(function (err, magazzino) {
@@ -79,7 +81,9 @@ module.exports = {
                 });
             }
 
-            magazzino.nome = req.body.nome ? req.body.nome : magazzino.nome;			magazzino.quantita = req.body.quantita ? req.body.quantita : magazzino.quantita;			
+            magazzino.nome = req.body.nome ? req.body.nome : magazzino.nome;
+			magazzino.quantita = req.body.quantita ? req.body.quantita : magazzino.quantita;
+			
             magazzino.save(function (err, magazzino) {
                 if (err) {
                     return res.status(500).json({
@@ -92,20 +96,4 @@ module.exports = {
             });
         });
     },
-
-    /**
-     * magazzinoController.remove()
-     */
-    remove: function (req, res) {
-        var id = req.params.id;
-        magazzinoModel.findByIdAndRemove(id, function (err, magazzino) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when deleting the magazzino.',
-                    error: err
-                });
-            }
-            return res.status(204).json();
-        });
-    }
 };
