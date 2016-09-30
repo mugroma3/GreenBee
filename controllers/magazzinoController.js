@@ -10,90 +10,78 @@ module.exports = {
     /**
      * magazzinoController.list()
      */
-    list: function (req, res) {
+    list: function (userData, callback) {
         magazzinoModel.find(function (err, magazzinos) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting magazzino.',
-                    error: err
-                });
+                callback([500, "Error when getting magazzini.", err]);
             }
-            return res.json(magazzinos);
+            callback([200, magazzinos]);
         });
     },
 
     /**
      * magazzinoController.show()
      */
-    show: function (req, res) {
-        var id = req.params.id;
-        magazzinoModel.findOne({_id: id}, function (err, magazzino) {
+    show: function (userData, callback) {
+        magazzinoModel.findOne({_id: userData.id}, function (err, magazzino) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting magazzino.',
-                    error: err
-                });
+                callback([500, "Error when getting magazzino.", err]);
             }
             if (!magazzino) {
-                return res.status(404).json({
-                    message: 'No such magazzino'
-                });
+                callback([404, 'No such magazzino']);
             }
-            return res.json(magazzino);
+            callback([200, magazzino]);
+        });
+    },
+
+    findByName: function (userData, callback) {
+        magazzinoModel.findOne({nome: userData.nome}, function (err, magazzino) {
+            if (err) {
+                callback([500, "Error when getting magazzino.", err]);
+            }
+            if (!magazzino) {
+                callback([404, 'No such magazzino']);
+            }
+            callback([200, magazzino]);
         });
     },
 
     /**
      * magazzinoController.create()
      */
-    create: function (req, res) {
-        var magazzino = new magazzinoModel({
-			nome : req.body.nome,
-			quantita : req.body.quantita
-        });
+    create: function (userData, callback) {
+        var magazzino = new magazzinoModel(userData);
 
         magazzino.save(function (err, magazzino) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating magazzino',
-                    error: err
-                });
+                callback([500, "Error when creating magazzino.", err]);
             }
-            return res.status(201).json(magazzino);
+            callback([201, magazzino]);
         });
     },
 
     /**
      * magazzinoController.update()
      */
-    update: function (req, res) {
-        var id = req.params.id;
-        magazzinoModel.findOne({_id: id}, function (err, magazzino) {
+    update: function (userData, callback) {
+        magazzinoModel.findOne({_id: userData.id}, function (err, magazzino) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting magazzino',
-                    error: err
-                });
+                callback([500, "Error when getting magazzino.", err]);
             }
             if (!magazzino) {
-                return res.status(404).json({
-                    message: 'No such magazzino'
-                });
+                callback([404, 'No such magazzino']);
             }
 
-            magazzino.nome = req.body.nome ? req.body.nome : magazzino.nome;
-			magazzino.quantita = req.body.quantita ? req.body.quantita : magazzino.quantita;
+            magazzino.nome = userData.nome ? userData.nome : magazzino.nome;
+			magazzino.quantita = userData.quantita ? userData.quantita : magazzino.quantita;
 			
             magazzino.save(function (err, magazzino) {
                 if (err) {
-                    return res.status(500).json({
-                        message: 'Error when updating magazzino.',
-                        error: err
-                    });
+                    callback([500, "Error when updating magazzino.", err]);
                 }
 
-                return res.json(magazzino);
+                callback([200, magazzino]);
             });
         });
-    },
+    }
 };

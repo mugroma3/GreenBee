@@ -52,7 +52,7 @@ module.exports = {
      * utenteController.update()
      */
     update: function (userData, callback) {
-        utenteModel.findOne({_id: id}, function (err, utente) {
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente', err]);
             }
@@ -60,11 +60,11 @@ module.exports = {
                 callback([404, 'No such utente']);
             }
 
-            utente.admin = admin ? admin : utente.admin;
-            utente.nome = nome ? nome : utente.nome;
-            utente.punti = punti ? punti : utente.punti;
-            utente.accessi = accessi ? accessi : utente.accessi;
-            utente.transazioni = transazioni ? transazioni : utente.transazioni;
+            utente.admin = userData.admin ? userData.admin : utente.admin;
+            utente.nome = userData.nome ? userData.nome : utente.nome;
+            utente.punti = userData.punti ? userData.punti : utente.punti;
+            utente.accessi = userData.accessi ? userData.accessi : utente.accessi;
+            utente.transazioni = userData.transazioni ? userData.transazioni : utente.transazioni;
 
             utente.save(function (err, utente) {
                 if (err) {
