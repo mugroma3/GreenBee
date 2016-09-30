@@ -35,6 +35,21 @@ module.exports = {
     },
 
     /**
+     * utenteController.isNellOrto()
+     */
+    isNellOrto: function (userData, callback) {
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+            if (err) {
+                callback([500, "Error when getting utente.", err]);
+            }
+            if (!utente) {
+                callback([404, 'No such utente']);
+            }
+            callback([200, utente.isNellOrto()]);
+        });
+    },
+
+    /**
      * utenteController.create()
      */
     create: function (userData, callback) { 

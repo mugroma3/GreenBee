@@ -24,6 +24,16 @@ router.get('/:id', function (req, res) {
 });
 
 /*
+ * GET l'utente è nell'orto [vero/falso]
+ */
+router.get('/isNellOrto/:id', function (req, res) {
+    var options = {id: req.params.id};
+    utenteController.isNellOrto(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
+/*
  * GET lista accessi dell'utente tramite id nell'url
  */
 router.get('/listaAccessi/:id', function (req, res) {
