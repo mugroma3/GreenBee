@@ -19,22 +19,46 @@ import gestionelingue.Lingue;
 
 public class OrtoBioBot extends Bot {
 
-	public static final String messaggioScegliLingua = "Scegli la tua lingua \n Choose your language";
-	public static final String messaggioBenvenuto = "Benvenuto in GreenBeeBot \n Welcome in GreenBeeBot";
+	public static final String testoScegliLingua = "Scegli la tua lingua \nChoose your language";
+	public static final String testoBenvenuto = "Benvenuto in GreenBeeBot \nWelcome in GreenBeeBot  \n\n"
+			+ "Powered by MUG Roma tre: \nhttps://telegram.me/mugroma3 \nhttp://muglab.uniroma3.it/  "
+			+ "\nhttps://www.facebook.com/mugroma3 " + "\nhttps://www.twitter.com/mugroma3  ";
 	private ReplyKeyboardMarkupWithButtons languageKeyboard;
 	private HashMap<Long, StatoUtente> statiUtenti;
-
+	private ReplyKeyboardMarkupWithButtons englishMenu;
+	private ReplyKeyboardMarkupWithButtons menuItaliano;
+	
+	
 	public OrtoBioBot(String token) {
 		super(token);
 		statiUtenti = new HashMap<>();
 		List<List<KeyboardButton>> keyboard = new ArrayList<List<KeyboardButton>>();
 		List<KeyboardButton> line = new ArrayList<>();
-		line.add(new KeyboardButton(Italiano.italiano));
+		line.add(new KeyboardButton(Italiano.ITALIANO));
 		line.add(new KeyboardButton(English.ENGLISH));
 		keyboard.add(line);
 		languageKeyboard = new ReplyKeyboardMarkupWithButtons(keyboard);
 		languageKeyboard.setResizeKeyboard(true);
 		languageKeyboard.setOneTimeKeyboard(true);
+		
+		
+		line = new ArrayList<>();
+		keyboard = new ArrayList<List<KeyboardButton>>();
+		KeyboardButton kb = new KeyboardButton(English.ingusc, false, true);
+		line.add(kb);
+		keyboard.add(line);
+		englishMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
+		englishMenu.setResizeKeyboard(true);
+		englishMenu.addLine(English.MARKET, English.TASK, English.CONTACT);
+		
+		line = new ArrayList<>();
+		keyboard = new ArrayList<List<KeyboardButton>>();
+	    kb = new KeyboardButton(Italiano.ingusc, false, true);
+		line.add(kb);
+		keyboard.add(line);
+		menuItaliano = new ReplyKeyboardMarkupWithButtons(keyboard);
+		menuItaliano.setResizeKeyboard(true);
+		menuItaliano.addLine(Italiano.MERCATO, Italiano.COMPITI, Italiano.CONTATTI);
 	}
 
 	@Override
@@ -43,26 +67,32 @@ public class OrtoBioBot extends Bot {
 		String text = arg0.getText();
 
 		if (text.equals("/start")) {
-			if (userIsNew(arg0.getFrom().getId())) 
-			{
-				sendMessage(new MessageToSend(arg0.getFrom().getId(), messaggioBenvenuto));
+			if (userIsNew(arg0.getFrom().getId())) {
+				sendMessage(new MessageToSend(arg0.getFrom().getId(), testoBenvenuto));
 				statiUtenti.put(arg0.getFrom().getId(), new StatoUtente());
 			}
 			chooseLanguage(arg0);
-			    
+
 			return;
 		}
-		
-		if(userIsNew(arg0.getFrom().getId()))
+
+		if (userIsNew(arg0.getFrom().getId()))
 			statiUtenti.put(arg0.getFrom().getId(), new StatoUtente());
-		
-		if(text.equals(Italiano.italiano))
-		{
-			if(statiUtenti.get(arg0.getFrom().getId()).getSezione() != SezioniBot.SCEGLILINGUA)
-				return;
-			statiUtenti.get(arg0.getFrom().getId()).setLingua(Lingue.ITALIANO);
+
+		if (text.equals(Italiano.ITALIANO)) {
+			if (statiUtenti.get(arg0.getFrom().getId()).getSezione() != SezioniBot.SCEGLILINGUA)
+				statiUtenti.get(arg0.getFrom().getId()).setLingua(Lingue.ITALIANO);
+			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			return;
 		}
-		
+
+		if (text.equals(English.ENGLISH)) {
+			if (statiUtenti.get(arg0.getFrom().getId()).getSezione() == SezioniBot.SCEGLILINGUA)
+				statiUtenti.get(arg0.getFrom().getId()).setLingua(Lingue.INGLESE);
+			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			return;
+		}
+
 	}
 
 	@Override
@@ -174,7 +204,7 @@ public class OrtoBioBot extends Bot {
 	}
 
 	public void chooseLanguage(Message arg0) {
-		MessageToSend mts = new MessageToSend(arg0.getFrom().getId(), messaggioScegliLingua);
+		MessageToSend mts = new MessageToSend(arg0.getFrom().getId(), testoScegliLingua);
 		mts.setReplyMarkup(languageKeyboard);
 		sendMessage(mts);
 	}
@@ -183,4 +213,7 @@ public class OrtoBioBot extends Bot {
 		return !statiUtenti.containsKey(userid);
 	}
 
+	public void inviaMenu(Message arg0, StatoUtente stato) {
+		stato.setSezione(SezioniBot.MENU);
+	}
 }
