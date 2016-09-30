@@ -8,6 +8,7 @@ module.exports = {
             case 204: res.status(204).json(); break;
             case 404: res.status(answer[0]).json({message:answer[1]}); break;
             case 500: res.status(answer[0]).json({message: answer[1], error: answer[2]}); break;
+            case 506: res.status(answer[0]).json(answer[1]); break;
             default: res.status(answer[0]).json({message: answer[1], error: answer[2]});
         }
     }

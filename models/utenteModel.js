@@ -9,6 +9,7 @@ var utenteSchema = new Schema({
 	'password' : { type: String, required: true },
 	'telegramID' : { type: Number, index: true },
 	'punti' : { type: Number, default: 0 },
+	'ultimoAccesso' : { type: Schema.Types.ObjectId },
 	'accessi' : [{
 		'ingresso': { type: Date, required: true, default: Date.now() },
 		'uscita': Date }],
@@ -35,7 +36,18 @@ utenteSchema.methods.deserializeUser = function(id, done){
 		done(err, user);
 	});
 };
+/**
+ * verifica se l'utente è nell'orto
+ * @returns {boolean}
+ */
+utenteSchema.methods.isNellOrto = function() {
+	if(this.ultimoAccesso != null){
+		return true;
+	}else{
+		return false;
+	}
 
+}
 utenteSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('utente', utenteSchema);

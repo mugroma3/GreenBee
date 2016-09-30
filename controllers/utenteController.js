@@ -91,91 +91,62 @@ module.exports = {
     /**
      * utenteController.addIngresso()
      */
-    addIngresso: function (req, res) {
+    addIngresso: function (userData, callback) {
         //verifica che l'utente esista
-        var id = req.params.id;
-        utenteModel.findOne({_id: id}, function (err, utente) {
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente.',
-                    error: err
-                });
+                callback([500, 'Error when getting utente.', err]);
             }
             if (!utente) {
-                return res.status(404).json({
-                    message: 'No such utente'
-                });
+                callback([404, 'Utente inesistente', err]);
             }
-            //se l'utente esiste..
             else{
-                //verifica che la lista abbia almeno 1 oggetto
-                if(utente.accessi.length > 0) {
-                    //verifica che sia uscito l'ultima volta
-                    if (utente.accessi[utente.accessi.length - 1].uscita == null) {
-                        return res.status(500).json({
-                            message: 'devi prima uscire'
-                        })
-                    }
+                //l'utente è nell'orto?
+                if(utente.isNellOrto()){
+                    callback([500, 'Errore, utente dentro l\'orto']);
                 }
-
-                utente.accessi.push( { 'ingresso': Date.now() } );
-                utente.save(function (err, utente) {
-                    if (err) {
-                        return res.status(500).json({
-                            message: 'Error when updating utente.',
-                            error: err
-                        });
-                    }
-                    return res.json(utente);
-                });
+                else{
+                    var tmp = utente.accessi.create({'ingresso': Date.now()});
+                    utente.ultimoAccesso = tmp._id;
+                    utente.accessi.push(tmp);
+                    utente.save(function (err, utente) {
+                        if (err) {
+                            callback([500, 'Errore nel salvataggio', err]);
+                        }
+                        callback([200, utente]);
+                    });
                 }
-    })},
+            }
+        })
+    },
 
     /**
      * utenteController.addUscita()
      */
-    addUscita: function (req, res) {
+    addUscita: function (userData, callback) {
         //verifica che l'utente esista
-        var id = req.params.id;
-        utenteModel.findOne({_id: id}, function (err, utente) {
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting utente.',
-                    error: err
-                });
+                callback([500, 'Error when getting utente.', err]);
             }
             if (!utente) {
-                return res.status(404).json({
-                    message: 'No such utente'
-                });
+                callback([404, 'Utente inesistente']);
             }
-            //se l'utente esiste..
             else{
-                //verifica che la lista abbia almeno 1 oggetto
-                if(utente.accessi.length > 0) {
-                    var len = utente.accessi.length;
-                    //verifica che stia dentro
-                    if (utente.accessi[len - 1].uscita != null) {
-                        return res.status(500).json({
-                            message: 'devi prima entrare'
-                        })
-                    }
-                }else{
-                    return res.status(500).json({
-                        message: 'devi prima entrare'
+                //l'utente è nell'orto?
+                if(!utente.isNellOrto()){
+                    callback([500, 'Errore, utente fuori dall\'orto']);
+                } else {
+                    utente.accessi.id(utente.ultimoAccesso).uscita = Date.now();
+                    //resetto l'ultimo accesso
+                    utente.ultimoAccesso = null;
+                    utente.save(function (err, utente) {
+                        if (err) {
+                            callback([500, 'Errore, nell\'inserimento']);
+                        }
+                        callback([200, utente]);
                     });
                 }
-
-                utente.accessi[len-1].uscita = Date.now();
-                utente.save(function (err, utente) {
-                    if (err) {
-                        return res.status(500).json({
-                            message: 'Error when updating utente.',
-                            error: err
-                        });
-                    }
-                    return res.json(utente);
-                });
             }
         })},
 

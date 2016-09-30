@@ -8,7 +8,7 @@ var REST = require('../utils/REST');
  * GET lista tutti gli utenti
  */
 router.get('/', function (req, res) {
-    utenteController.list(options, function(answer){
+    utenteController.list(null, function(answer){
         REST.generate(req, res, answer);
     });
 });
@@ -34,7 +34,7 @@ router.get('/listaAccessi/:id', function (req, res) {
 });
 
 /*
- * POST nuovo utente (nome, username e password obbligatori)
+ * POST nuovo utente (nome, username e password sono obbligatori)
  */
 router.post('/', function (req, res) {
     var options = {
@@ -84,7 +84,10 @@ router.put('/addTransazione/:id', function (req, res) {
  * PUT aggiungi ingresso a utente, id nell'url
  */
 router.put('/addIngresso/:id', function (req, res) {
-    utenteController.addIngresso(req, res);
+    var options = {id: req.params.id};
+    utenteController.addIngresso(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 /*
@@ -92,7 +95,10 @@ router.put('/addIngresso/:id', function (req, res) {
  *
  */
 router.put('/addUscita/:id', function (req, res) {
-    utenteController.addUscita(req, res);
+    var options = {id: req.params.id};
+    utenteController.addUscita(options, function(answer){
+        REST.generate(req, res, answer);
+    });
 });
 
 module.exports = router;

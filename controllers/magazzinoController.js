@@ -83,5 +83,38 @@ module.exports = {
                 callback([200, magazzino]);
             });
         });
+    },
+
+    updateQuantita: function (userData, callback) {
+        /* userData.nome indica il nome
+        * userData.quantita è un numero indicante la variazione della quantità. sarà >0 per le vendite, <0 per gli acquisti
+        * */
+        magazzinoModel.findOne({nome: userData.nome}, function (err, magazzino) {
+            if (err) {
+                callback([500, "Error when getting magazzino.", err]);
+            }
+            if (!magazzino && userData.quantita>0) {
+                //Se non esiste lo creo
+                this.create(userData, callback);
+            } else {
+                callback([500, "Errore, mi stai tentando di trollare?"]);
+            }
+
+            if(magazzino.quantita+userData.quantita>=0){
+                magazzino.quantita = magazzino.quantita+userData.quantita;
+                magazzino.save(function (err, magazzino) {
+                    if (err) {
+                        callback([500, "Error when updating magazzino.", err]);
+                    }
+
+                    callback([200, magazzino]);
+                });
+            } else {
+                callback([500, "Errore, non vi sono abbastanza oggetti in magazzino"]);
+            }
+
+
+
+        });
     }
 };
