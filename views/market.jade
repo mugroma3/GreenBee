@@ -12,6 +12,12 @@ block content
             if(current.value > 1)
                 document.getElementById(id).value--;
         }
+        function toggleElement(id) {
+            $('#'+id).toggle();
+        }
+        function resetForm(formId){
+            document.forms[formId].reset();
+        }
     .container
         .row
             .col-xs-6.col-sm-6.col-md-6.col-lg-6
@@ -42,9 +48,32 @@ block content
                                                         button(type='submit').btn.btn-danger.pull-right
                                                             text BUY
             .col-xs-6.col-sm-6.col-md-6.col-lg-6
-                button.btn.btn-success.active.center-block
-                    text.h2 VENDI
-                br
+                .panel
+                    .panel-heading
+                        button(type='button' onclick="toggleElement('newSale')").btn.btn-success.active.center-block
+                            text.h2 Nuova Vendita
+                    br
+                    .panel-body
+                        form(id='saleForm',action="/user/addSale",method="post").form-horizontal
+                            div(style="display: none;" id='newSale')
+                                .form-group
+                                    label(for='inputOggetto').col-xs-3.col-sm-3.col-md-3.col-lg-3.control-label Nome:
+                                    .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                                        select(id="inputOggetto" name="oggetto" required).form-control
+                                            option(value="" selected disabled)
+                                                | Scegli Ortaggio
+                                            each oggetto in user.orto
+                                                option(value="#{oggetto}")
+                                                    | #{oggetto}
+                                .form-group
+                                    label(for='inputQuantita').col-xs-3.col-sm-3.col-md-3.col-lg-3.control-label Quantità:
+                                    .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                                        input(type='number' id='inputQuantita' name='quantita' placeholder='Quantita' required).form-control
+                                .form-group
+                                    button(type='button' onclick="toggleElement('newSale');resetForm('saleForm');").col-xs-6.col-sm-6.col-md-6.col-lg-6.btn.btn-danger.center-block
+                                        | ANNULLA
+                                    button(type='submit').col-xs-6.col-sm-6.col-md-6.col-lg-6.btn.btn-success.center-block
+                                        | VENDI
                 br
                 .panel.panel-success
                     .panel-heading
