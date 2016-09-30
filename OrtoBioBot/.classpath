@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/fluent-hc-4.5.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/httpclient-4.5.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/httpclient-cache-4.5.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/httpclient-win-4.5.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/httpcore-4.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/httpmime-4.5.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli_lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/Botticelli.jar"/>
+	<classpathentry kind="lib" path="lib/okhttp-3.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/okio-1.10.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
