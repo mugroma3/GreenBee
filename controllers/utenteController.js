@@ -35,6 +35,18 @@ module.exports = {
         });
     },
 
+    getColtivazioni: function (userData, callback) {
+        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+            if (err) {
+                callback([500, "Error when getting utente.", err]);
+            }
+            if (!utente) {
+                callback([404, 'No such utente']);
+            }
+            callback([200, utente.orto]);
+        });
+    },
+
     /**
      * utenteController.isNellOrto()
      */
@@ -188,7 +200,13 @@ module.exports = {
      * utenteController.addTransazione()
      */
     addTransazione: function (userData, callback) {
-        magazzinoController.updateQuantita({'nome': userData.oggetto, 'quantita': userData.quantita}, function(anwser){
+        var dati;
+        switch(userData.tipoTransazione){
+            case 'vendo': dati = {'nome': userData.oggetto,'quantita': userData.quantita}; break;
+            case 'acquisto' : dati = {'nome': userData.oggetto,'quantita': userData.quantita*(-1)}; break;
+            default : callback([500, 'Tipo transazione non valido']); return;
+        };
+        magazzinoController.updateQuantita(dati, function(anwser){
             if(anwser[0]<299){ //Significa che ho un codice http minore di 299, quindi un codice di OK
                 utenteModel.findOne({_id: userData.user.id}, function (err, utente) {
                     if (err) {
@@ -209,8 +227,9 @@ module.exports = {
                             if (err) {
                                 //DB Sminchiato
                                 callback([500, 'Error when updating utente', err]);
+                            } else {
+                                callback([200, utente]);
                             }
-                            callback([200, utente]);
                         });
                     }
                 });
@@ -241,26 +260,27 @@ module.exports = {
      * utenteController.addOrtaggio()
      */
     addOrtaggio: function (userData, callback) {
-        //verifica che l'utente esista
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
-            if (err) {
-                callback([500, 'Error when getting utente.', err]);
-            }
-            if (!utente) {
-                callback([404, 'Utente inesistente', err]);
-            }
-            else{
-                utente.orto.push(userData.ortaggio);
-                //utenteModel.update({ _id: userData.id }, {$addToSet: { 'orto': userData.ortaggio} }); //TODO aggiustare sta merda
-                //console.log(utente.orto);
-                utente.save(function (err, utente) {
-                    if (err) {
-                        callback([500, 'Error when updating utente', err]);
-                    }
-                    callback([200, utente]);
-                });
-            }
+        utenteModel.update(
+            {_id: userData.id},
+            {$addToSet: {orto: userData.ortaggio}}, function(err, data){
+                if(err){
+                    callback([500, 'Error when updating utente.', err]);
+                }
+                callback([200, data]);
         });
+    },
 
+    /**
+     * utenteController.removeOrtaggio()
+     */
+    removeOrtaggio: function (userData, callback) {
+        utenteModel.update(
+            {_id: userData.id},
+            {$pull: {orto: userData.ortaggio}}, function(err, data){
+                if(err){
+                    callback([500, 'Error when updating utente.', err]);
+                }
+                callback([200, data]);
+        });
     }
 };

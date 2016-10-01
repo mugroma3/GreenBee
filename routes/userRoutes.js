@@ -12,6 +12,8 @@ router.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
+
+//TODO da rifare, deve interrogare il controller, non il model!!!
 router.get('/market', function (req, res) {
     magazzinoModel.find(function (err, magazzinos) {
         if (err) {
@@ -29,7 +31,7 @@ router.get('/market', function (req, res) {
 
 router.post('/addSale', function (req, res) {
     var options = {
-        tipoTransazione : 'vendo',
+        tipoTransazione : req.body.tipoTransazione,
         oggetto : req.body.oggetto,
         quantita : req.body.quantita,
         user: {id: req.user._id}
@@ -38,9 +40,51 @@ router.post('/addSale', function (req, res) {
         if(answer[0]==200){
             res.render('addedSale', {user: req.user, sale: answer[1]});
         } else {
-            res.render('error', {message: answer[1]});
+            res.render('error', {message: answer[1], status: answer[2]});
         }
     });
 });
+
+
+router.get('/gestisciColtivazioni', function (req, res) {
+    var options = {id : req.user._id};
+    utenteController.getColtivazioni(options, function(answer){
+        if(answer[0]==200){
+            res.render('gestisciColtivazioni', {user: req.user, coltivazioni: answer[1]});
+        } else {
+            res.render('error', {message: answer[1], status: answer[2]});
+        }
+    });
+
+});
+
+router.post('/addColtivazione', function (req, res) {
+    var options = {
+        id: req.user._id,
+        ortaggio: req.body.coltivazione
+    };
+    utenteController.addOrtaggio(options, function(answer){
+        if(answer[0]==200){
+            res.render('addColtivazione', { title: 'Express', user : req.user});
+        } else {
+            res.render('error', {message: answer[1], status: answer[2]});
+        }
+    });
+});
+
+router.post('/removeColtivazione', function (req, res) {
+    var options = {
+        id: req.user._id,
+        ortaggio: req.body.coltivazione
+    };
+    utenteController.removeOrtaggio(options, function(answer){
+        if(answer[0]==200){
+            res.redirect('gestisciColtivazioni');
+        } else {
+            res.render('error', {message: answer[1], status: answer[2]});
+        }
+    });
+});
+
 
 module.exports = router;

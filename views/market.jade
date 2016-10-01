@@ -37,12 +37,14 @@ block content
                                             td #{oggetto.nome}
                                             td #{oggetto.quantita}
                                             td
-                                                form.form-inline
+                                                form(action="/user/addSale",method="post").form-inline
                                                     .from-group
+                                                        input(type="hidden" name="oggetto" value="#{oggetto.nome}")
+                                                        input(type="hidden" name="tipoTransazione" value="acquisto")
                                                         .input-group
                                                             button(type='button' onclick='decrementa("#{oggetto._id}")').btn.btn-default
                                                                 span(onclick='decrementa("#{oggetto._id}")' aria-hidden="true").glyphicon.glyphicon-minus
-                                                            input(type='number' id='#{oggetto._id}' value='1' name='quantity' min='1' max='#{oggetto.quantita}')
+                                                            input(type='number' id='#{oggetto._id}' value='1' name='quantita' min='1' max='#{oggetto.quantita}')
                                                             button(type='button' onclick='incrementa("#{oggetto._id}")').btn.btn-default
                                                                 span(aria-hidden="true").glyphicon.glyphicon-plus
                                                         button(type='submit').btn.btn-danger.pull-right
@@ -55,6 +57,7 @@ block content
                     br
                     .panel-body
                         form(id='saleForm',action="/user/addSale",method="post").form-horizontal
+                            input(type="hidden" name="tipoTransazione" value="vendo")
                             div(style="display: none;" id='newSale')
                                 .form-group
                                     label(for='inputOggetto').col-xs-3.col-sm-3.col-md-3.col-lg-3.control-label Nome:

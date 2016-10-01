@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    .container
+        p Ciao #{user.nome}
+        h1 Ecco le tue coltivazioni
+        br
+        form(role='form', action="/user/addColtivazione",method="post")
+            input(type='text', name='coltivazione', placeholder='Coltivazione')
+            button(type='submit').btn.btn-default Salva
+        br
+        br
+        table.table.table-striped
+            tr
+                th Nome
+                th Opzioni
+            each coltivazione in coltivazioni
+                tr
+                    td #{coltivazione}
+                    td
+                        form(role='form', action="/user/removeColtivazione",method="post")
+                            input(type="hidden" name="coltivazione" value="#{coltivazione}")
+                            button(type="submit").btn.btn-default Rimuovi
