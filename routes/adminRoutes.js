@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 var userModel = require('../models/utenteModel');
 var utenteController = require('../controllers/utenteController');
+var prezzarioController = require('../controllers/prezzarioController');
 
 router.get('/', function (req, res) {
     res.render('adminIndex', { title: 'Express', user : req.user});
 });
 
+//TODO Tocca usare il controller non il model!!!
 router.get('/userList', function (req, res) {
     userModel.find(function (err, utenti) {
         if (err) {
@@ -41,5 +43,17 @@ router.post('/addUser', function (req, res) {
         }
     });
 });
+
+router.get('/prezzario', function (req, res) {
+    prezzarioController.list(options, function(answer){
+        if(answer[0]==200){
+            res.render('prezzario', {user: req.user, prezzi: answer[1]});
+        } else {
+            res.render('error', {message: answer[1], status: answer[2]});
+        }
+    });
+
+});
+
 
 module.exports = router;

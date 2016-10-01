@@ -6,6 +6,7 @@ TODO:
 10) Fare le api utente con ricerca, addIngresso, addUscita, addTransazione tramite telegramID
 11) Escludere alcuni campi nelle stampe dei JSON.... ATTENZIONE!
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
+16) @vitus89 Stampare nel market i punti dell'utente
 
 
 
