@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    .container
+        p Ciao #{user.nome}
+        h1 Ecco il prezzario
+        br
+        form(role='form', action="/admin/addPrezzo",method="post")
+            input(type='text', name='prodotto', placeholder='Prodotto')
+            input(type='number', name='costo', placeholder='Costo')
+            button(type='submit').btn.btn-default Salva
+        br
+        br
+        table.table.table-striped
+            tr
+                th Nome
+                th Costo
+                th Opzioni
+            each prezzo in prezzi
+                tr
+                    td #{prezzo.prodotto}
+                    td #{prezzo.costo}
+                    td
+                        form(role='form', action="/admin/removePrezzo",method="post")
+                            input(type="hidden" name="prodotto" value="#{prezzo._id}")
+                            button(type="submit").btn.btn-default Rimuovi

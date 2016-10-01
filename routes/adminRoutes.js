@@ -45,14 +45,37 @@ router.post('/addUser', function (req, res) {
 });
 
 router.get('/prezzario', function (req, res) {
-    prezzarioController.list(options, function(answer){
+    prezzarioController.list(null, function(answer){
         if(answer[0]==200){
             res.render('prezzario', {user: req.user, prezzi: answer[1]});
         } else {
             res.render('error', {message: answer[1], status: answer[2]});
         }
     });
+});
 
+router.post('/removePrezzo', function (req, res) {
+    prezzarioController.remove({id: req.body.prodotto}, function(answer){
+        if(answer[0]==204){
+            res.redirect('prezzario');
+        } else {
+            res.render('error', {message: answer[1], status: answer[2]});
+        }
+    });
+});
+
+router.post('/addPrezzo', function (req, res) {
+    var options = {
+        prodotto: req.body.prodotto,
+        costo: req.body.costo
+    };
+    prezzarioController.create(options, function(answer){
+        if(answer[0]==201){
+            res.render('addedPrezzario', { title: 'Express', user : req.user, prezzo: answer[1]});
+        } else {
+            res.render('error', {message: answer[1], status: answer[2]});
+        }
+    });
 });
 
 
