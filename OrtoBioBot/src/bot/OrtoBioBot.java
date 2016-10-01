@@ -23,12 +23,22 @@ public class OrtoBioBot extends Bot {
 	public static final String testoBenvenuto = "Benvenuto in GreenBeeBot \nWelcome in GreenBeeBot  \n\n"
 			+ "Powered by MUG Roma tre: \nhttps://telegram.me/mugroma3 \nhttp://muglab.uniroma3.it/  "
 			+ "\nhttps://www.facebook.com/mugroma3 " + "\nhttps://www.twitter.com/mugroma3  ";
+
+	public static final String contact = "Powered by MUG Roma tre: \nhttps://telegram.me/mugroma3 \nhttp://muglab.uniroma3.it/  "
+			+ "\nhttps://www.facebook.com/mugroma3 " + "\nhttps://www.twitter.com/mugroma3  ";
+	
+	private static final String back = "🔙";
+	
 	private ReplyKeyboardMarkupWithButtons languageKeyboard;
 	private HashMap<Long, StatoUtente> statiUtenti;
 	private ReplyKeyboardMarkupWithButtons englishMenu;
 	private ReplyKeyboardMarkupWithButtons menuItaliano;
+	private ReplyKeyboardMarkupWithButtons menuMercato;
+	private ReplyKeyboardMarkupWithButtons marketMenu;
+	private ReplyKeyboardMarkupWithButtons menuCompiti;
+	private ReplyKeyboardMarkupWithButtons taskMenu;
 	
-	
+
 	public OrtoBioBot(String token) {
 		super(token);
 		statiUtenti = new HashMap<>();
@@ -40,8 +50,7 @@ public class OrtoBioBot extends Bot {
 		languageKeyboard = new ReplyKeyboardMarkupWithButtons(keyboard);
 		languageKeyboard.setResizeKeyboard(true);
 		languageKeyboard.setOneTimeKeyboard(true);
-		
-		
+
 		line = new ArrayList<>();
 		keyboard = new ArrayList<List<KeyboardButton>>();
 		KeyboardButton kb = new KeyboardButton(English.ingusc, false, true);
@@ -50,15 +59,42 @@ public class OrtoBioBot extends Bot {
 		englishMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
 		englishMenu.setResizeKeyboard(true);
 		englishMenu.addLine(English.MARKET, English.TASK, English.CONTACT);
-		
+		englishMenu.addLine(English.SETLANGUAGE);
+
 		line = new ArrayList<>();
 		keyboard = new ArrayList<List<KeyboardButton>>();
-	    kb = new KeyboardButton(Italiano.ingusc, false, true);
+		kb = new KeyboardButton(Italiano.ingusc, false, true);
 		line.add(kb);
 		keyboard.add(line);
 		menuItaliano = new ReplyKeyboardMarkupWithButtons(keyboard);
 		menuItaliano.setResizeKeyboard(true);
 		menuItaliano.addLine(Italiano.MERCATO, Italiano.COMPITI, Italiano.CONTATTI);
+		menuItaliano.addLine(Italiano.IMPOSTALINGUA);
+		
+		
+		keyboard = new ArrayList<List<KeyboardButton>>();
+		menuMercato = new ReplyKeyboardMarkupWithButtons(keyboard);
+		menuMercato.addLine(Italiano.CONSULTA, Italiano.AGGIUNGI, Italiano.STORICO, back);
+		menuMercato.setResizeKeyboard(true);
+		
+		
+		keyboard = new ArrayList<List<KeyboardButton>>();
+		marketMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
+		marketMenu.addLine(English.BROWSE, English.ADD, English.HISTORY, back);
+		marketMenu.setResizeKeyboard(true);
+		
+		
+		keyboard = new ArrayList<List<KeyboardButton>>();
+		menuCompiti = new ReplyKeyboardMarkupWithButtons(keyboard);
+		menuCompiti.addLine(Italiano.CONSULTA, Italiano.AGGIUNGI, back);
+		menuCompiti.setResizeKeyboard(true);
+		
+		
+		keyboard = new ArrayList<List<KeyboardButton>>();
+		taskMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
+		taskMenu.addLine(English.BROWSE, English.ADD, back);
+		taskMenu.setResizeKeyboard(true);
+		
 	}
 
 	@Override
@@ -71,8 +107,7 @@ public class OrtoBioBot extends Bot {
 				sendMessage(new MessageToSend(arg0.getFrom().getId(), testoBenvenuto));
 				statiUtenti.put(arg0.getFrom().getId(), new StatoUtente());
 			}
-			chooseLanguage(arg0);
-
+			chooseLanguage(arg0, statiUtenti.get(arg0.getFrom().getId()));
 			return;
 		}
 
@@ -92,6 +127,69 @@ public class OrtoBioBot extends Bot {
 			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
 			return;
 		}
+
+		if (text.equals(Italiano.IMPOSTALINGUA) || text.equals(English.SETLANGUAGE)) {
+			chooseLanguage(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			return;
+		}
+
+		if (text.equals(Italiano.CONTATTI) || text.equals(English.CONTACT))
+		{
+			sendMessage(new MessageToSend(arg0.getFrom().getId(), contact));
+			return;
+		}
+		
+		
+		if(text.equals(Italiano.MERCATO) || text.equals(English.MARKET))
+		{
+			inviaMenuMercato(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			return;
+		}
+		
+		
+		
+		if(text.equals(Italiano.COMPITI) || text.equals(English.TASK))
+		{
+			inviaMenuCompiti(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			return;
+		}
+		
+		if(text.equals(back))
+		{
+			switch(statiUtenti.get(arg0.getFrom().getId()).getSezione())
+			{
+			case MARKET:
+				inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				break;
+			case MARKETCONSULTA:
+				inviaMenuMercato(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				break;
+			case MARKETSTORICO:
+				inviaMenuMercato(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				break;
+			case MENU:
+				
+				break;
+			case SCEGLILINGUA:
+				
+				break;
+			case TASK:
+				inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				break;
+				
+			case TASKCONSULTA:
+				
+				break;
+			default:
+				break;
+			
+			}
+			
+			
+			return;
+		}
+		
+		
 
 	}
 
@@ -203,17 +301,73 @@ public class OrtoBioBot extends Bot {
 
 	}
 
-	public void chooseLanguage(Message arg0) {
+	private void chooseLanguage(Message arg0, StatoUtente stato) {
+		stato.setSezione(SezioniBot.SCEGLILINGUA);
 		MessageToSend mts = new MessageToSend(arg0.getFrom().getId(), testoScegliLingua);
 		mts.setReplyMarkup(languageKeyboard);
 		sendMessage(mts);
 	}
 
-	public boolean userIsNew(long userid) {
+	private boolean userIsNew(long userid) {
 		return !statiUtenti.containsKey(userid);
 	}
 
-	public void inviaMenu(Message arg0, StatoUtente stato) {
+	private void inviaMenu(Message arg0, StatoUtente stato) {
 		stato.setSezione(SezioniBot.MENU);
+		MessageToSend mts;
+		if (stato.getLingua() == Lingue.ITALIANO) {
+			mts = new MessageToSend(arg0.getFrom().getId(), Italiano.MENUITALIANO);
+			mts.setReplyMarkup(menuItaliano);
+		} else {
+			mts = new MessageToSend(arg0.getFrom().getId(), English.ENGLISHMENU);
+			mts.setReplyMarkup(englishMenu);
+		}
+
+		sendMessage(mts);
 	}
+	
+	private void inviaMenuMercato(Message arg0, StatoUtente stato) 
+	{
+		if(stato.getSezione() != SezioniBot.MENU)
+		{
+			inviaMenu(arg0, stato);
+			return;
+		}
+		
+		stato.setSezione(SezioniBot.MARKET);
+		MessageToSend mts;
+		if (stato.getLingua() == Lingue.ITALIANO) {
+			mts = new MessageToSend(arg0.getFrom().getId(), Italiano.BENVENUTOMERCATO);
+			mts.setReplyMarkup(menuMercato);
+		} else {
+			mts = new MessageToSend(arg0.getFrom().getId(), English.WELCOMEMARKET);
+			mts.setReplyMarkup(marketMenu);
+		}
+		
+		sendMessage(mts);
+	}
+	
+	
+	private void inviaMenuCompiti(Message arg0, StatoUtente stato) 
+	{
+		if(stato.getSezione() != SezioniBot.MENU)
+		{
+			inviaMenu(arg0, stato);
+			return;
+		}
+		
+		stato.setSezione(SezioniBot.TASK);
+		MessageToSend mts;
+		if (stato.getLingua() == Lingue.ITALIANO) {
+			mts = new MessageToSend(arg0.getFrom().getId(), Italiano.BENVENUTOCOMPITI);
+			mts.setReplyMarkup(menuCompiti);
+		} else {
+			mts = new MessageToSend(arg0.getFrom().getId(), English.WELCOMETASK);
+			mts.setReplyMarkup(taskMenu);
+		}
+		
+		sendMessage(mts);
+	}
+	
+
 }
