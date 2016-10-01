@@ -1,5 +1,6 @@
-var utenteModel = require('../models/utenteModel.js');
+var utenteModel = require('../models/utenteModel');
 
+var magazzinoController = require('./magazzinoController');
 /**
  * utenteController.js
  *
@@ -187,25 +188,34 @@ module.exports = {
      * utenteController.addTransazione()
      */
     addTransazione: function (userData, callback) {
-        utenteModel.findOne({_id: userData.user.id}, function (err, utente) {
-            if (err) {
-                callback([500, 'Error when getting utente', err]);
-            }
-            if (!utente) {
-                callback([404, 'No such utente']);
-            }
-            else{
-                utente.transazioni.push({
-                    'tipoTransazione': userData.tipoTransazione,
-                    'oggetto': userData.oggetto,
-                    'quantita': userData.quantita
-                });
-                utente.save(function (err, utente) {
+        magazzinoController.updateQuantita({'nome': userData.oggetto, 'quantita': userData.quantita}, function(anwser){
+            if(anwser[0]<299){ //Significa che ho un codice http minore di 299, quindi un codice di OK
+                utenteModel.findOne({_id: userData.user.id}, function (err, utente) {
                     if (err) {
-                        callback([500, 'Error when updating utente', err]);
+                        //DB Sminchiato
+                        callback([500, 'Error when getting utente', err]);
                     }
-                    callback([200, utente]);
+                    if (!utente) {
+                        //DB Sminchiato
+                        callback([404, 'No such utente']);
+                    }
+                    else{
+                        utente.transazioni.push({
+                            'tipoTransazione': userData.tipoTransazione,
+                            'oggetto': userData.oggetto,
+                            'quantita': userData.quantita
+                        });
+                        utente.save(function (err, utente) {
+                            if (err) {
+                                //DB Sminchiato
+                                callback([500, 'Error when updating utente', err]);
+                            }
+                            callback([200, utente]);
+                        });
+                    }
                 });
+            } else {
+                callback([anwser[0], anwser[1]]);
             }
         });
     },

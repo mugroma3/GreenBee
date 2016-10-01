@@ -11,14 +11,4 @@ router.get('/', function (req, res) {
     });
 });
 
-/*
- * GET
- */
-router.get('/:id', function (req, res) {
-    var options = {id: req.params.id};
-    magazzinoController.show(options, function(answer){
-        REST.generate(req, res, answer);
-    });
-});
-
 module.exports = router;
