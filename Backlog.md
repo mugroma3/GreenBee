@@ -7,8 +7,8 @@ TODO:
 16) @vitus89 Stampare nel market i punti dell'utente
 17) Mettere tasti + e - in admin/prezzario
 18) input(type="number") Hai solo nascosto i tastini integrati di freccia su e giù, se clicchi dove dovrebbero stare si incrementa/decrementa il contatore
-
-
+20) @vitus89 check responsive for all elemnts
+21) @lorenzo93 collapse magazzino->prezzario
 
 
 Credo non manchi altro al progetto...

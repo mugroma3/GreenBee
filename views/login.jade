@@ -1,15 +1,24 @@
-extends layout
+doctype html
+html
+    head
+        title= title
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet', href='/bootstrap-3.3.7/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
 
-block content
-    .container
-        h1 Login Page
-        br
-        form(role='form', action="/login",method="post", style='max-width: 300px;')
-            .form-group
-                input.form-control(type='text', name="username", placeholder='Enter Username')
-            .form-group
-                input.form-control(type='password', name="password", placeholder='Password')
-            button.btn.btn-default(type='submit') Sign In
-        &nbsp;
-    a(href='/')
-        button.btn.btn-primary(type="button") Back to Home
+    body
+        .container
+            h1 Login Page
+            br
+            form(role='form', action="/login",method="post", style='max-width: 300px;')
+                .form-group
+                    input.form-control(type='text', name="username", placeholder='Enter Username')
+                .form-group
+                    input.form-control(type='password', name="password", placeholder='Password')
+                button.btn.btn-default(type='submit') Sign In
+            | &nbsp;
+        a(href='/')
+            button.btn.btn-primary(type="button") Back to Home
+
+        script(src='/bootstrap-3.3.7/js/jquery-3.1.1.min.js')
+        script(src='/bootstrap-3.3.7/js/bootstrap.min.js')

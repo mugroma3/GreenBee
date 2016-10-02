@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .container
+        .row
+            h4(role="alert").alert.alert-success.text-success.text-center Le Mie Transazioni
+            .table-responsive
+                .table
+                    table.table.table-striped
+                        tr.default
+                            th Tipo Trasazione
+                            th Oggetto
+                            th Quantità
+                        each transazione in user.transazioni
+                            tr
+                                td #{transazione.tipoTransazione}
+                                td #{transazione.oggetto}
+                                td #{transazione.quantita}

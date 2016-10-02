@@ -9,9 +9,12 @@ router.get('/', function (req, res) {
 
 router.get('/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('../');
 });
 
+router.get('/storicoTransazioni', function(req, res){
+    res.render('storicoTransazioni', {user: req.user});
+});
 
 //TODO da rifare, deve interrogare il controller, non il model!!!
 router.get('/market', function (req, res) {

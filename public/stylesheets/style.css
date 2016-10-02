@@ -13,5 +13,5 @@ input[type=number]::-webkit-outer-spin-button {
   -moz-appearance: none;
   appearance: none;
   margin: 0;
-  width: 20%;
+  width: 30%;
 }
