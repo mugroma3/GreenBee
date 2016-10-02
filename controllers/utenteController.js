@@ -180,29 +180,6 @@ module.exports = {
         })},
 
     /**
-     * utenteController.addTelegramID()
-     */
-    addTelegramID: function (userData, callback) {
-        //verifica che l'utente esista
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
-            if (err) {
-                callback([500, 'Error when getting utente.', err]);
-            }
-            if (!utente) {
-                callback([404, 'Utente inesistente']);
-            }
-            else{
-                utente.telegramID = userData.telegramID;
-                utente.save(function (err, utente) {
-                    if (err) {
-                        callback([500, 'Errore, nell\'inserimento']);
-                    }
-                    callback([200, utente]);
-                });
-            }
-    })},
-
-    /**
      * utenteController.listIngressi()
      */
     listIngressi: function (userData, callback) {
