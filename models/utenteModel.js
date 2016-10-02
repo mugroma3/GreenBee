@@ -7,7 +7,7 @@ var utenteSchema = new Schema({
 	'nome' : { type: String, required: true },
 	'username' : {type: String, unique: true, required: true },
 	'password' : { type: String, required: true },
-	'telegramID' : { type: Number, unique: true, index: true },
+	'telegramID' : { type: Number, index: true },
 	'punti' : { type: Number, default: 0 },
 	'ultimoAccesso' : { type: Schema.Types.ObjectId },
 	'accessi' : [{
