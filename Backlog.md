@@ -2,7 +2,6 @@ TODO:
 
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 9) Aggiungere bootstrap a tutte le view
-10) Fare le api utente con ricerca, addIngresso, addUscita, addTransazione tramite telegramID
 11) Escludere alcuni campi nelle stampe dei JSON.... ATTENZIONE a quali!
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
 16) @vitus89 Stampare nel market i punti dell'utente
@@ -23,6 +22,7 @@ COMPLETATI:
 5) magazzinoController.update() verificare che quantità sia >0
 6) magazzino evitare di esporre API?? Tanto ci pensa la gestione del mercato a fare tutto
 8) WebUI Admin Prezzario (listAll, modify e aggiungi)
+10) Fare le api utente con ricerca, addIngresso, addUscita, addTransazione, addColtivazione, removeColtivazione tramite telegramID
 12) aggiungere listaTransazioni
 13) aggiungere removeOrtaggi e gestire l'array senza duplicati
 14) modifica market con menu a tendina per ortaggi

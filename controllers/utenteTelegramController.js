@@ -4,12 +4,12 @@ var magazzinoController = require('./magazzinoController');
 /**
  * utenteController.js
  *
- * @description :: Server-side logic for managing utentes.
+ * @description :: Server-side logic for managing Telegram's utentes.
  */
 module.exports = {
 
     /**
-     * utenteController.list()
+     * utenteTelegramController.list()
      */
     list: function (userData, callback) {
         utenteModel.find(function (err, utentes) {
@@ -21,10 +21,10 @@ module.exports = {
     },
 
     /**
-     * utenteController.show()
+     * utenteTelegramController.show()
      */
     show: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
             }
@@ -36,7 +36,7 @@ module.exports = {
     },
 
     getColtivazioni: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
             }
@@ -51,7 +51,7 @@ module.exports = {
      * utenteController.isNellOrto()
      */
     isNellOrto: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
             }
@@ -62,67 +62,13 @@ module.exports = {
         });
     },
 
-    /**
-     * utenteController.create()
-     */
-    create: function (userData, callback) { 
-        var utente = new utenteModel(userData);
-
-        utente.save(function (err, utente) {
-            if (err) {
-                callback([500, "Error when creating utente", err]);
-            }
-            callback([201, utente]);
-        });
-    },
 
     /**
-     * utenteController.update()
-     */
-    update: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
-            if (err) {
-                callback([500, 'Error when getting utente', err]);
-            }
-            if (!utente) {
-                callback([404, 'No such utente']);
-            }
-
-            utente.admin = userData.admin ? userData.admin : utente.admin;
-            utente.nome = userData.nome ? userData.nome : utente.nome;
-            utente.punti = userData.punti ? userData.punti : utente.punti;
-            utente.accessi = userData.accessi ? userData.accessi : utente.accessi;
-            utente.transazioni = userData.transazioni ? userData.transazioni : utente.transazioni;
-            utente.telegramID = userData.telegramID ? userData.telegramID : utente.telegramID;
-
-            utente.save(function (err, utente) {
-                if (err) {
-                    callback([500, 'Error when updating utente.', err]);
-                }
-
-                callback([200, utente]);
-            });
-        });
-    },
-
-    /**
-     * utenteController.remove()
-     */
-    remove: function (userData, callback) {
-        utenteModel.findByIdAndRemove(userData.id, function (err, utente) {
-            if (err) {
-                callback([500, 'Error when deleting the utente.', err]);
-            }
-            callback([204]);
-        });
-    },
-
-    /**
-     * utenteController.addIngresso()
+     * utenteTelegramController.addIngresso()
      */
     addIngresso: function (userData, callback) {
         //verifica che l'utente esista
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente.', err]);
             }
@@ -150,11 +96,11 @@ module.exports = {
     },
 
     /**
-     * utenteController.addUscita()
+     * utenteTelegramController.addUscita()
      */
     addUscita: function (userData, callback) {
         //verifica che l'utente esista
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente.', err]);
             }
@@ -180,33 +126,10 @@ module.exports = {
         })},
 
     /**
-     * utenteController.addTelegramID()
-     */
-    addTelegramID: function (userData, callback) {
-        //verifica che l'utente esista
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
-            if (err) {
-                callback([500, 'Error when getting utente.', err]);
-            }
-            if (!utente) {
-                callback([404, 'Utente inesistente']);
-            }
-            else{
-                utente.telegramID = userData.telegramID;
-                utente.save(function (err, utente) {
-                    if (err) {
-                        callback([500, 'Errore, nell\'inserimento']);
-                    }
-                    callback([200, utente]);
-                });
-            }
-    })},
-
-    /**
-     * utenteController.listIngressi()
+     * utenteTelegramController.listIngressi()
      */
     listIngressi: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente', err]);
             }
@@ -221,7 +144,7 @@ module.exports = {
     },
 
     /**
-     * utenteController.addTransazione()
+     * utenteTelegramController.addTransazione()
      */
     addTransazione: function (userData, callback) {
         var dati;
@@ -232,7 +155,7 @@ module.exports = {
         };
         magazzinoController.updateQuantita(dati, function(anwser){
             if(anwser[0]<299){ //Significa che ho un codice http minore di 299, quindi un codice di OK
-                utenteModel.findOne({_id: userData.user.id}, function (err, utente) {
+                utenteModel.findOne({telegramID: userData.user.id}, function (err, utente) {
                     if (err) {
                         //DB Sminchiato
                         callback([500, 'Error when getting utente', err]);
@@ -264,10 +187,10 @@ module.exports = {
     },
 
     /**
-     * utenteController.listTransazioni()
+     * utenteTelegramController.listTransazioni()
      */
     listTransazioni: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente', err]);
             }
@@ -281,11 +204,11 @@ module.exports = {
     },
 
     /**
-     * utenteController.addOrtaggio()
+     * utenteTelegramController.addOrtaggio()
      */
     addOrtaggio: function (userData, callback) {
         utenteModel.update(
-            {_id: userData.id},
+            {telegramID: userData.id},
             {$addToSet: {orto: userData.ortaggio}}, function(err, data){
                 if(err){
                     callback([500, 'Error when updating utente.', err]);
@@ -295,11 +218,11 @@ module.exports = {
     },
 
     /**
-     * utenteController.removeOrtaggio()
+     * utenteTelegramController.removeOrtaggio()
      */
     removeOrtaggio: function (userData, callback) {
         utenteModel.update(
-            {_id: userData.id},
+            {telegramID: userData.id},
             {$pull: {orto: userData.ortaggio}}, function(err, data){
                 if(err){
                     callback([500, 'Error when updating utente.', err]);

@@ -48,3 +48,7 @@ jspm_packages
 
 #database
 dataBase
+
+#bat inutile
+lanciaProgetto.bat
+npm install.bat

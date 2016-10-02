@@ -78,7 +78,8 @@ router.put('/:id', function (req, res) {
         admin: req.body.admin,
         punti: req.body.punti,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        telegramID: req.body.telegramID
     };
     utenteController.update(options, function(answer){
         REST.generate(req, res, answer);
