@@ -11,6 +11,7 @@ TODO:
 
 
 
+
 Credo non manchi altro al progetto...
 
 COMPLETATI:
@@ -25,3 +26,4 @@ COMPLETATI:
 12) aggiungere listaTransazioni
 13) aggiungere removeOrtaggi e gestire l'array senza duplicati
 14) modifica market con menu a tendina per ortaggi
+19) Comportamento della home in caso di utente loggato? (redirect a /user o home page con la roba dell'utente) @lorenzo93 preferisce la prima
