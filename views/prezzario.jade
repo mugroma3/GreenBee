@@ -7,7 +7,7 @@ block content
         br
         form(role='form', action="/admin/addPrezzo",method="post")
             input(type='text', name='prodotto', placeholder='Prodotto')
-            input(type='number', name='costo', placeholder='Costo')
+            input(type='number', name='costo', placeholder='Costo' min="0")
             button(type='submit').btn.btn-default Salva
         br
         br
