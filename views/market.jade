@@ -15,23 +15,28 @@ block content
         function toggleElement(id) {
             $('#'+id).toggle();
         }
+
         function resetForm(formId){
             document.forms[formId].reset();
         }
-
     .container
         .row
-            .col-xs-4.col-sm-4.col-md-4.col-lg-4
+            .col-lg-4.col-md-4.col-sm-4
+
                 br
-                button(type='button' onclick="toggleElement('newSale')").btn.btn-success.active.center-block
-                    text.h2 Nuova Vendita
+                button(type='button' id="btnNewSale" onclick="toggleElement('newSale');toggleElement('btnDeleteSale');toggleElement('btnNewSale');").btn.btn-success.active.center-block
+                    text.h2
+                        |Nuova Vendita
+                button(type='button' id="btnDeleteSale" style="display: none;" onclick="toggleElement('newSale');toggleElement('btnDeleteSale');toggleElement('btnNewSale');resetForm('saleForm');").btn.btn-danger.active.center-block
+                    text.h2
+                        | Annulla
                 br
                 form(id='saleForm',action="/user/addSale",method="post").form-horizontal
                     input(type="hidden" name="tipoTransazione" value="vendo")
                     div(style="display: none;" id='newSale')
                         .form-group
-                            label(for='inputOggetto').col-xs-3.col-sm-3.col-md-3.col-lg-3.control-label Nome:
-                            .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                            label(for='inputOggetto').col-lg-3.control-label Nome:
+                            .col-lg-6
                                 select(id="inputOggetto" name="oggetto" required).form-control
                                     option(value="" selected disabled)
                                         | Scegli Ortaggio
@@ -39,42 +44,36 @@ block content
                                         option(value="#{oggetto}")
                                             | #{oggetto}
                         .form-group
-                            label(for='inputQuantita').col-xs-3.col-sm-3.col-md-3.col-lg-3.control-label Quantità:
-                            .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                            label(for='inputQuantita').col-lg-3.control-label Quantità:
+                            .col-lg-6
                                 input(type='number' id='inputQuantita' name='quantita' placeholder='Quantita' required).form-control
                         .form-group
-                            button(type='button' onclick="toggleElement('newSale');resetForm('saleForm');").col-xs-6.col-sm-6.col-md-6.col-lg-6.btn.btn-danger.center-block
-                                | ANNULLA
-                            button(type='submit').col-xs-6.col-sm-6.col-md-6.col-lg-6.btn.btn-success.center-block
+                            button(type='submit').col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.col-xs-6.col-xs-offset-3.btn.btn-success
                                 | VENDI
 
-            .col-xs-8.col-sm-8.col-md-8.col-lg-8
-                h1(role="alert").alert.alert-success.text-success.text-center Mercato a disposizione
+            .col-lg-7.col-md-7.col-sm-7
                 br
-                .table-responsive
-                    .table
-                        table.table.table-striped
-                            tr.default
-                                th Nome
-                                th Quantità Disponibile
-                                th Quantità Da Acquistare
-                                th Acquista
-                            each oggetto in magazzino
-                                tr
-                                    td #{oggetto.nome}
-                                    td #{oggetto.quantita}
-                                    form(action="/user/addSale",method="post").form-inline
-                                        .from-group
-                                            input(type="hidden" name="oggetto" value="#{oggetto.nome}")
-                                            input(type="hidden" name="tipoTransazione" value="acquisto")
-                                            td
-                                                .input-group
-                                                    button(type='button' onclick='decrementa("#{oggetto._id}")').btn.btn-default
-                                                        span(onclick='decrementa("#{oggetto._id}")' aria-hidden="true").glyphicon.glyphicon-minus
-                                                    input(type='number' id='#{oggetto._id}' value='1' name='quantita' min='1' max='#{oggetto.quantita}')
-                                                    button(type='button' onclick='incrementa("#{oggetto._id}")').btn.btn-default
-                                                        span(aria-hidden="true").glyphicon.glyphicon-plus
-                                            td
-                                                button(type='submit').btn.btn-danger
-                                                    span(aria-hidden='true').glyphicon.glyphicon-usd
+                .table
+                    table.table.table-striped
+                        tr
+                            th(colspan="4").success.text-center
+                                | Mercato a disposizione
+                        tr.default
+                            th Tipo
+                            th Giacenza
+                            th Quantità
+                            th Acquista
+                        each oggetto in magazzino
+                            tr
+                                td #{oggetto.nome}
+                                td #{oggetto.quantita}
+                                form(action="/user/addSale",method="post").form-inline
+                                    .from-group
+                                        input(type="hidden" name="oggetto" value="#{oggetto.nome}")
+                                        input(type="hidden" name="tipoTransazione" value="acquisto")
+                                        td
+                                            input(type='number' id='#{oggetto._id}' value='1' name='quantita' min='1' max='#{oggetto.quantita}').form-control
+                                        td
+                                            button(type='submit').btn.btn-danger
+                                                span(aria-hidden='true').glyphicon.glyphicon-usd
 
