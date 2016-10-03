@@ -5,15 +5,13 @@ import gestionelingue.Lingue;
 public class StatoUtente {
 
 	private SezioniBot sezione;
-	private int pagina;
-	private Lingue lingua;
-	
+	private int pagina = 0;
+	private Lingue lingua = Lingue.ITALIANO;
+	private boolean inOrto = false;
 	
 	public StatoUtente() 
 	{
 		this.sezione = SezioniBot.SCEGLILINGUA;
-		this.pagina = 0;
-		this.lingua = Lingue.ITALIANO;
 	}
 	
 	public SezioniBot getSezione() 
@@ -42,7 +40,14 @@ public class StatoUtente {
 	{
 		this.lingua = lingua;
 	}
-	
-	
-	
+
+	public boolean isInOrto() 
+	{
+		return inOrto;
+	}
+
+	public void setInOrto(boolean inOrto) 
+	{
+		this.inOrto = inOrto;
+	}
 }

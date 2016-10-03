@@ -31,8 +31,10 @@ public class OrtoBioBot extends Bot {
 	
 	private ReplyKeyboardMarkupWithButtons languageKeyboard;
 	private HashMap<Long, StatoUtente> statiUtenti;
-	private ReplyKeyboardMarkupWithButtons englishMenu;
-	private ReplyKeyboardMarkupWithButtons menuItaliano;
+	private ReplyKeyboardMarkupWithButtons englishMenuEntry;
+	private ReplyKeyboardMarkupWithButtons englishMenuExit;
+	private ReplyKeyboardMarkupWithButtons menuItalianoUscita;
+	private ReplyKeyboardMarkupWithButtons menuItalianoEntrata;
 	private ReplyKeyboardMarkupWithButtons menuMercato;
 	private ReplyKeyboardMarkupWithButtons marketMenu;
 	private ReplyKeyboardMarkupWithButtons menuCompiti;
@@ -53,23 +55,49 @@ public class OrtoBioBot extends Bot {
 
 		line = new ArrayList<>();
 		keyboard = new ArrayList<List<KeyboardButton>>();
-		KeyboardButton kb = new KeyboardButton(English.ingusc, false, true);
+		KeyboardButton kb = new KeyboardButton(English.REPENTER, false, true);
 		line.add(kb);
 		keyboard.add(line);
-		englishMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
-		englishMenu.setResizeKeyboard(true);
-		englishMenu.addLine(English.MARKET, English.TASK, English.CONTACT);
-		englishMenu.addLine(English.SETLANGUAGE);
+		englishMenuEntry = new ReplyKeyboardMarkupWithButtons(keyboard);
+		englishMenuEntry.setResizeKeyboard(true);
+		englishMenuEntry.addLine(English.MARKET, English.TASK, English.CONTACT);
+		englishMenuEntry.addLine(English.SETLANGUAGE);
 
+		
 		line = new ArrayList<>();
 		keyboard = new ArrayList<List<KeyboardButton>>();
-		kb = new KeyboardButton(Italiano.ingusc, false, true);
+	    kb = new KeyboardButton(English.REPEXIT, false, true);
 		line.add(kb);
 		keyboard.add(line);
-		menuItaliano = new ReplyKeyboardMarkupWithButtons(keyboard);
-		menuItaliano.setResizeKeyboard(true);
-		menuItaliano.addLine(Italiano.MERCATO, Italiano.COMPITI, Italiano.CONTATTI);
-		menuItaliano.addLine(Italiano.IMPOSTALINGUA);
+		englishMenuExit = new ReplyKeyboardMarkupWithButtons(keyboard);
+		englishMenuExit.setResizeKeyboard(true);
+		englishMenuExit.addLine(English.MARKET, English.TASK, English.CONTACT);
+		englishMenuExit.addLine(English.SETLANGUAGE);
+		
+		
+		
+		line = new ArrayList<>();
+		keyboard = new ArrayList<List<KeyboardButton>>();
+		kb = new KeyboardButton(Italiano.SEGENT, false, true);
+		line.add(kb);
+		keyboard.add(line);
+		menuItalianoEntrata = new ReplyKeyboardMarkupWithButtons(keyboard);
+		menuItalianoEntrata.setResizeKeyboard(true);
+		menuItalianoEntrata.addLine(Italiano.MERCATO, Italiano.COMPITI, Italiano.CONTATTI);
+		menuItalianoEntrata.addLine(Italiano.IMPOSTALINGUA);
+		
+		
+		
+		
+		line = new ArrayList<>();
+		keyboard = new ArrayList<List<KeyboardButton>>();
+		kb = new KeyboardButton(Italiano.SEGUSC, false, true);
+		line.add(kb);
+		keyboard.add(line);
+		menuItalianoUscita = new ReplyKeyboardMarkupWithButtons(keyboard);
+		menuItalianoUscita.setResizeKeyboard(true);
+		menuItalianoUscita.addLine(Italiano.MERCATO, Italiano.COMPITI, Italiano.CONTATTI);
+		menuItalianoUscita.addLine(Italiano.IMPOSTALINGUA);
 		
 		
 		keyboard = new ArrayList<List<KeyboardButton>>();
@@ -315,12 +343,30 @@ public class OrtoBioBot extends Bot {
 	private void inviaMenu(Message arg0, StatoUtente stato) {
 		stato.setSezione(SezioniBot.MENU);
 		MessageToSend mts;
-		if (stato.getLingua() == Lingue.ITALIANO) {
+		if (stato.getLingua() == Lingue.ITALIANO) 
+		{
+			if(stato.isInOrto())
+			{
 			mts = new MessageToSend(arg0.getFrom().getId(), Italiano.MENUITALIANO);
-			mts.setReplyMarkup(menuItaliano);
-		} else {
+			mts.setReplyMarkup(menuItalianoEntrata);
+			}
+			else
+			{
+				mts = new MessageToSend(arg0.getFrom().getId(), Italiano.MENUITALIANO);
+				mts.setReplyMarkup(menuItalianoUscita);
+			}
+		} else 
+		{
+			if(stato.isInOrto())
+			{
 			mts = new MessageToSend(arg0.getFrom().getId(), English.ENGLISHMENU);
-			mts.setReplyMarkup(englishMenu);
+			mts.setReplyMarkup(englishMenuEntry);
+			}
+			else
+			{
+				mts = new MessageToSend(arg0.getFrom().getId(), English.ENGLISHMENU);
+				mts.setReplyMarkup(englishMenuExit);
+			}
 		}
 
 		sendMessage(mts);
@@ -369,5 +415,9 @@ public class OrtoBioBot extends Bot {
 		sendMessage(mts);
 	}
 	
+	private void checkInOrto(Message arg0, StatoUtente stato)
+	{
+		
+	}
 
 }

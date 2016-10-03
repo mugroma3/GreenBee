@@ -10,8 +10,6 @@ public class Utente {
 	private String id;
 	private String nome;
 	private String username;
-	private String password;
-	private Integer v;
 	private Accesso ultimoAccesso;
 	private List<Transazione> transazioni = new ArrayList<>();
 	private List<Accesso> accessi = new ArrayList<Accesso>();
@@ -67,40 +65,6 @@ public class Utente {
 	 */
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	/**
-	 *
-	 * @return The password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 *
-	 * @param password
-	 *            The password
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 *
-	 * @return The v
-	 */
-	public Integer getV() {
-		return v;
-	}
-
-	/**
-	 *
-	 * @param v
-	 *            The __v
-	 */
-	public void setV(Integer v) {
-		this.v = v;
 	}
 
 	/**
