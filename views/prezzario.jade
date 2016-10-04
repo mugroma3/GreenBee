@@ -2,27 +2,40 @@ extends layout
 
 block content
     .container
-        p Ciao #{user.nome}
-        h1 Ecco il prezzario
-        br
-        form(role='form', action="/admin/addPrezzo",method="post")
-            input(type='text', name='nome', placeholder='Nome')
-            input(type='number', name='costo', placeholder='Costo' min="0")
-            button(type='submit').btn.btn-default Salva
-        br
-        br
-        table.table.table-striped
-            tr
-                th Nome
-                th Quantità in magazzino
-                th Costo
-                th Opzioni
-            each prezzo in prezzi
-                tr
-                    td #{prezzo.nome}
-                    td #{prezzo.quantita}
-                    td #{prezzo.costo}
-                    td
-                        form(role='form', action="/admin/removePrezzo",method="post")
-                            input(type="hidden" name="prodotto" value="#{prezzo._id}")
-                            button(type="submit").btn.btn-default Rimuovi
+        .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                h1.text-success.text-center Ecco il prezzario
+                br
+                form(role='form', action="/admin/addPrezzo",method="post").form-inline
+                    .form-group
+                        label(for='nome') Nome:
+                            &nbsp;
+                            input(type='text', name='nome', placeholder='Nome')
+                            &nbsp;
+                        label(for='costo') Costo:
+                            &nbsp;
+                            input(type='number', name='costo', placeholder='Costo' min="0")
+                        label(for='imgUploaded') Carica Immagine:
+                            input(type='file', name='imgUploaded', accept="image/gif, image/jpeg, image/jpg, image/png, image/GIF, image/JPEG, image/JPG, image/PNG")
+                    .form-group
+                        .col-xs-12.col-sm-12.col-md-6.col-lg-3
+                            button(type='submit').btn.btn-success Salva
+        .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                br
+                br
+                table.table.table-striped
+                    tr.success
+                        th Nome
+                        th Quantità in magazzino
+                        th Costo
+                        th Opzioni
+                    each prezzo in prezzi
+                        tr
+                            td #{prezzo.nome}
+                            td #{prezzo.quantita}
+                            td #{prezzo.costo}
+                            td
+                                form(role='form', action="/admin/removePrezzo",method="post")
+                                    input(type="hidden" name="prodotto" value="#{prezzo._id}")
+                                    button(type="submit").btn.btn-default Rimuovi
