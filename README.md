@@ -57,7 +57,7 @@ per fare un esempio:
     
 in ogni status_signal verranno inviati tutti i ble_server che la centralina conosce, in questo modo è possibile vedere velocemente quali server ble risultano spenti
 
-a quale endpoint va mandato questo json? sono favorevol a a fare una POST presso {ortobio.com}/controlunit/{id centralina}/reading
+a quale endpoint va mandato questo json? sono favorevole a fare una POST presso {ortobio.com}/controlunit/{id centralina}/reading
 
 
              
