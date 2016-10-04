@@ -11,6 +11,16 @@ module.exports = {
      * magazzinoController.list()
      */
     list: function (userData, callback) {
+        magazzinoModel.find({quantita: {$gt: 0}},function (err, magazzinos) {
+            if (err) {
+                callback([500, "Error when getting magazzini.", err]);
+            } else {
+                callback([200, magazzinos]);
+            }
+        });
+    },
+
+    listAll: function (userData, callback) {
         magazzinoModel.find(function (err, magazzinos) {
             if (err) {
                 callback([500, "Error when getting magazzini.", err]);
@@ -54,16 +64,18 @@ module.exports = {
 
         magazzino.save(function (err, magazzino) {
             if (err) {
+                console.log(err);
                 callback([500, "Error when creating magazzino.", err]);
+            } else {
+                callback([201, magazzino]);
             }
-            callback([201, magazzino]);
         });
     },
 
     /**
      * magazzinoController.update()
      */
-    /*update: function (userData, callback) {
+    update: function (userData, callback) {
         magazzinoModel.findOne({_id: userData.id}, function (err, magazzino) {
             if (err) {
                 callback([500, "Error when getting magazzino.", err]);
@@ -73,7 +85,8 @@ module.exports = {
             }
 
             magazzino.nome = userData.nome ? userData.nome : magazzino.nome;
-			magazzino.quantita = userData.quantita ? userData.quantita : magazzino.quantita;
+            magazzino.costo = userData.costo ? userData.costo : magazzino.costo;
+            magazzino.immagine = userData.immagine ? userData.immagine : magazzino.immagine;
 			
             magazzino.save(function (err, magazzino) {
                 if (err) {
@@ -83,7 +96,7 @@ module.exports = {
                 callback([200, magazzino]);
             });
         });
-    },*/
+    },
 
     updateQuantita: function (userData, callback) {
         /* userData.nome indica il nome
@@ -93,32 +106,19 @@ module.exports = {
             if (err) {
                 callback([500, "Error when getting magazzino.", err]);
             }
-            if (!userData.quantita>0) {
-                
-                callback([500, "Errore, mi stai tentando di trollare?"]);
+            if (!magazzino){
+                callback([500, "Errore: la roba che vendi non è accettata sul mercato"]);
             } else {
-                if (!magazzino){
-                    //Se non esiste lo creo
-                    module.exports.create(userData, callback);
-                } else {
-                    if(magazzino.quantita+userData.quantita>0){
-                        magazzino.quantita = (magazzino.quantita-0)+(userData.quantita-0);
-                        magazzino.save(function (err, magazzino) {
-                            if (err) {
-                                callback([500, "Error when updating magazzino.", err]);
-                            }
-
-                            callback([200, magazzino]);
-                        });
-                    } else {
-                        if(magazzino.quantita+userData.quantita==0){
-                            //Se a fine transazione l'oggetto nel magazzino ha quantità =0 allora lo elimino
-                            magazzino.remove();
-                            callback([204, null]);
-                        } else {
-                            callback([500, "Errore, non vi sono abbastanza oggetti in magazzino"]);
+                if (magazzino.quantita + userData.quantita >= 0) {
+                    magazzino.quantita = (magazzino.quantita - 0) + (userData.quantita - 0);
+                    magazzino.save(function (err, magazzino) {
+                        if (err) {
+                            callback([500, "Error when updating magazzino.", err]);
                         }
-                    }
+                        callback([200, magazzino]);
+                    });
+                } else {
+                    callback([500, "Errore, non vi sono abbastanza oggetti in magazzino"]);
                 }
             }
         });

@@ -6,7 +6,7 @@ block content
         h1 Ecco il prezzario
         br
         form(role='form', action="/admin/addPrezzo",method="post")
-            input(type='text', name='prodotto', placeholder='Prodotto')
+            input(type='text', name='nome', placeholder='Nome')
             input(type='number', name='costo', placeholder='Costo' min="0")
             button(type='submit').btn.btn-default Salva
         br
@@ -14,11 +14,13 @@ block content
         table.table.table-striped
             tr
                 th Nome
+                th Quantità in magazzino
                 th Costo
                 th Opzioni
             each prezzo in prezzi
                 tr
-                    td #{prezzo.prodotto}
+                    td #{prezzo.nome}
+                    td #{prezzo.quantita}
                     td #{prezzo.costo}
                     td
                         form(role='form', action="/admin/removePrezzo",method="post")

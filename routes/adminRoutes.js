@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userModel = require('../models/utenteModel');
 var utenteController = require('../controllers/utenteController');
-var prezzarioController = require('../controllers/prezzarioController');
+var magazzinoController = require('../controllers/magazzinoController');
 
 router.get('/', function (req, res) {
     res.render('adminIndex', { title: 'Express', user : req.user});
@@ -45,7 +45,7 @@ router.post('/addUser', function (req, res) {
 });
 
 router.get('/prezzario', function (req, res) {
-    prezzarioController.list(null, function(answer){
+    magazzinoController.listAll(null, function(answer){
         if(answer[0]==200){
             res.render('prezzario', {user: req.user, prezzi: answer[1]});
         } else {
@@ -55,7 +55,7 @@ router.get('/prezzario', function (req, res) {
 });
 
 router.post('/removePrezzo', function (req, res) {
-    prezzarioController.remove({id: req.body.prodotto}, function(answer){
+    magazzinoController.remove({id: req.body.prodotto}, function(answer){
         if(answer[0]==204){
             res.redirect('prezzario');
         } else {
@@ -66,10 +66,11 @@ router.post('/removePrezzo', function (req, res) {
 
 router.post('/addPrezzo', function (req, res) {
     var options = {
-        prodotto: req.body.prodotto,
-        costo: req.body.costo
+        nome: req.body.nome,
+        costo: req.body.costo,
+        immagine: req.body.immagine
     };
-    prezzarioController.create(options, function(answer){
+    magazzinoController.create(options, function(answer){
         if(answer[0]==201){
             res.render('addedPrezzario', { title: 'Express', user : req.user, prezzo: answer[1]});
         } else {

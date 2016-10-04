@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var magazzinoModel = require('../models/magazzinoModel');
-var utenteController = require('../controllers/utenteController.js');
+var magazzinoController = require('../controllers/magazzinoController');
+var utenteController = require('../controllers/utenteController');
 
 router.get('/', function (req, res) {
     res.render('indexLogged', { title: 'Express', user : req.user});
@@ -16,20 +16,14 @@ router.get('/storicoTransazioni', function(req, res){
     res.render('storicoTransazioni', {user: req.user});
 });
 
-//TODO da rifare, deve interrogare il controller, non il model!!!
 router.get('/market', function (req, res) {
-    magazzinoModel.find(function (err, magazzinos) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Error when getting magazzino.',
-                error: err
-            });
+    magazzinoController.list(null, function(answer){
+        if(answer[0]==200){
+            res.render('market', {user: req.user, magazzino: answer[1]});
         } else {
-            res.render('market', {user: req.user, magazzino: magazzinos});
+            res.render('error', {message: answer[1], status: answer[2]});
         }
-
     });
-
 });
 
 router.post('/addSale', function (req, res) {

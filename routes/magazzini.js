@@ -6,7 +6,7 @@ var REST = require('../utils/REST');
  * GET
  */
 router.get('/', function (req, res) {
-    magazzinoController.list(null, function(answer){
+    magazzinoController.listAll(null, function(answer){
         REST.generate(req, res, answer);
     });
 });

@@ -19,61 +19,66 @@ block content
         function resetForm(formId){
             document.forms[formId].reset();
         }
-    .container
-        .row
-            .col-lg-4.col-md-4.col-sm-4
-
-                br
-                button(type='button' id="btnNewSale" onclick="toggleElement('newSale');toggleElement('btnDeleteSale');toggleElement('btnNewSale');").btn.btn-success.active.center-block
-                    text.h2
-                        |Nuova Vendita
-                button(type='button' id="btnDeleteSale" style="display: none;" onclick="toggleElement('newSale');toggleElement('btnDeleteSale');toggleElement('btnNewSale');resetForm('saleForm');").btn.btn-danger.active.center-block
-                    text.h2
-                        | Annulla
-                br
-                form(id='saleForm',action="/user/addSale",method="post").form-horizontal
-                    input(type="hidden" name="tipoTransazione" value="vendo")
-                    div(style="display: none;" id='newSale')
-                        .form-group
-                            label(for='inputOggetto').col-lg-3.control-label Nome:
-                            .col-lg-6
-                                select(id="inputOggetto" name="oggetto" required).form-control
-                                    option(value="" selected disabled)
-                                        | Scegli Ortaggio
-                                    each oggetto in user.orto
-                                        option(value="#{oggetto}")
-                                            | #{oggetto}
-                        .form-group
-                            label(for='inputQuantita').col-lg-3.control-label Quantità:
-                            .col-lg-6
-                                input(type='number' id='inputQuantita' name='quantita' placeholder='Quantita' required).form-control
-                        .form-group
-                            button(type='submit').col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.col-xs-6.col-xs-offset-3.btn.btn-success
-                                | VENDI
-
-            .col-lg-7.col-md-7.col-sm-7
-                br
-                .table
-                    table.table.table-striped
-                        tr
-                            th(colspan="4").success.text-center
-                                | Mercato a disposizione
-                        tr.default
-                            th Tipo
-                            th Giacenza
-                            th Quantità
-                            th Acquista
-                        each oggetto in magazzino
-                            tr
-                                td #{oggetto.nome}
-                                td #{oggetto.quantita}
+    div.row
+        div.col-xs-12.col-sm-12.col-md-3.col-lg-4
+            br
+            button(type='button' id="btnNewSale" onclick="toggleElement('newSale');toggleElement('btnDeleteSale');toggleElement('btnNewSale');").btn.btn-success.active.center-block
+                text.h4
+                    | Nuova Vendita
+            button(type='button' id="btnDeleteSale" style="display: none;" onclick="toggleElement('newSale');toggleElement('btnDeleteSale');toggleElement('btnNewSale');resetForm('saleForm');").btn.btn-danger.active.center-block
+                text.h4
+                    | Annulla
+            br
+            form(id='saleForm',action="/user/addSale",method="post").form-horizontal
+                input(type="hidden" name="tipoTransazione" value="vendo")
+                div(style="display: none;" id='newSale')
+                    .form-group
+                        label(for='inputOggetto').col-lg-3.control-label Nome:
+                        .col-lg-6
+                            select(id="inputOggetto" name="oggetto" required).form-control
+                                option(value="" selected disabled)
+                                    | Scegli Ortaggio
+                                each oggetto in user.orto
+                                    option(value="#{oggetto}")
+                                        | #{oggetto}
+                    .form-group
+                        label(for='inputQuantita').col-lg-3.control-label Quantità:
+                        .col-lg-6
+                            input(type='number' id='inputQuantita' name='quantita' placeholder='Quantita' required).form-control
+                    .form-group
+                        button(type='submit').col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.col-xs-6.col-xs-offset-3.btn.btn-success
+                            | VENDI
+        div.col-xs-12.col-sm-8.col-md-9.col-lg-8
+            br
+            .row
+                each oggetto in magazzino
+                    .col-md-6
+                        a(data-toggle='modal' style='cursor:pointer;' data-target='#ortaggiModal#{oggetto._id}')
+                            if oggetto.immagine
+                                img(src='#{oggetto.immagine}' style='width:200px;height:200px;' alt='...').img-circle.img-responsive
+                            else
+                                img(src='/imgOggetti/img_not_found.jpg' style='width:200px;height:200px;' alt='...').img-circle.img-responsive
+                            #{oggetto.nome}
+                        div(class='modal fade' tabindex='-1' role='dialog' id='ortaggiModal#{oggetto._id}' aria-labelledby='ortaggiModalLabel#{oggetto._id}')
+                            div(class='modal-dialog' role='document')
                                 form(action="/user/addSale",method="post").form-inline
-                                    .from-group
-                                        input(type="hidden" name="oggetto" value="#{oggetto.nome}")
-                                        input(type="hidden" name="tipoTransazione" value="acquisto")
-                                        td
-                                            input(type='number' id='#{oggetto._id}' value='1' name='quantita' min='1' max='#{oggetto.quantita}').form-control
-                                        td
-                                            button(type='submit').btn.btn-danger
-                                                span(aria-hidden='true').glyphicon.glyphicon-usd
-
+                                    .modal-content
+                                        .modal-header
+                                            h4(id='ortaggiModalLabel#{oggetto._id}').modal-title #{oggetto.nome}
+                                        .modal-body
+                                            .row
+                                                .col-md-4
+                                                    | Quantità disponibile: #{oggetto.quantita}
+                                                .col-md-4
+                                                    | Prezzo: #{oggetto.costo}
+                                                .col-md-6
+                                                    | Scegli la quantità:
+                                                    input(type='number' id='#{oggetto._id}' value='1' name='quantita' min='1' max='#{oggetto.quantita}').form-control
+                                        .modal-footer
+                                            button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Close
+                                            input(type="hidden" name="oggetto" value="#{oggetto.nome}")
+                                            input(type="hidden" name="tipoTransazione" value="acquisto")
+                                            button(type='submit' class='btn btn-success')
+                                                | Acquista
+                        br
+                        br
