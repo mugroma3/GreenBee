@@ -18,10 +18,10 @@ body
                 img.img-responsive(src='/img/1.jpg',alt='Responsive image')
                 .carousel-caption
             .item
-                img.img-responsive(src='/img/3.jpg',alt='Responsive image').center-block
+                img.img-responsive(src='/img/3.jpg',alt='Responsive image')
                 .carousel-caption
             .item
-                img.img-responsive(src='/img/4.jpg',alt='Responsive image').center-block
+                img.img-responsive(src='/img/4.jpg',alt='Responsive image')
                 .carousel-caption
         // Controls
         a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
@@ -33,12 +33,13 @@ body
     .container
         .row
             div.col-xs-12.col-md-12.col-lg-12
-                h1=title
-                p Welcome to #{title}
-                a(href="/login") Login
-        .row
-            .col-xs-offset-2.col-sm-offset-2.col-md-offset-4.col-lg-offset-4
-                .buttons
+                h1.text-center=title
+                p.text-center Welcome to #{title}
+                center
+                    a.btn.btn-info.btn.active(href='/login', role='button') Login
+        .row.center-block
+            .col-xs-offset-1.col-sm-offset-2.col-md-offset-4
+                .buttons.center
                     a.btn.btn-default.btn.active(href='/login', role='button') Gli orti
                     a.btn.btn-default.btn.active(href='/login', role='button') Social
                     a.btn.btn-default.btn.active(href='/login', role='button') Chi siamo
