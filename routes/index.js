@@ -8,7 +8,7 @@ router.get('/',function (req, res) {
 	if(req.isAuthenticated()) {
 		res.redirect('/user');
   	} else {
-		res.render('index', { title: 'Express'});
+		res.render('index', { title: 'BioOrtoStar'});
   	}
 });
 
