@@ -1,6 +1,7 @@
 package apinod;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -11,6 +12,18 @@ public class ChiamatoreAPI {
 	
 	private OkHttpClient client;
 	private APINod urlContainer;
+	
+	//rifare con quelli che saranno
+	private Type intResult;
+	private Type chatResult;
+	private Type booleanResult;
+	private Type messageResult;
+	private Type userProfilePhotosResult;
+	private Type downlodableFileResult;
+	private Type listUpdateResult;
+	private Type listChatMembersResult;
+	private Type chatMembersResult;
+	
 	
 	public ChiamatoreAPI() 
 	{
