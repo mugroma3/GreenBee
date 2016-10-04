@@ -12,7 +12,13 @@ module.exports = {
      * utenteController.list()
      */
     list: function (userData, callback) {
-        utenteModel.find(function (err, utentes) {
+        utenteModel.find(null, {password:0,
+                                __v:0,
+                                ultimoAccesso:0,
+                                transazioni:0,
+                                accessi:0,
+                                orto:0},
+                                function (err, utentes) {
             if (err) {
                 callback([500, "Error when getting utenti.", err]);
             }
@@ -24,19 +30,41 @@ module.exports = {
      * utenteController.show()
      */
     show: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({_id: userData.id},{password:0,
+                                                _id:0,
+                                                __v:0,
+                                                ultimoAccesso:0,
+                                                transazioni:0,
+                                                accessi:0},
+                                                function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
             }
-            if (!utente) {
-                callback([404, 'No such utente']);
+            else{
+                if (!utente) {
+                    callback([404, 'No such utente']);
+                }
+                else{
+                    callback([200, utente]);
+                }
             }
-            callback([200, utente]);
+
         });
     },
-
+    /**
+    *utenteController.getColtivazioni()
+    * */
     getColtivazioni: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.findOne({_id: userData.id},{_id:0,
+                                                username:0,
+                                                password:0,
+                                                admin:0, nome:0,
+                                                telegramID:0,
+                                                punti:0,
+                                                ultimoAccesso:0,
+                                                accessi:0,
+                                                transazioni:0},
+                                                function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
             }
@@ -51,14 +79,16 @@ module.exports = {
      * utenteController.isNellOrto()
      */
     isNellOrto: function (userData, callback) {
-        utenteModel.findOne({_id: userData.id}, function (err, utente) {
+        utenteModel.count({_id: userData.id, ultimoAccesso: null}, function (err, numUtenti) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
             }
-            if (!utente) {
-                callback([404, 'No such utente']);
+            if (numUtenti == 0 ) {
+                callback([200, true]);
             }
-            callback([200, utente.isNellOrto()]);
+            else{
+                callback([200, false]);
+            }
         });
     },
 
@@ -87,14 +117,12 @@ module.exports = {
             if (!utente) {
                 callback([404, 'No such utente']);
             }
-
             utente.admin = userData.admin ? userData.admin : utente.admin;
             utente.nome = userData.nome ? userData.nome : utente.nome;
             utente.punti = userData.punti ? userData.punti : utente.punti;
             utente.accessi = userData.accessi ? userData.accessi : utente.accessi;
             utente.transazioni = userData.transazioni ? userData.transazioni : utente.transazioni;
             utente.telegramID = userData.telegramID ? userData.telegramID : utente.telegramID;
-
             utente.save(function (err, utente) {
                 if (err) {
                     callback([500, 'Error when updating utente.', err]);
@@ -180,9 +208,9 @@ module.exports = {
         })},
 
     /**
-     * utenteController.listIngressi()
+     * utenteController.listAccessi()
      */
-    listIngressi: function (userData, callback) {
+    listAccessi: function (userData, callback) {
         utenteModel.findOne({_id: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente', err]);

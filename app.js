@@ -65,7 +65,7 @@ api.setApp(app);  //setting rest-api calls
 var utenteModel = require('./models/utenteModel');
 passport.use(new localStrategy(
     function(username, password, done){
-      utenteModel.findOne({username: username}, function (err, utente) {
+      utenteModel.findOne({username: username},{_id:0, admin:0, nome:0, telegramID:0, punti:0, ultimoAccesso:0, accessi:0, transazioni:0, orto:0}, function (err, utente) {
         if (err) {
           return done(err)
         }

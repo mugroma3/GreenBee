@@ -9,41 +9,49 @@ var magazzinoController = require('./magazzinoController');
 module.exports = {
 
     /**
-     * utenteTelegramController.list()
-     */
-    list: function (userData, callback) {
-        utenteModel.find(function (err, utentes) {
-            if (err) {
-                callback([500, "Error when getting utenti.", err]);
-            }
-            callback([200, utentes]);
-        });
-    },
-
-    /**
      * utenteTelegramController.show()
      */
     show: function (userData, callback) {
-        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id},{ password:0,
+                                                        username:0,
+                                                        punti:0,
+                                                        ultimoAccesso:0,
+                                                        accessi:{$slice: 5},
+                                                        transazioni:{$slice: 5}},
+                                                        function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
+            }else {
+                if (!utente) {
+                    callback([404, 'No such utente']);
+                } else {
+                    callback([200, utente]);
+                }
             }
-            if (!utente) {
-                callback([404, 'No such utente']);
-            }
-            callback([200, utente]);
         });
     },
 
     getColtivazioni: function (userData, callback) {
-        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id},{ _id:0,
+                                                        username:0,
+                                                        password:0,
+                                                        admin:0,
+                                                        nome:0,
+                                                        punti:0,
+                                                        ultimoAccesso:0,
+                                                        //telegramID:0,
+                                                        accessi:0,
+                                                        transazioni:0},
+                                                        function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
+            }else{
+                if (!utente) {
+                    callback([404, 'No such utente']);
+                }else{
+                    callback([200, utente.orto]);
+                }
             }
-            if (!utente) {
-                callback([404, 'No such utente']);
-            }
-            callback([200, utente.orto]);
         });
     },
 
@@ -51,14 +59,17 @@ module.exports = {
      * utenteController.isNellOrto()
      */
     isNellOrto: function (userData, callback) {
-        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
+        utenteModel.count({telegramID: userData.id, ultimoAccesso: null}, function (err, numUtenti) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
+            } else {
+                if (numUtenti == 0) {
+                    callback([200, true]);
+                }
+                else {
+                    callback([200, false]);
+                }
             }
-            if (!utente) {
-                callback([404, 'No such utente']);
-            }
-            callback([200, utente.isNellOrto()]);
         });
     },
 
@@ -68,28 +79,40 @@ module.exports = {
      */
     addIngresso: function (userData, callback) {
         //verifica che l'utente esista
-        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id},{ telegramID:0,
+                                                        username:0,
+                                                        password:0,
+                                                        admin:0,
+                                                        nome:0,
+                                                        punti:0,
+                                                        telegramID:0,
+                                                        transazioni:0},
+                                                        function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente.', err]);
             }
-            if (!utente) {
-                callback([404, 'Utente inesistente', err]);
-            }
-            else{
-                //l'utente è nell'orto?
-                if(utente.isNellOrto()){
-                    callback([500, 'Errore, utente dentro l\'orto']);
+            else {
+                if (!utente) {
+                    callback([404, 'Utente inesistente', err]);
                 }
-                else{
-                    var tmp = utente.accessi.create({'ingresso': Date.now()});
-                    utente.ultimoAccesso = tmp._id;
-                    utente.accessi.push(tmp);
-                    utente.save(function (err, utente) {
-                        if (err) {
-                            callback([500, 'Errore nel salvataggio', err]);
-                        }
-                        callback([200, utente]);
-                    });
+                else {
+                    //l'utente è nell'orto?
+                    if (utente.isNellOrto()) {
+                        callback([500, 'Errore, utente dentro l\'orto']);
+                    }
+                    else {
+                        var tmp = utente.accessi.create({'ingresso': Date.now()});
+                        utente.ultimoAccesso = tmp._id;
+                        utente.accessi.push(tmp);
+                        utente.save(function (err) {
+                            if (err) {
+                                callback([500, 'Errore nel salvataggio', err]);
+                            }else{
+                                callback([200, 'OK']);
+                            }
+
+                        });
+                    }
                 }
             }
         })
@@ -100,44 +123,65 @@ module.exports = {
      */
     addUscita: function (userData, callback) {
         //verifica che l'utente esista
-        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id},{ username:0,
+                                                        password:0,
+                                                        admin:0,
+                                                        nome:0,
+                                                        punti:0,
+                                                        telegramID:0,
+                                                        transazioni:0},
+                                                        function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente.', err]);
             }
-            if (!utente) {
-                callback([404, 'Utente inesistente']);
-            }
-            else{
-                //l'utente è nell'orto?
-                if(!utente.isNellOrto()){
-                    callback([500, 'Errore, utente fuori dall\'orto']);
-                } else {
-                    utente.accessi.id(utente.ultimoAccesso).uscita = Date.now();
-                    //resetto l'ultimo accesso
-                    utente.ultimoAccesso = null;
-                    utente.save(function (err, utente) {
-                        if (err) {
-                            callback([500, 'Errore, nell\'inserimento']);
-                        }
-                        callback([200, utente]);
-                    });
+            else {
+                if (!utente) {
+                    callback([404, 'Utente inesistente']);
+                }
+                else {
+                    //l'utente è nell'orto?
+                    if (!utente.isNellOrto()) {
+                        callback([500, 'Errore, utente fuori dall\'orto']);
+                    } else {
+                        utente.accessi.id(utente.ultimoAccesso).uscita = Date.now();
+                        //resetto l'ultimo accesso
+                        utente.ultimoAccesso = null;
+                        utente.save(function (err) {
+                            if (err) {
+                                callback([500, 'Errore, nell\'inserimento']);
+                            } else {
+                                callback([200, 'OK']);
+                            }
+                        });
+                    }
                 }
             }
         })},
 
     /**
-     * utenteTelegramController.listIngressi()
+     * utenteTelegramController.listAccessi()
+     * lista ultimi 5 accessi
      */
-    listIngressi: function (userData, callback) {
-        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
+    listAccessi: function (userData, callback) {
+        utenteModel.findOne({telegramID: userData.id},{ _id:0,
+                                                        username:0,
+                                                        password:0,
+                                                        admin:0,
+                                                        punti:0,
+                                                        ultimoAccesso:0,
+                                                        transazioni:0,
+                                                        orto:0,
+                                                        accessi: {$slice: 5}},
+                                                        function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente', err]);
-            }
-            if (!utente) {
-                callback([404, 'No such utente']);
-            }
-            else{
-                callback([200, utente.accessi]);
+            } else {
+                if (!utente) {
+                    callback([404, 'No such utente']);
+                }
+                else {
+                    callback([200, utente.accessi]);
+                }
             }
 
         });
@@ -155,30 +199,40 @@ module.exports = {
         };
         magazzinoController.updateQuantita(dati, function(anwser){
             if(anwser[0]<299){ //Significa che ho un codice http minore di 299, quindi un codice di OK
-                utenteModel.findOne({telegramID: userData.user.id}, function (err, utente) {
-                    if (err) {
-                        //DB Sminchiato
-                        callback([500, 'Error when getting utente', err]);
-                    }
-                    if (!utente) {
-                        //DB Sminchiato
-                        callback([404, 'No such utente']);
-                    }
-                    else{
-                        utente.transazioni.push({
-                            'tipoTransazione': userData.tipoTransazione,
-                            'oggetto': userData.oggetto,
-                            'quantita': userData.quantita
-                        });
-                        utente.save(function (err, utente) {
-                            if (err) {
-                                //DB Sminchiato
-                                callback([500, 'Error when updating utente', err]);
-                            } else {
-                                callback([200, utente]);
-                            }
-                        });
-                    }
+                utenteModel.findOne({telegramID: userData.user.id},{username:0,
+                                                                    password:0,
+                                                                    admin:0,
+                                                                    nome:0,
+                                                                    punti:0,
+                                                                    telegramID:0,
+                                                                    accessi:0,
+                                                                    ultimoAccesso:0},
+                                                                    function (err, utente) {
+                if (err) {
+                    //DB Sminchiato
+                    callback([500, 'Error when getting utente', err]);
+                }
+                else{
+                if (!utente) {
+                    //DB Sminchiato
+                    callback([404, 'No such utente']);
+                }
+                else {
+                    utente.transazioni.push({
+                        'tipoTransazione': userData.tipoTransazione,
+                        'oggetto': userData.oggetto,
+                        'quantita': userData.quantita
+                    });
+                    utente.save(function (err, utente) {
+                        if (err) {
+                            //DB Sminchiato
+                            callback([500, 'Error when updating utente', err]);
+                        } else {
+                            callback([200, utente]);
+                        }
+                    });
+                }
+            }
                 });
             } else {
                 callback([anwser[0], anwser[1]]);
@@ -188,17 +242,29 @@ module.exports = {
 
     /**
      * utenteTelegramController.listTransazioni()
+     * lista ultime 5 transazioni
      */
     listTransazioni: function (userData, callback) {
-        utenteModel.findOne({telegramID: userData.id}, function (err, utente) {
+        utenteModel.findOne({telegramID: userData.id},{ _id:0,
+                                                        username:0,
+                                                        password:0,
+                                                        admin:0,
+                                                        punti:0,
+                                                        ultimoAccesso:0,
+                                                        accessi:0,
+                                                        orto:0,
+                                                        transazioni:{$slice: 5}},
+                                                        function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente', err]);
             }
-            if (!utente) {
-                callback([404, 'No such utente']);
-            }
-            else{
-                callback([200, utente.transazioni]);
+            else {
+                if (!utente) {
+                    callback([404, 'No such utente']);
+                }
+                else {
+                    callback([200, utente.transazioni]);
+                }
             }
         });
     },
@@ -207,14 +273,19 @@ module.exports = {
      * utenteTelegramController.addOrtaggio()
      */
     addOrtaggio: function (userData, callback) {
-        utenteModel.update(
-            {telegramID: userData.id},
-            {$addToSet: {orto: userData.ortaggio}}, function(err, data){
-                if(err){
-                    callback([500, 'Error when updating utente.', err]);
-                }
-                callback([200, data]);
-        });
+        if(userData.ortaggio!=null) {
+            utenteModel.update(
+                {telegramID: userData.id},
+                {$addToSet: {orto: userData.ortaggio}}, function (err, data) {
+                    if (err) {
+                        callback([500, 'Error when updating utente.', err]);
+                    } else {
+                        callback([200, 'OK']);
+                    }
+                });
+        } else {
+            callback([500, 'Error, ortaggio is null']);
+        }
     },
 
     /**
@@ -227,7 +298,9 @@ module.exports = {
                 if(err){
                     callback([500, 'Error when updating utente.', err]);
                 }
-                callback([200, data]);
+                else{
+                    callback([200, 'Rimosso']);
+                }
         });
     }
 };

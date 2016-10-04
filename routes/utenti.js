@@ -38,7 +38,7 @@ router.get('/isNellOrto/:id', function (req, res) {
  */
 router.get('/listaAccessi/:id', function (req, res) {
     var options = {id: req.params.id};
-    utenteController.listIngressi(options, function(answer){
+    utenteController.listAccessi(options, function(answer){
         REST.generate(req, res, answer);
     });
 });
@@ -48,7 +48,7 @@ router.get('/listaAccessi/:id', function (req, res) {
  */
 router.get('/listaTransazioni/:id', function (req, res) {
     var options = {id: req.params.id};
-    utenteController.listIngressi(options, function(answer){
+    utenteController.listTransazioni(options, function(answer){
         REST.generate(req, res, answer);
     });
 });

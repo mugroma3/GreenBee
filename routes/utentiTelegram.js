@@ -5,15 +5,6 @@ var utenteTelegramController = require('../controllers/utenteTelegramController.
 var REST = require('../utils/REST');
 
 /*
- * GET lista tutti gli Telegram utenti
- */
-router.get('/', function (req, res) {
-    utenteTelegramController.list(null, function(answer){
-        REST.generate(req, res, answer);
-    });
-});
-
-/*
  * GET utente tramite TelegramID  nell'url
  */
 router.get('/:id', function (req, res) {
@@ -36,9 +27,9 @@ router.get('/isNellOrto/:id', function (req, res) {
 /*
  * GET lista accessi dell'utente tramite TelegramID nell'url
  */
-router.get('/listaAccessi/:id', function (req, res) {
+router.get('/listAccessi/:id', function (req, res) {
     var options = {id: req.params.id};
-    utenteTelegramController.listIngressi(options, function(answer){
+    utenteTelegramController.listAccessi(options, function(answer){
         REST.generate(req, res, answer);
     });
 });
@@ -46,9 +37,9 @@ router.get('/listaAccessi/:id', function (req, res) {
 /*
  * GET lista transazioni dell'utente tramite TelegramID nell'url
  */
-router.get('/listaTransazioni/:id', function (req, res) {
+router.get('/listTransazioni/:id', function (req, res) {
     var options = {id: req.params.id};
-    utenteTelegramController.listIngressi(options, function(answer){
+    utenteTelegramController.listTransazioni(options, function(answer){
         REST.generate(req, res, answer);
     });
 });
@@ -74,6 +65,36 @@ router.put('/addTransazione/:id', function (req, res) {
 router.put('/addIngresso/:id', function (req, res) {
     var options = {id: req.params.id};
     utenteTelegramController.addIngresso(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
+/*
+ * PUT aggiungi Ortaggio a utente, TelegramID nell'url
+ */
+router.put('/addOrtaggio/:id', function (req, res) {
+    var options = {id: req.params.id, ortaggio: req.body.ortaggio};
+    utenteTelegramController.addOrtaggio(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
+/*
+ * GET lista Orto dell'utente tramite TelegramID nell'url
+ */
+router.get('/listOrto/:id', function (req, res) {
+    var options = {id: req.params.id};
+    utenteTelegramController.getColtivazioni(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
+/*
+ * DELETE rimuove Ortaggio dall'orto dell'utente tramite TelegramID nell'url
+ */
+router.put('/removeOrtaggio/:id', function (req, res) {
+    var options = {id: req.params.id, ortaggio: req.body.ortaggio};
+    utenteTelegramController.removeOrtaggio(options, function(answer){
         REST.generate(req, res, answer);
     });
 });
