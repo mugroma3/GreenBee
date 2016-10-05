@@ -143,7 +143,7 @@ public class OrtoBioBot extends Bot {
 			statiUtenti.put(arg0.getFrom().getId(), new StatoUtente());
 
 		if (text.equals(Italiano.ITALIANO)) {
-			if (statiUtenti.get(arg0.getFrom().getId()).getSezione() != SezioniBot.SCEGLILINGUA)
+			if (statiUtenti.get(arg0.getFrom().getId()).getSezione() == SezioniBot.SCEGLILINGUA)
 				statiUtenti.get(arg0.getFrom().getId()).setLingua(Lingue.ITALIANO);
 			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
 			return;
