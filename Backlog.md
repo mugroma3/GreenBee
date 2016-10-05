@@ -2,23 +2,12 @@ TODO:
 
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 9) Aggiungere bootstrap a tutte le view
-11) @kappa89 Escludere alcuni campi nelle stampe dei JSON.... ATTENZIONE a quali!
-    utenteTelegramController.
-        addOrtaggio()
-        removeOrtaggi()
-        addTransazione()
-        addUscita()
-        addEntrata()
-        far tornare solo una stringa di conferma [ok/failed] 
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
 16) @vitus89 Stampare nel market i punti dell'utente
 20) @vitus89 check responsive for all elemnts
-21) @lorenzo93 collapse magazzino->prezzario
-    //add costo, scrocca metodo updatecosto, elimina prezzario(controller, model, route), inserire funzione stampaSolo quantità > 0
-    //modifica agguntaPrezzi (route)
-    //modifica market per far stampare prezzo
-    //modifica addTransazione per fare calcoli di prezzo e scalare/aggiungere punti (verifica cliente abbastanza punti, presenza in magazzino, scala punti, scala magazzino)
 22) @vitus89 stampare nome utente dentro la navbar
+23) Aggiungere controllo addOrtaggio che esista nel magazzino
+24) Aggiungere file upload di immagine in addPrezzo (nella pagina prezzario.jade)
 
 
 Credo non manchi altro al progetto...
@@ -33,9 +22,22 @@ COMPLETATI:
 6) magazzino evitare di esporre API?? Tanto ci pensa la gestione del mercato a fare tutto
 8) WebUI Admin Prezzario (listAll, modify e aggiungi)
 10) Fare le api utente con ricerca, addIngresso, addUscita, addTransazione, addColtivazione, removeColtivazione tramite telegramID
+11) @kappa89 Escludere alcuni campi nelle stampe dei JSON.... ATTENZIONE a quali!
+    utenteTelegramController.
+        addOrtaggio()
+        removeOrtaggi()
+        addTransazione()
+        addUscita()
+        addEntrata()
+        far tornare solo una stringa di conferma [ok/failed]
 12) aggiungere listaTransazioni
 13) aggiungere removeOrtaggi e gestire l'array senza duplicati
 14) modifica market con menu a tendina per ortaggi
 17) Mettere tasti + e - in admin/prezzario
 18) input(type="number") Hai solo nascosto i tastini integrati di freccia su e giù, se clicchi dove dovrebbero stare si incrementa/decrementa il contatore
 19) Comportamento della home in caso di utente loggato? (redirect a /user o home page con la roba dell'utente) @lorenzo93 preferisce la prima
+21) @lorenzo93 collapse magazzino->prezzario
+    //add costo, scrocca metodo updatecosto, elimina prezzario(controller, model, route), inserire funzione stampaSolo quantità > 0
+    //modifica agguntaPrezzi (route)
+    //modifica market per far stampare prezzo
+    //modifica addTransazione per fare calcoli di prezzo e scalare/aggiungere punti (verifica cliente abbastanza punti, presenza in magazzino, scala punti, scala magazzino)
