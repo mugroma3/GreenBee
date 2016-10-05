@@ -50,10 +50,14 @@ html
                                         a(href='/admin/prezzario')
                                             | Prezzario
 
-
                     ul(class="nav navbar-nav navbar-right")
+                        li(id='welcome')
+                            a(href='#' style="cursor:text;")
+                                | Ciao #{user.nome}
                         li
+                            | &nbsp;&nbsp;&nbsp;
                             input(type="button" onclick="location.href='/user/logout'" value="LogOut").btn.btn-default.navbar-btn
+                            | &nbsp;&nbsp;
         br
         br
         br

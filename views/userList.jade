@@ -1,26 +1,25 @@
 extends layout
 
 block content
-    .container
-        p Ciao #{user.nome}
-        h1 Ecco gli utenti registrati al tuo orto
-        h4
-            a(href="/admin/addUser") Aggiungi un utente
-
-        table.table.table-striped
-            tr
-                th Nome
-                th Username
-                th Password
-                th Amministratore
-                th Opzioni
-            each utente in listaUtenti
+    .row
+        .col-xs-12.col-sm-12.col-md-6.col-lg-8
+            table.table.table-striped.pull-left
                 tr
-                    td #{utente.nome}
-                    td #{utente.username}
-                    td #{utente.password}
-                    td #{utente.admin}
-                    td
-                        a(href="#" class="btn btn-default") Rinomina
-                        a(href="#" class="btn btn-default") Cambia Password
-                        a(href="#" class="btn btn-default") Cambia Username
+                    th(colspan='5').text-center.success Ecco gli utenti registrati al tuo orto
+                tr
+                    th Nome
+                    th Username
+                    th Password
+                    th Amministratore
+                    th Opzioni
+                each utente in listaUtenti
+                    tr
+                        td #{utente.nome}
+                        td #{utente.username}
+                        td #{utente.password}
+                        td #{utente.admin}
+                        td
+                            a(href="#" class="btn btn-default") Rinomina
+                            a(href="#" class="btn btn-default") Cambia Password
+                            a(href="#" class="btn btn-default") Cambia Username
+            a(href='/admin/addUser') Aggiungi Un Utente
