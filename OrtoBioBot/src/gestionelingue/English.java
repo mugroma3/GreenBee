@@ -10,8 +10,8 @@ public class English {
 	public final static String SETLANGUAGE= "Set language 🇮🇹🇬🇧";
 	public final static String REPENTER= "Report entry";
 	public final static String REPEXIT= "Report exit";
-	public final static String WELCOMEMARKET = "Ma CIAOOOO, sono anche io un placeholder e nello specifico sono quello british del market!!!";
-	public final static String WELCOMETASK = "NOOOOO MA SONO UN PLACEHOLDER PURE IO PORCO DIO!!!";
+	public final static String WELCOMEMARKET = "Welcome in the market!\nHere you can sell your products, buy something or see the history of your transactions.";
+	public final static String WELCOMETASK = "Here you can find all the available tasks in the garden: browse the task list and choose what to do.";
 	public final static String BROWSE= "Browse";
 	public final static String ADD= "Add";
 	public final static String HISTORY= "History";
