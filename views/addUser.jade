@@ -1,11 +1,29 @@
 extends layout
 
 block content
-    .container
-        p Ciao #{user.nome}
-        form(role='form', action="/admin/addUser",method="post")
-            input(type='text', name='nome', placeholder='Nome')
-            input.form-control(type='text', name="username", placeholder='Enter Username')
-            input.form-control(type='password', name="password", placeholder='Password')
-            input(type='checkbox', name='admin', placeholder='Amministratore')
-            button.btn.btn-default(type='submit') Registralo
+    .row
+        .col-xs-12.col-sm-12.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+            | Aggiungi un utente:
+            br
+            br
+            form(role='form', action="/admin/addUser",method="post").form-horizontal
+                .form-group
+                    label(for='Nome').control-label.col-sm-2 Nome:&nbsp;
+                    .col-sm-6
+                        input(type='text', name='nome', placeholder='Nome', id='Nome').form-control
+                .form-group
+                    label(for='Username').control-label.col-sm-2 Username:&nbsp;
+                    .col-sm-6
+                        input(type='text', name="username", placeholder='Enter Username', id="Username").form-control
+                .form-group
+                    label(for='Password').control-label.col-sm-2 Password:&nbsp;
+                    .col-sm-6
+                        input(type='password', name="password", placeholder='Password',id="Password").form-control
+                .form-group
+                    .col-sm-offset-2.col-sm-6
+                        .checkbox
+                            label
+                                input(type='checkbox', name='admin', value='true')
+                                | Amministratore
+                .form-group
+                    button.btn.btn-success(type='submit') Registralo

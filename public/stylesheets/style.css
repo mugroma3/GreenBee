@@ -1,14 +1,11 @@
 body {
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: italic 18px Georgia, serif;
 }
 
 a {
     color: #00B7FF;
 }
 
-input[type=number]{
-    width: 60%;
-}
 .btn-file {
     position: relative;
     overflow: hidden;
