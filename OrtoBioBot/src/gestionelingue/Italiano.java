@@ -14,5 +14,5 @@ public class Italiano {
 	public final static String CONSULTA= "Consulta";
 	public final static String AGGIUNGI= "Aggiungi";
 	public final static String STORICO= "Storico";
-	public final static String MENUITALIANO = "Ciao sono un placeholder XD! Qui spieghiamo anche che trovi dentro i comandi";
+	public final static String MENUITALIANO = "Benvenuti in GreenBeeBot, un orto urbano sociale e smart ideato dal MUG Roma Tre e gestito tramite un bot Telegram.\nScegli un'opzione:";
 }

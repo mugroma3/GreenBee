@@ -15,6 +15,6 @@ public class English {
 	public final static String BROWSE= "Browse";
 	public final static String ADD= "Add";
 	public final static String HISTORY= "History";
-	public final static String ENGLISHMENU = "Ciao sono un placeholder XD! Qui spieghiamo anche che trovi dentro i comandi e lo faccio in inglese god dog!";
+	public final static String ENGLISHMENU = "Welcome in GreenBeeBot, an urban-social-smart garden made by MUG Roma Tre and managed with a Telegram bot.\nChoose an option:";
 	
 }
