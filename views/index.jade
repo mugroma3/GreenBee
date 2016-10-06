@@ -17,7 +17,7 @@ body
             li(data-target='#carousel-example-generic', data-slide-to='1')
             li(data-target='#carousel-example-generic', data-slide-to='2')
         // Wrapper for slides
-        .carousel-inner(style='height:180px')
+        .carousel-inner(style='height:400px')
             .item.active
                 img(src='/img/1.jpg',alt='banner').center-block
                 .carousel-caption
@@ -42,11 +42,11 @@ body
             .row
                 div.col-xs-12.col-sm-12.col-md-12.col-lg-12
                     h1.text-muted.text-center=title
-                    p.text-muted.text-center Welcome to #{title}
-                    p.text-muted
+                    //p.text-muted.text-center Welcome to #{title}
+                    p.text-muted(style='font-size:200%') Questo progetto è nato in maniera del tutto casuale: un giorno, in un orto urbano dimenticato di Roma, abbiamo trovato delle arnie di api. Da qui la nostra idea di unire le capacità collaborative tipiche delle api alla gestione di un orto sociale. Per l'appunto, “GreenBee”.
                     a.btn.btn-info.btn.active(href='/login', role='button') Login
             br
-            .row
+            //.row
                 .col-xs-12.col-sm-12.col-md-12.col-lg-12
                     .buttons
                         a.btn.btn-default.btn.active(href='/login', role='button') Gli orti
@@ -54,12 +54,26 @@ body
                         a.btn.btn-default.btn.active(href='/login', role='button') Chi siamo
                         a.btn.btn-default.btn.active(href='/login', role='button') Market
             br
-            a(href='/login')
-                img(src='/img/l1.png' style='height:80px')
-            a(href='/login')
-                img(src='/img/l2.jpg' style='height:80px')
-            a(href='/login')
-                img(src='/img/l3.png' style='height:80px')
+            .row
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l1.png' style='height:80px')
+                    p Gli orti
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l2.jpg' style='height:80px')
+                    p Social
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l3.png' style='height:80px')
+                    p Chi siamo
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l4.png' style='height:80px')
+                    p Market
+            br
+            br
+            br
 
     script(src='/bootstrap-3.3.7/js/jquery-3.1.1.min.js')
     script(src='/bootstrap-3.3.7/js/bootstrap.min.js')
