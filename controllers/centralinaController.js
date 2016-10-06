@@ -1,4 +1,5 @@
 var centralinaModel = require('../models/centralinaModel.js');
+var sensoreModel = require('../models/sensoreModel.js');
 
 
 /**
@@ -13,50 +14,49 @@ module.exports = {
      */
     create: function (centralina, callback) {
         var centralina = new centralinaModel(centralina);
-
-
         centralina.save(function (err, centralina) {
             if (err) {
-                callback([500, "Error when creating utente", err]);
+                callback([500, "Error when creating centralina", err]);
             }
-            callback([201, centralina]);
+            else{
+                callback([201, centralina]);
+            }
         });
     },
 
     /**
      * centralinaController.list()
      */
-    list: function (req, res) {
+    list: function (centralinaData, callback) {
         centralinaModel.find(function (err, centralinas) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting centralina.',
-                    error: err
-                });
+                callback([500, "Error when getting letture.", err]);
+                }
+                else{
+                callback([200, centralinas]);
             }
-            return res.json(centralinas);
         });
     },
 
+
     /**
-     * centralinaController.show()
+     * utenteController.show()
      */
-    show: function (req, res) {
-        var id = req.params.id;
-        centralinaModel.findOne({_id: id}, function (err, centralina) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting centralina.',
-                    error: err
-                });
-            }
-            if (!centralina) {
-                return res.status(404).json({
-                    message: 'No such centralina'
-                });
-            }
-            return res.json(centralina);
-        });
+    show: function (centralinaData, callback) {
+        centralinaModel.findOne({_id: centralinaData.id}, function (err, centralina) {
+                if (err) {
+                    callback([500, "Error when getting lettura.", err]);
+                }
+                else{
+                    if (!centralina) {
+                        callback([404, 'No such lettura']);
+                    }
+                    else{
+                        callback([200, centralina]);
+                    }
+                }
+
+            });
     },
 
     /**

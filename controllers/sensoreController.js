@@ -10,15 +10,14 @@ module.exports = {
     /**
      * sensoreController.list()
      */
-    list: function (req, res) {
+    list: function (option, callback) {
         sensoreModel.find(function (err, sensores) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting sensore.',
-                    error: err
-                });
+                callback([500, "errore di lista sensori", err]);
             }
-            return res.json(sensores);
+            else{
+                callback([200, sensores]);
+            }
         });
     },
 
@@ -47,7 +46,12 @@ module.exports = {
      * sensoreController.create()
      */
     create: function (req, res) {
-        var sensore = new sensoreModel({			nome : req.body.nome,			idBluetooth : req.body.idBluetooth,			data : req.body.data,			umidita : req.body.umidita,			batteria : req.body.batteria
+        var sensore = new sensoreModel({
+			nome : req.body.nome,
+			idBluetooth : req.body.idBluetooth,
+			data : req.body.data,
+			umidita : req.body.umidita,
+			batteria : req.body.batteria
         });
 
         sensore.save(function (err, sensore) {
@@ -79,7 +83,12 @@ module.exports = {
                 });
             }
 
-            sensore.nome = req.body.nome ? req.body.nome : sensore.nome;			sensore.idBluetooth = req.body.idBluetooth ? req.body.idBluetooth : sensore.idBluetooth;			sensore.data = req.body.data ? req.body.data : sensore.data;			sensore.umidita = req.body.umidita ? req.body.umidita : sensore.umidita;			sensore.batteria = req.body.batteria ? req.body.batteria : sensore.batteria;			
+            sensore.nome = req.body.nome ? req.body.nome : sensore.nome;
+			sensore.idBluetooth = req.body.idBluetooth ? req.body.idBluetooth : sensore.idBluetooth;
+			sensore.data = req.body.data ? req.body.data : sensore.data;
+			sensore.umidita = req.body.umidita ? req.body.umidita : sensore.umidita;
+			sensore.batteria = req.body.batteria ? req.body.batteria : sensore.batteria;
+			
             sensore.save(function (err, sensore) {
                 if (err) {
                     return res.status(500).json({
