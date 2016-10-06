@@ -3,6 +3,7 @@ TODO:
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
 23) Aggiungere controllo addOrtaggio che esista nel magazzino
+25) LO SCHEDULE!!!!
 
 Credo non manchi altro al progetto...
 
