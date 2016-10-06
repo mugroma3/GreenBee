@@ -1,11 +1,27 @@
 var centralinaModel = require('../models/centralinaModel.js');
 
+
 /**
  * centralinaController.js
  *
  * @description :: Server-side logic for managing centralinas.
  */
 module.exports = {
+
+    /**
+     * centralinaController.create()
+     */
+    create: function (centralina, callback) {
+        var centralina = new centralinaModel(centralina);
+
+
+        centralina.save(function (err, centralina) {
+            if (err) {
+                callback([500, "Error when creating utente", err]);
+            }
+            callback([201, centralina]);
+        });
+    },
 
     /**
      * centralinaController.list()
@@ -44,24 +60,6 @@ module.exports = {
     },
 
     /**
-     * centralinaController.create()
-     */
-    create: function (req, res) {
-        var centralina = new centralinaModel({			ph : req.body.ph,			irraggiamentoSolare : req.body.irraggiamentoSolare,			batteria : req.body.batteria,			temperatura : req.body.temperatura,			data : req.body.data
-        });
-
-        centralina.save(function (err, centralina) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating centralina',
-                    error: err
-                });
-            }
-            return res.status(201).json(centralina);
-        });
-    },
-
-    /**
      * centralinaController.update()
      */
     update: function (req, res) {
@@ -79,7 +77,12 @@ module.exports = {
                 });
             }
 
-            centralina.ph = req.body.ph ? req.body.ph : centralina.ph;			centralina.irraggiamentoSolare = req.body.irraggiamentoSolare ? req.body.irraggiamentoSolare : centralina.irraggiamentoSolare;			centralina.batteria = req.body.batteria ? req.body.batteria : centralina.batteria;			centralina.temperatura = req.body.temperatura ? req.body.temperatura : centralina.temperatura;			centralina.data = req.body.data ? req.body.data : centralina.data;			
+            centralina.ph = req.body.ph ? req.body.ph : centralina.ph;
+			centralina.irraggiamentoSolare = req.body.irraggiamentoSolare ? req.body.irraggiamentoSolare : centralina.irraggiamentoSolare;
+			centralina.batteria = req.body.batteria ? req.body.batteria : centralina.batteria;
+			centralina.temperatura = req.body.temperatura ? req.body.temperatura : centralina.temperatura;
+			centralina.data = req.body.data ? req.body.data : centralina.data;
+			
             centralina.save(function (err, centralina) {
                 if (err) {
                     return res.status(500).json({
