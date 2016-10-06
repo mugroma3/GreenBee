@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    .row
+        .col-xs-12.col-sm-12.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+            center
+                form(role='form', action="/user/addColtivazione",method="post").form-inline
+                    .form-group
+                        | Aggiungi una coltivazione &nbsp;&nbsp;&nbsp;
+                        input(type='text', name='coltivazione', placeholder='Coltivazione')
+                        button(type='submit').btn.btn-default
+                            | Salva
+                br
+                table.table.table-striped
+                    tr
+                        th(colspan='2').text-center.success Le Tue Coltivazioni
+                    tr
+                        th Nome
+                        th Opzioni
+                    each coltivazione in coltivazioni
+                        tr
+                            td #{coltivazione}
+                            td
+                                form(role='form', action="/user/removeColtivazione",method="post")
+                                    input(type="hidden" name="coltivazione" value="#{coltivazione}")
+                                    button(type="submit").btn.btn-default Rimuovi

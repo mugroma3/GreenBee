@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    .container
+        .row
+            br
+            .table
+                table.table.table-striped
+                    tr
+                        th(colspan="4").success.text-center
+                            |Le Mie Transazioni
+                    tr.default
+                        th.text-center Trasazione
+                        th.text-center Oggetto
+                        th.text-center Quantità
+                    each transazione in user.transazioni
+                        tr
+                            td #{transazione.tipoTransazione}
+                            td #{transazione.oggetto}
+                            td #{transazione.quantita}
