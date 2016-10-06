@@ -2,8 +2,15 @@ TODO:
 
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 9) Aggiungere bootstrap a tutte le view
+11) @kappa89 Escludere alcuni campi nelle stampe dei JSON.... ATTENZIONE a quali!
+    utenteTelegramController.
+        addOrtaggio()
+        removeOrtaggi()
+        addTransazione()
+        addUscita()
+        addEntrata()
+        far tornare solo una stringa di conferma [ok/failed] 
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
-16) @vitus89 Stampare nel market i punti dell'utente
 20) @vitus89 check responsive for all elemnts
 22) @vitus89 stampare nome utente dentro la navbar
 23) Aggiungere controllo addOrtaggio che esista nel magazzino
@@ -33,6 +40,7 @@ COMPLETATI:
 12) aggiungere listaTransazioni
 13) aggiungere removeOrtaggi e gestire l'array senza duplicati
 14) modifica market con menu a tendina per ortaggi
+16) @vitus89 Stampare nel market i punti dell'utente
 17) Mettere tasti + e - in admin/prezzario
 18) input(type="number") Hai solo nascosto i tastini integrati di freccia su e giù, se clicchi dove dovrebbero stare si incrementa/decrementa il contatore
 19) Comportamento della home in caso di utente loggato? (redirect a /user o home page con la roba dell'utente) @lorenzo93 preferisce la prima

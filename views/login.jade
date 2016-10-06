@@ -8,17 +8,18 @@ html
 
     body
         .container
-            h1 Login Page
-            br
-            form(role='form', action="/login",method="post", style='max-width: 300px;')
-                .form-group
-                    input.form-control(type='text', name="username", placeholder='Enter Username')
-                .form-group
-                    input.form-control(type='password', name="password", placeholder='Password')
-                button.btn.btn-default(type='submit') Sign In
-            | &nbsp;
-        a(href='/')
-            button.btn.btn-primary(type="button") Back to Home
+            div(id='pwd-container').row
+                .col-xs-12.col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4.col-lg-4.col-lg-offset-4
+                    section.login-form
+                        form(role='login', action="/login",method="post")
+                            | #{title}
+                            input.form-control.input-lg(type='text', name="username", placeholder='Enter Username',required)
+                            input.form-control.input-lg(type='password', name="password", placeholder='Password',required)
+                            .pwstrength_viewport_progres
+                            button.btn.btn-primary.btn-block(type='submit', name='go') Sign In
+                            a(href='/')
+                                button.btn.btn-primary.btn-block(type="button") Back to Home
+
 
         script(src='/bootstrap-3.3.7/js/jquery-3.1.1.min.js')
         script(src='/bootstrap-3.3.7/js/bootstrap.min.js')

@@ -1,10 +1,11 @@
 var express = require('express');
+var titolo = 'GreenBee';
 var router = express.Router();
 var magazzinoController = require('../controllers/magazzinoController');
 var utenteController = require('../controllers/utenteController');
 
 router.get('/', function (req, res) {
-    res.render('indexLogged', { title: 'Express', user : req.user});
+    res.render('indexLogged', { title: titolo, user : req.user});
 });
 
 router.get('/logout', function (req, res) {
@@ -13,17 +14,21 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/storicoTransazioni', function(req, res){
-    res.render('storicoTransazioni', {user: req.user});
+    res.render('storicoTransazioni', {title: titolo, user: req.user});
 });
 
 router.get('/market', function (req, res) {
     magazzinoController.list(null, function(answer){
         if(answer[0]==200){
-            res.render('market', {user: req.user, magazzino: answer[1]});
+            res.render('market', {title: titolo, user: req.user, magazzino: answer[1]});
         } else {
-            res.render('error', {message: answer[1], status: answer[2]});
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
     });
+});
+
+router.get('/toDoList', function(req, res){
+    res.render('toDoList', {title: titolo, user: req.user});
 });
 
 router.post('/addSale', function (req, res) {
@@ -35,9 +40,9 @@ router.post('/addSale', function (req, res) {
     };
     utenteController.addTransazione(options, function(answer){
         if(answer[0]==200){
-            res.render('addedSale', {user: req.user, sale: answer[1]});
+            res.render('addedSale', {title: titolo, user: req.user, sale: answer[1]});
         } else {
-            res.render('error', {message: answer[1], status: answer[2]});
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
     });
 });
@@ -47,9 +52,9 @@ router.get('/gestisciColtivazioni', function (req, res) {
     var options = {id : req.user._id};
     utenteController.getColtivazioni(options, function(answer){
         if(answer[0]==200){
-            res.render('gestisciColtivazioni', {user: req.user, coltivazioni: answer[1]});
+            res.render('gestisciColtivazioni', {title: titolo, user: req.user, coltivazioni: answer[1]});
         } else {
-            res.render('error', {message: answer[1], status: answer[2]});
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
     });
 
@@ -62,9 +67,9 @@ router.post('/addColtivazione', function (req, res) {
     };
     utenteController.addOrtaggio(options, function(answer){
         if(answer[0]==200){
-            res.render('addColtivazione', { title: 'Express', user : req.user});
+            res.render('addColtivazione', { title: titolo, user : req.user});
         } else {
-            res.render('error', {message: answer[1], status: answer[2]});
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
     });
 });
@@ -78,7 +83,7 @@ router.post('/removeColtivazione', function (req, res) {
         if(answer[0]==200){
             res.redirect('gestisciColtivazioni');
         } else {
-            res.render('error', {message: answer[1], status: answer[2]});
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
     });
 });
