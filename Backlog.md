@@ -3,8 +3,6 @@ TODO:
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
 23) Aggiungere controllo addOrtaggio che esista nel magazzino
-24) Aggiungere file upload di immagine in addPrezzo (nella pagina prezzario.jade)
-
 
 Credo non manchi altro al progetto...
 
@@ -41,3 +39,4 @@ COMPLETATI:
     //modifica market per far stampare prezzo
     //modifica addTransazione per fare calcoli di prezzo e scalare/aggiungere punti (verifica cliente abbastanza punti, presenza in magazzino, scala punti, scala magazzino)
 22) @vitus89 stampare nome utente dentro la navbar
+24) Aggiungere file upload di immagine in addPrezzo (nella pagina prezzario.jade)

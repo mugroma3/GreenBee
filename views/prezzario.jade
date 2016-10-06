@@ -14,7 +14,7 @@ block content
             .col-xs-12.col-sm-12.col-md-12.col-lg-12
                 br
                 div(style="display: none;" id='newObject')
-                    form(role='form', action="/admin/addPrezzo",method="post",id='prezzarioForm').form-inline
+                    form(role='form', action="/admin/addPrezzo",method="post",id='prezzarioForm',encType="multipart/form-data").form-inline
                         .form-group
                             label(for='nome') Nome:&nbsp;
                                 input(type='text', name='nome', placeholder='Nome',required)
@@ -28,7 +28,7 @@ block content
                                     .btn.btn-default.image-preview-input
                                         span.glyphicon.glyphicon-folder-open
                                         span.image-preview-input-title Carica un'immagine
-                                        input(type='file',required, name='input-file-preview', accept="image/gif, image/jpeg, image/jpg, image/png, image/GIF, image/JPEG, image/JPG, image/PNG")
+                                        input(type='file',required, name='immagine', accept="image/gif, image/jpeg, image/jpg, image/png, image/GIF, image/JPEG, image/JPG, image/PNG")
                                 input(type='text', disabled="disabled").form-control.image-preview-filename
                         .form-group
                             .col-xs-12.col-sm-12.col-md-6.col-lg-3

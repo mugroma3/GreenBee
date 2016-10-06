@@ -1,4 +1,5 @@
 var magazzinoModel = require('../models/magazzinoModel.js');
+var uuid = require('uuid');
 
 /**
  * magazzinoController.js
@@ -60,16 +61,33 @@ module.exports = {
      * magazzinoController.create()
      */
     create: function (userData, callback) {
-        var magazzino = new magazzinoModel(userData);
 
-        magazzino.save(function (err, magazzino) {
+        if (!userData.immagine) {
+            callback(500, 'No files were uploaded.');
+            return;
+        }
+        var nomeOriginale = userData.immagine.name.split('.');
+
+        var pathImmagine = "./public/imgOggetti/"+uuid.v4()+"."+nomeOriginale[nomeOriginale.length-1];
+
+        userData.immagine.mv(pathImmagine, function(err) {
             if (err) {
-                console.log(err);
-                callback([500, "Error when creating magazzino.", err]);
+                callback(500, 'Errore nel salvataggio immagine', err);
             } else {
-                callback([201, magazzino]);
+                var magazzino = new magazzinoModel({nome: userData.nome, costo: userData.costo, immagine: pathImmagine});
+
+                magazzino.save(function (err, magazzino) {
+                    if (err) {
+                        console.log(err);
+                        callback([500, "Error when creating magazzino.", err]);
+                    } else {
+                        callback([201, magazzino]);
+                    }
+                });
             }
         });
+
+
     },
 
     /**

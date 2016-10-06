@@ -3,6 +3,7 @@ var router = express.Router();
 var userModel = require('../models/utenteModel');
 var utenteController = require('../controllers/utenteController');
 var magazzinoController = require('../controllers/magazzinoController');
+
 var titolo = 'GreenBee';
 
 router.get('/', function (req, res) {
@@ -73,8 +74,9 @@ router.post('/addPrezzo', function (req, res) {
     var options = {
         nome: req.body.nome,
         costo: req.body.costo,
-        immagine: req.body.immagine
+        immagine: req.files.immagine
     };
+
     magazzinoController.create(options, function(answer){
         if(answer[0]==201){
             res.render('addedPrezzario', { title: titolo, user : req.user, prezzo: answer[1]});
