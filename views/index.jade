@@ -43,7 +43,9 @@ body
                 div.col-xs-12.col-sm-12.col-md-12.col-lg-12
                     h1.text-muted.text-center=title
                     p.text-muted.text-center Welcome to #{title}
+                    p.text-muted
                     a.btn.btn-info.btn.active(href='/login', role='button') Login
+            br
             .row
                 .col-xs-12.col-sm-12.col-md-12.col-lg-12
                     .buttons
@@ -51,12 +53,13 @@ body
                         a.btn.btn-default.btn.active(href='/login', role='button') Social
                         a.btn.btn-default.btn.active(href='/login', role='button') Chi siamo
                         a.btn.btn-default.btn.active(href='/login', role='button') Market
-                    a(href='/login')
-                        img(src='/img/l1.png' style='height:80px')
-                    a(href='/login')
-                        img(src='/img/l2.jpg' style='height:80px')
-                    a(href='/login')
-                        img(src='/img/l3.png' style='height:80px')
+            br
+            a(href='/login')
+                img(src='/img/l1.png' style='height:80px')
+            a(href='/login')
+                img(src='/img/l2.jpg' style='height:80px')
+            a(href='/login')
+                img(src='/img/l3.png' style='height:80px')
 
     script(src='/bootstrap-3.3.7/js/jquery-3.1.1.min.js')
     script(src='/bootstrap-3.3.7/js/bootstrap.min.js')
