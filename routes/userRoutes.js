@@ -47,7 +47,6 @@ router.post('/addSale', function (req, res) {
     });
 });
 
-
 router.get('/gestisciColtivazioni', function (req, res) {
     var options = {id : req.user._id};
     utenteController.getColtivazioni(options, function(answer){

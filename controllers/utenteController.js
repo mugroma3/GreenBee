@@ -247,17 +247,18 @@ module.exports = {
                         callback([404, 'No such utente']);
                     }
                     else{
-                        utente.transazioni.push({
+                        var lastTrans = {
                             'tipoTransazione': userData.tipoTransazione,
                             'oggetto': userData.oggetto,
                             'quantita': userData.quantita
-                        });
-                        utente.save(function (err, utente) {
+                        };
+                        utente.transazioni.push(lastTrans);
+                        utente.save(function (err) {
                             if (err) {
                                 //DB Sminchiato
                                 callback([500, 'Error when updating utente', err]);
                             } else {
-                                callback([200, utente]);
+                                callback([200, lastTrans]);
                             }
                         });
                     }

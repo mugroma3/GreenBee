@@ -111,11 +111,13 @@ module.exports = {
             } else {
                 if (magazzino.quantita + userData.quantita >= 0) {
                     magazzino.quantita = (magazzino.quantita - 0) + (userData.quantita - 0);
+                    console.log(magazzino);
                     magazzino.save(function (err, magazzino) {
                         if (err) {
                             callback([500, "Error when updating magazzino.", err]);
+                        }else{
+                            callback([200, magazzino]);
                         }
-                        callback([200, magazzino]);
                     });
                 } else {
                     callback([500, "Errore, non vi sono abbastanza oggetti in magazzino"]);

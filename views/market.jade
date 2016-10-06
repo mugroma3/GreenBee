@@ -5,6 +5,9 @@ block content
         .col-xs-12.col-sm-12.col-md-6.col-lg-6
             center
                 h2.text-success Il tuo saldo: #{user.punti} BioCoin
+                if(sale)
+                    | Hai venduto: #{sale}
+
         .col-xs-12.col-sm-12.col-md-6.col-lg-6
             br
             center
