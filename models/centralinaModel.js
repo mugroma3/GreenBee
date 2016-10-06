@@ -8,7 +8,10 @@ var centralinaSchema = new Schema({
 	'battery_lvl': Number,
 	'luminosity': Number,
 	'Data' : Date,
-	'ble_servers': [sensoreModel]
+	'ble_servers': [{
+		type: Schema.Types.ObjectId,
+		ref: 'sensore'
+	}]
 });
 
 module.exports = mongoose.model('centralina', centralinaSchema);

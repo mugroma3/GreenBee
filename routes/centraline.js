@@ -2,39 +2,20 @@ var express = require('express');
 var router = express.Router();
 var centralinaController = require('../controllers/centralinaController.js');
 
-/*
- * GET
- */
-router.get('/', function (req, res) {
-    centralinaController.list(req, res);
-});
+var REST = require('../utils/REST');
 
 /*
- * GET
+ * POST lettura centralina
  */
-router.get('/:id', function (req, res) {
-    centralinaController.show(req, res);
-});
-
-/*
- * POST
- */
-router.post('/', function (req, res) {
-    centralinaController.create(req, res);
-});
-
-/*
- * PUT
- */
-router.put('/:id', function (req, res) {
-    centralinaController.update(req, res);
-});
-
-/*
- * DELETE
- */
-router.delete('/:id', function (req, res) {
-    centralinaController.remove(req, res);
+router.post('/:id', function (req, res) {
+        var options = {name: req.param.id,
+            battery_lvl: req.body.battery_lvl,
+            luminosity: req.body.luminosity,
+            Data: req.body.Date,
+            ble_servers: req.body.ble_servers}; //TODO vedere come leggere un array
+    centralinaController.create(options, function(answer){
+        REST.generate(req, res, answer);
+    })
 });
 
 module.exports = router;

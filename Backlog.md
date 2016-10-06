@@ -2,14 +2,6 @@ TODO:
 
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 9) Aggiungere bootstrap a tutte le view
-11) @kappa89 Escludere alcuni campi nelle stampe dei JSON.... ATTENZIONE a quali!
-    utenteTelegramController.
-        addOrtaggio()
-        removeOrtaggi()
-        addTransazione()
-        addUscita()
-        addEntrata()
-        far tornare solo una stringa di conferma [ok/failed] 
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
 20) @vitus89 check responsive for all elemnts
 22) @vitus89 stampare nome utente dentro la navbar
