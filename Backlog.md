@@ -17,7 +17,8 @@ TODO:
     //modifica agguntaPrezzi (route)
     //modifica market per far stampare prezzo
     //modifica addTransazione per fare calcoli di prezzo e scalare/aggiungere punti (verifica cliente abbastanza punti, presenza in magazzino, scala punti, scala magazzino)
-
+24) Gestire l'upload delle immagini
+25) Eliminare le pagine added.jade
 
 Credo non manchi altro al progetto...
 
@@ -34,8 +35,9 @@ COMPLETATI:
 12) aggiungere listaTransazioni
 13) aggiungere removeOrtaggi e gestire l'array senza duplicati
 14) modifica market con menu a tendina per ortaggi
+16) @vitus89 Stampare nel market i punti dell'utente
 17) Mettere tasti + e - in admin/prezzario
 18) input(type="number") Hai solo nascosto i tastini integrati di freccia su e giù, se clicchi dove dovrebbero stare si incrementa/decrementa il contatore
 19) Comportamento della home in caso di utente loggato? (redirect a /user o home page con la roba dell'utente) @lorenzo93 preferisce la prima
 22) @vitus89 stampare nome utente dentro la navbar
-16) @vitus89 Stampare nel market i punti dell'utente
+23) AdminHome diventa la pagina dei sensori
