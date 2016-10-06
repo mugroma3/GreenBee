@@ -19,13 +19,13 @@ body
         // Wrapper for slides
         .carousel-inner(style='height:400px')
             .item.active
-                img(src='/img/1.jpg',alt='banner').center-block
+                img.img-responsive(src='/img/5.jpg',alt='banner').center-block
                 .carousel-caption
                     .caption-wrapper
                         .caption-info
                             h1(style='font-family:verdana;font-size:360%;center') BioOrtoStar
             .item
-                img.img-responsive(src='/img/3.jpg',alt='Responsive image').center-block
+                img(src='/img/6.jpg',alt='Responsive image').center-block
                 .carousel-caption
             .item
                 img.img-responsive(src='/img/4.jpg',alt='Responsive image').center-block
@@ -40,10 +40,15 @@ body
     center
         .container
             .row
-                div.col-xs-12.col-sm-12.col-md-12.col-lg-12
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
                     h1.text-muted.text-center=title
                     //p.text-muted.text-center Welcome to #{title}
-                    p.text-muted(style='font-size:200%') Questo progetto è nato in maniera del tutto casuale: un giorno, in un orto urbano dimenticato di Roma, abbiamo trovato delle arnie di api. Da qui la nostra idea di unire le capacità collaborative tipiche delle api alla gestione di un orto sociale. Per l'appunto, “GreenBee”.
+                    p.text-muted(style='font-size:20px') Questo progetto è nato in maniera del tutto casuale: un giorno, in un orto urbano dimenticato di Roma, abbiamo trovato delle arnie di api. Da qui la nostra idea di unire le capacità collaborative tipiche delle api alla gestione di un orto sociale. Per l'appunto, “GreenBee”.
+                    a.btn.btn-info.btn.active(href='/login', role='button') Login
+                //.col-xs-12
+                    h1.text-muted.text-center=title
+                    //p.text-muted.text-center Welcome to #{title}
+                    p.text-muted(style='font-size:100%') Questo progetto è nato in maniera del tutto casuale: un giorno, in un orto urbano dimenticato di Roma, abbiamo trovato delle arnie di api. Da qui la nostra idea di unire le capacità collaborative tipiche delle api alla gestione di un orto sociale. Per l'appunto, “GreenBee”.
                     a.btn.btn-info.btn.active(href='/login', role='button') Login
             br
             //.row
@@ -57,7 +62,7 @@ body
             .row
                 .col-xs-3.col-sm-3.col-md-3.col-lg-3
                     a(href='/login')
-                        img.img-responsive(src='/img/l1.png' style='height:80px')
+                        img.img-responsive(src='/img/l1.png' style='width:80px;height:80px')
                     p Gli orti
                 .col-xs-3.col-sm-3.col-md-3.col-lg-3
                     a(href='/login')
