@@ -136,12 +136,14 @@ module.exports = {
     /**
      * utenteController.remove()
      */
-    remove: function (userData, callback) {
+    removeUtente: function (userData, callback) {
         utenteModel.findByIdAndRemove(userData.id, function (err, utente) {
             if (err) {
                 callback([500, 'Error when deleting the utente.', err]);
             }
-            callback([204]);
+            else {
+                callback([204, "utente rimosso"]);
+            }
         });
     },
 
