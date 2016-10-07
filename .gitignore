@@ -48,3 +48,6 @@ jspm_packages
 
 #database
 dataBase
+
+#build
+bin
