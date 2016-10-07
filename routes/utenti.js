@@ -138,7 +138,7 @@ router.put('/addUscita/:id', function (req, res) {
 /*
  * DELETE rimuove Utente tramite id nell'url
  */
-router.put('/removeUtente/:id', function (req, res) {
+router.delete('/removeUtente/:id', function (req, res) {
     var options = {id: req.params.id};
     utenteController.removeUtente(options, function(answer){
         REST.generate(req, res, answer);
