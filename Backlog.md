@@ -5,8 +5,9 @@ TODO:
 23) Aggiungere controllo addOrtaggio che esista nel magazzino
 25) LO SCHEDULE!!!!
 26) Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
-27) Implementare la funzione remove in gestioneUtenti, prezzario/magazzino, gestiosciColtivazioni(quelle dell'utonto)
-28) Implementare le funzioni rinomina, cambia password e username in getioneUtenti
+27) Implementare la funzione remove prezzario/magazzino(magazzinoController)
+28) Implementare le funzioni rinomina, cambia password e username, remove in getioneUtenti
+29) Implementare la pagina dei sensori
 Credo non manchi altro al progetto...
 
 COMPLETATI:
