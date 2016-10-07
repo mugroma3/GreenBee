@@ -2,26 +2,28 @@ doctype html
 html
 head
     title= title
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    //meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    meta(charset='UTF-8')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+
     link(rel='stylesheet', href='/bootstrap-3.3.7/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
 body
     div(id='carousel-example-generic' data-ride='carousel').carousel.slide
-        // Indicators
-        ol.carousel-indicators
-            li.active(data-target='#carousel-example-generic', data-slide-to='0')
-            li(data-target='#carousel-example-generic', data-slide-to='1')
-            li(data-target='#carousel-example-generic', data-slide-to='2')
         // Wrapper for slides
-        .carousel-inner(role='listbox',style='height:180px; margin:0 auto')
+        .carousel-inner
             .item.active
-                img.img-responsive(src='/img/1.jpg',alt='Responsive image')
+                img(src='/img/7.png',alt='banner').center-block
+                .carousel-caption
+                    .caption-wrapper
+                        .caption-info
+                            h1(style='font-family:verdana;font-size:360%;center') BioOrtoStar
+            .item
+                img(src='/img/8.png',alt='Responsive image').center-block
                 .carousel-caption
             .item
-                img.img-responsive(src='/img/3.jpg',alt='Responsive image')
-                .carousel-caption
-            .item
-                img.img-responsive(src='/img/4.jpg',alt='Responsive image')
+                img.img-responsive(src='/img/sfondoLegnoTransparent.png',alt='Responsive image').center-block
                 .carousel-caption
         // Controls
         a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
@@ -30,20 +32,37 @@ body
         a.right.carousel-control(href='#carousel-example-generic', role='button', data-slide='next')
             span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
             span.sr-only Next
-    .container
-        .row
-            div.col-xs-12.col-md-12.col-lg-12
-                h1.text-center=title
-                p.text-center Welcome to #{title}
-                center
+    center
+        .container
+            .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                    h1.text-mug.text-center=title
+                    //p.text-muted.text-center Welcome to #{title}
+                    p.text-muted(style='font-size:20px') Questo progetto è nato in maniera del tutto casuale: un giorno, in un orto urbano dimenticato di Roma, abbiamo trovato delle arnie di api. Da qui la nostra idea di unire le capacità collaborative tipiche delle api alla gestione di un orto sociale. Per l'appunto, “GreenBee”.
                     a.btn.btn-info.btn.active(href='/login', role='button') Login
-        .row.center-block
-            .col-xs-offset-1.col-sm-offset-2.col-md-offset-4
-                .buttons.center
-                    a.btn.btn-default.btn.active(href='/login', role='button') Gli orti
-                    a.btn.btn-default.btn.active(href='/login', role='button') Social
-                    a.btn.btn-default.btn.active(href='/login', role='button') Chi siamo
-                    a.btn.btn-default.btn.active(href='/login', role='button') Market
+            br
+            br
+            .row
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l1.png' style='width:80px')
+                    p Gli orti
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l2.png' style='width:80px')
+                    p Social
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l3.png' style='width:80px')
+                    p Chi siamo
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    a(href='/login')
+                        img.img-responsive(src='/img/l4.png' style='width:80px')
+                    p Market
+            br
+            br
+            br
+
 
     script(src='/bootstrap-3.3.7/js/jquery-3.1.1.min.js')
     script(src='/bootstrap-3.3.7/js/bootstrap.min.js')

@@ -4,10 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var fileUpload = require('express-fileupload');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://greenbeedb/ortoBioDB'); //Localhost/nomeDB
+mongoose.connect('mongodb://localhost/ortoBioDB'); //Localhost/nomeDB
 
 var routes = require('./routes/index');
 var api = require('./routes/apiRoutes');
@@ -31,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload());
 
 //Configure Passport
 app.use(expressSession({secret: 'MugLab',

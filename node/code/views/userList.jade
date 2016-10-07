@@ -2,7 +2,10 @@ extends layout
 
 block content
     .row
-        .col-xs-12.col-sm-12.col-md-6.col-lg-8
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+            center
+                a(type='button',href='/admin/addUser').btn.btn-mug  Aggiungi Un Utente
+        .col-xs-12.col-sm-12.col-md-12.col-lg-8
             table.table.table-striped.pull-left
                 tr
                     th(colspan='5').text-center.success Ecco gli utenti registrati al tuo orto
@@ -19,7 +22,8 @@ block content
                         td #{utente.password}
                         td #{utente.admin}
                         td
-                            a(href="#" class="btn btn-default") Rinomina
-                            a(href="#" class="btn btn-default") Cambia Password
-                            a(href="#" class="btn btn-default") Cambia Username
-            a(href='/admin/addUser') Aggiungi Un Utente
+                            a(href="#").btn.btn-mug Rinomina
+                            | &nbsp;
+                            a(href="#").btn.btn-mug  Cambia Password
+                            | &nbsp;
+                            a(href="#").btn.btn-mug  Cambia Username

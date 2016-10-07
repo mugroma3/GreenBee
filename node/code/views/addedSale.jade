@@ -1,7 +1,18 @@
 extends layout
 
 block content
-    .container
-        p Ciao #{user.nome}
-        h4 Hai venduto #{sale}
-        a(href="/user/market/") Torna al Market
+    .row
+        .col-xs-12.col-sm-12.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3
+            h1.text-success Vendita effettuata con successo
+            .row
+                .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                    h3.text-primary Transazione:  #{sale.tipoTransazione}
+            .row
+                .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                    h3.text-primary Oggetto: #{sale.oggetto}
+            .row
+                .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                    h3.text-primary Quantità: #{sale.quantita}
+            .row
+                .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                    a(href="/user/market/").pull-right.btn.btn-mug Torna al Market

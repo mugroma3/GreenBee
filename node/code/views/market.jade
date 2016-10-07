@@ -1,28 +1,13 @@
 extends layout
 
 block content
-    script.
-        function incrementa(id){
-            var current = document.getElementById(id);
-            if (current.value < current.max)
-                document.getElementById(id).value++;
-        }
-        function decrementa(id) {
-            var current = document.getElementById(id);
-            if(current.value > 1)
-                document.getElementById(id).value--;
-        }
-        function toggleElement(id) {
-            $('#'+id).toggle();
-        }
-
-        function resetForm(formId){
-            document.forms[formId].reset();
-        }
     .row
         .col-xs-12.col-sm-12.col-md-6.col-lg-6
             center
                 h2.text-success Il tuo saldo: #{user.punti} BioCoin
+                if(sale)
+                    | Hai venduto: #{sale}
+
         .col-xs-12.col-sm-12.col-md-6.col-lg-6
             br
             center

@@ -3,18 +3,19 @@ extends layout
 block content
     .container
         .row
-            br
-            .table
-                table.table.table-striped
-                    tr
-                        th(colspan="4").success.text-center
-                            |Le Mie Transazioni
-                    tr.default
-                        th.text-center Trasazione
-                        th.text-center Oggetto
-                        th.text-center Quantità
-                    each transazione in user.transazioni
+            .col-xs-12.col-sm-12.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+                br
+                .table.text-center
+                    table.table.table-striped
                         tr
-                            td #{transazione.tipoTransazione}
-                            td #{transazione.oggetto}
-                            td #{transazione.quantita}
+                            th(colspan="4").success.text-center
+                                |Le Mie Transazioni
+                        tr
+                            th.text-center Trasazione
+                            th.text-center Oggetto
+                            th.text-center Quantità
+                        each transazione in user.transazioni
+                            tr
+                                td #{transazione.tipoTransazione}
+                                td #{transazione.oggetto}
+                                td #{transazione.quantita}

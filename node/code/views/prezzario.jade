@@ -3,25 +3,39 @@ extends layout
 block content
     .container
         .row
-            .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                h1.text-success.text-center Ecco il prezzario
-                br
-                form(role='form', action="/admin/addPrezzo",method="post").form-inline
-                    .form-group
-                        label(for='nome') Nome:
-                            &nbsp;
-                            input(type='text', name='nome', placeholder='Nome')
-                            &nbsp;
-                        label(for='costo') Costo:
-                            &nbsp;
-                            input(type='number', name='costo', placeholder='Costo' min="0")
-                        label(for='imgUploaded') Carica Immagine:
-                            input(type='file', name='imgUploaded', accept="image/gif, image/jpeg, image/jpg, image/png, image/GIF, image/JPEG, image/JPG, image/PNG")
-                    .form-group
-                        .col-xs-12.col-sm-12.col-md-6.col-lg-3
-                            button(type='submit').btn.btn-success Salva
+            .col-xs-12.col-sm-12.col-md-2.col-lg-2
+                button(type='button' id="btnNew" onclick="toggleElement('newObject');toggleElement('btnDelete');toggleElement('btnNew');").btn.btn-success.btn-lg.active
+                    text.h4
+                        | Aggiungi
+                button(type='button' id="btnDelete" style="display: none;" onclick="toggleElement('newObject');toggleElement('btnDelete');toggleElement('btnNew');resetForm('prezzarioForm');").btn.btn-danger.btn-lg.active
+                    text.h4
+                        | Annulla
         .row
             .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                br
+                div(style="display: none;" id='newObject')
+                    form(role='form', action="/admin/addPrezzo",method="post",id='prezzarioForm',encType="multipart/form-data").form-inline
+                        .form-group
+                            label(for='nome') Nome:&nbsp;
+                                input(type='text', name='nome', placeholder='Nome',required)
+                            label(for='costo') &nbsp;Costo:&nbsp;
+                                input(type='number', name='costo', placeholder='Costo' min="0",required)
+                            |&nbsp;&nbsp;
+                            .input-group.image-preview
+                                span.input-group-btn
+                                    button(type='button' style="display:none;").btn.btn-default.image-preview-clear
+                                        span.glyphicon.glyphicon-remove Clear
+                                    .btn.btn-default.image-preview-input
+                                        span.glyphicon.glyphicon-folder-open
+                                        span.image-preview-input-title Carica un'immagine
+                                        input(type='file',required, name='immagine', accept="image/gif, image/jpeg, image/jpg, image/png, image/GIF, image/JPEG, image/JPG, image/PNG")
+                                input(type='text', disabled="disabled").form-control.image-preview-filename
+                        .form-group
+                            .col-xs-12.col-sm-12.col-md-6.col-lg-3
+                                button(type='submit').btn.btn-success Salva
+        .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                h1.text-success.text-center Ecco il prezzario
                 br
                 br
                 table.table.table-striped

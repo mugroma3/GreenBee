@@ -1,4 +1,6 @@
 var centralinaModel = require('../models/centralinaModel.js');
+var sensoreModel = require('../models/sensoreModel.js');
+
 
 /**
  * centralinaController.js
@@ -8,57 +10,53 @@ var centralinaModel = require('../models/centralinaModel.js');
 module.exports = {
 
     /**
-     * centralinaController.list()
-     */
-    list: function (req, res) {
-        centralinaModel.find(function (err, centralinas) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting centralina.',
-                    error: err
-                });
-            }
-            return res.json(centralinas);
-        });
-    },
-
-    /**
-     * centralinaController.show()
-     */
-    show: function (req, res) {
-        var id = req.params.id;
-        centralinaModel.findOne({_id: id}, function (err, centralina) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting centralina.',
-                    error: err
-                });
-            }
-            if (!centralina) {
-                return res.status(404).json({
-                    message: 'No such centralina'
-                });
-            }
-            return res.json(centralina);
-        });
-    },
-
-    /**
      * centralinaController.create()
      */
-    create: function (req, res) {
-        var centralina = new centralinaModel({			ph : req.body.ph,			irraggiamentoSolare : req.body.irraggiamentoSolare,			batteria : req.body.batteria,			temperatura : req.body.temperatura,			data : req.body.data
-        });
-
+    create: function (centralina, callback) {
+        var centralina = new centralinaModel(centralina);
         centralina.save(function (err, centralina) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating centralina',
-                    error: err
-                });
+                callback([500, "Error when creating centralina", err]);
             }
-            return res.status(201).json(centralina);
+            else{
+                callback([201, centralina]);
+            }
         });
+    },
+
+    /**
+     * centralinaController.list()
+     */
+    list: function (centralinaData, callback) {
+        centralinaModel.find(function (err, centralinas) {
+            if (err) {
+                callback([500, "Error when getting letture.", err]);
+                }
+                else{
+                callback([200, centralinas]);
+            }
+        });
+    },
+
+
+    /**
+     * utenteController.show()
+     */
+    show: function (centralinaData, callback) {
+        centralinaModel.findOne({_id: centralinaData.id}, function (err, centralina) {
+                if (err) {
+                    callback([500, "Error when getting lettura.", err]);
+                }
+                else{
+                    if (!centralina) {
+                        callback([404, 'No such lettura']);
+                    }
+                    else{
+                        callback([200, centralina]);
+                    }
+                }
+
+            });
     },
 
     /**
@@ -79,7 +77,12 @@ module.exports = {
                 });
             }
 
-            centralina.ph = req.body.ph ? req.body.ph : centralina.ph;			centralina.irraggiamentoSolare = req.body.irraggiamentoSolare ? req.body.irraggiamentoSolare : centralina.irraggiamentoSolare;			centralina.batteria = req.body.batteria ? req.body.batteria : centralina.batteria;			centralina.temperatura = req.body.temperatura ? req.body.temperatura : centralina.temperatura;			centralina.data = req.body.data ? req.body.data : centralina.data;			
+            centralina.ph = req.body.ph ? req.body.ph : centralina.ph;
+			centralina.irraggiamentoSolare = req.body.irraggiamentoSolare ? req.body.irraggiamentoSolare : centralina.irraggiamentoSolare;
+			centralina.batteria = req.body.batteria ? req.body.batteria : centralina.batteria;
+			centralina.temperatura = req.body.temperatura ? req.body.temperatura : centralina.temperatura;
+			centralina.data = req.body.data ? req.body.data : centralina.data;
+			
             centralina.save(function (err, centralina) {
                 if (err) {
                     return res.status(500).json({

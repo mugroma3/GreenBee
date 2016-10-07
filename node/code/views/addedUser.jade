@@ -1,7 +1,15 @@
 extends layout
 
 block content
-    .container
-        p Ciao #{user.nome}
-        h4 Hai aggiunto l'utente #{userAdded}
-        a(href="/admin/") Torna alla Home
+    .row
+        .col-xs-12.col-sm-12.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3
+            h1.text-success Utente aggiunto con successo
+            .row
+                .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                    h3.text-primary Nome:  #{userAdded.nome}
+            .row
+                .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                    h3.text-primary Username: #{userAdded.username}
+            .row
+                .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                    a(href="/admin").pull-right.btn.btn-mug Torna alla Home

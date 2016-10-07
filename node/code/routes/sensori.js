@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var sensoreController = require('../controllers/sensoreController.js');
+var REST = require('../utils/REST');
 
 /*
  * GET
  */
 router.get('/', function (req, res) {
-    sensoreController.list(req, res);
+    sensoreController.list(null, function (answer) {
+        REST.generate(req, res, answer);
+    });
 });
 
 /*
