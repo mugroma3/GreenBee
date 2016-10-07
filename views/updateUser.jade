@@ -21,9 +21,14 @@ block content
                     .col-sm-6
                         input(type='password', name="password", placeholder='Password',id="Password").form-control
                 .form-group
-                    label(for='TelegramID').control-label.col-sm-2 TelegramID:&nbsp;
-                    .col-sm-6
-                        input(type='text', name="telegramID", placeholder='Password',id="TelegramID", value='#{utenteSelezionato.telegramID}').form-control
+                    if utenteSelezionato.telegramID
+                        label(for='TelegramID').control-label.col-sm-2 TelegramID:&nbsp;
+                        .col-sm-6
+                            input(type='text', name="telegramID", placeholder='Telegram ID',id="TelegramID", value='#{utenteSelezionato.telegramID}').form-control
+                    else
+                        label(for='TelegramID').control-label.col-sm-2 TelegramID:&nbsp;
+                        .col-sm-6
+                            input(type='text', name="telegramID", placeholder='Telegram ID',id="TelegramID").form-control
                 .form-group
                     .col-sm-offset-2.col-sm-6
                         .checkbox
