@@ -1,0 +1,40 @@
+extends layout
+
+block content
+    .row
+        .col-xs-12.col-sm-12.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3
+            h3.text-mug Aggiungi un utente:
+            br
+            br
+            form(role='form', action="/admin/updatedUser",method="post").form-horizontal
+                input(type="hidden" name="utenteId" value="#{utenteSelezionato._id}")
+                .form-group
+                    label(for='Nome').control-label.col-sm-2 Nome:&nbsp;
+                    .col-sm-6
+                        input(type='text', name='nome', placeholder='Nome', id='Nome', value='#{utenteSelezionato.nome}').form-control
+                .form-group
+                    label(for='Username').control-label.col-sm-2 Username:&nbsp;
+                    .col-sm-6
+                        input(type='text', name="username", placeholder='Enter Username', id="Username", value='#{utenteSelezionato.username}').form-control
+                .form-group
+                    label(for='Password').control-label.col-sm-2 Password:&nbsp;
+                    .col-sm-6
+                        input(type='password', name="password", placeholder='Password',id="Password").form-control
+                .form-group
+                    label(for='TelegramID').control-label.col-sm-2 TelegramID:&nbsp;
+                    .col-sm-6
+                        input(type='text', name="telegramID", placeholder='Password',id="TelegramID", value='#{utenteSelezionato.telegramID}').form-control
+                .form-group
+                    .col-sm-offset-2.col-sm-6
+                        .checkbox
+                            label
+                            if utenteSelezionato.admin
+                                input(type='checkbox', name='admin', value='true', checked)
+                            else
+                                input(type='checkbox', name='admin', value='true')
+                            | Amministratore
+                .form-group
+                    .col-sm-3.col-sm-offset-1
+                        a(href="/admin/userList/").btn.btn-mug Torna alla Lista Utenti
+                    .col-sm-3.col-sm-offset-1
+                        button.btn.btn-success(type='submit') Modifica Utente

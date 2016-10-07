@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var userModel = require('../models/utenteModel');
 var utenteController = require('../controllers/utenteController');
 var magazzinoController = require('../controllers/magazzinoController');
 
@@ -10,23 +9,48 @@ router.get('/', function (req, res) {
     res.render('indexLogged', { title: titolo, user : req.user});
 });
 
-//TODO Tocca usare il controller non il model!!!
 router.get('/userList', function (req, res) {
-    userModel.find(function (err, utenti) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Error when getting magazzino.',
-                error: err
-            });
+    utenteController.list(null, function (answer) {
+        if(answer[0]==200){
+            res.render('userList', {title: titolo, user: req.user, listaUtenti: answer[1]});
         } else {
-            res.render('userList', { title: titolo, user : req.user, listaUtenti: utenti});
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
-
     });
 });
 
 router.get('/addUser', function (req, res) {
     res.render('addUser', { title: titolo, user : req.user});
+});
+
+router.post('/updateUser', function (req, res) {
+    var options = {id: req.body.utenteId};
+    utenteController.show(options, function(answer){
+        if(answer[0]==200){
+            res.render('updateUser', { title: titolo, user : req.user, utenteSelezionato: answer[1]});
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
+
+router.post('/updatedUser', function (req, res) {
+    var options = {
+        id: req.body.utenteId,
+        nome: req.body.nome,
+        username: req.body.username,
+        password: req.body.password,
+        admin: req.body.admin,
+        telegramID: req.body.telegramID
+    };
+    console.log(options);
+    utenteController.update(options, function(answer){
+        if(answer[0]==200){
+            res.render('updatedUser', { title: titolo, user : req.user});
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
 });
 
 router.get('/sensori', function (req, res) {
@@ -38,7 +62,8 @@ router.post('/addUser', function (req, res) {
         nome: req.body.nome,
         username: req.body.username,
         password: req.body.password,
-        admin: req.body.admin
+        admin: req.body.admin,
+        telegramID: req.body.telegramID
     };
     utenteController.create(options, function(answer){
         switch (answer[0]){
@@ -86,5 +111,15 @@ router.post('/addPrezzo', function (req, res) {
     });
 });
 
+router.post('/removeUtente', function (req, res) {
+    var options = {id: req.body.utenteId};
+    utenteController.removeUtente(options, function(answer){
+        if(answer[0]==204){
+            res.redirect('/admin/userList');
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
 
 module.exports = router;

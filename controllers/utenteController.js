@@ -21,8 +21,9 @@ module.exports = {
                                 function (err, utentes) {
             if (err) {
                 callback([500, "Error when getting utenti.", err]);
+            }else{
+                callback([200, utentes]);
             }
-            callback([200, utentes]);
         });
     },
 
@@ -31,7 +32,6 @@ module.exports = {
      */
     show: function (userData, callback) {
         utenteModel.findOne({_id: userData.id},{password:0,
-                                                _id:0,
                                                 __v:0,
                                                 ultimoAccesso:0,
                                                 transazioni:0,
@@ -119,6 +119,8 @@ module.exports = {
             }
             utente.admin = userData.admin ? userData.admin : utente.admin;
             utente.nome = userData.nome ? userData.nome : utente.nome;
+            utente.username = userData.username ? userData.username : utente.username;
+            utente.password = userData.password ? userData.password : utente.password;
             utente.punti = userData.punti ? userData.punti : utente.punti;
             utente.accessi = userData.accessi ? userData.accessi : utente.accessi;
             utente.transazioni = userData.transazioni ? userData.transazioni : utente.transazioni;
@@ -126,9 +128,9 @@ module.exports = {
             utente.save(function (err, utente) {
                 if (err) {
                     callback([500, 'Error when updating utente.', err]);
+                }else {
+                    callback([200, utente]);
                 }
-
-                callback([200, utente]);
             });
         });
     },
