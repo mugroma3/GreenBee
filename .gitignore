@@ -50,4 +50,4 @@ jspm_packages
 dataBase
 
 #build
-bin
+bin/
