@@ -20,9 +20,24 @@ block content
                         td #{utente.username}
                         td #{utente.admin}
                         td
-                            form(role='form', action="/admin/removeUtente",method="post", onsubmit="return confirm('Vuoi Rimuovere #{utente.nome}?')")
-                                input(type="hidden" name="utenteId" value="#{utente._id}")
-                                button(type="submit").btn.btn-mug Rimuovi
+                            button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeUserModal#{utente._id}').btn.btn-mug
+                                | Rimuovi
+                            div(class='modal fade' tabindex='-1' role='dialog' id='removeUserModal#{utente._id}' aria-labelledby='removeUserModalLabel#{utente._id}')
+                                div(class='modal-dialog' role='document')
+                                    form(role='form', action="/admin/removeUtente",method="post").form-inline
+                                        .modal-content
+                                            .modal-header.text-center
+                                                h2 Si è scelto di eliminare questo utente:
+                                            .modal-body.text-center
+                                                .row
+                                                    h3 Nome: #{utente.nome}
+                                                .row
+                                                    h3 Username: #{utente.username}
+                                            .modal-footer
+                                                button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                input(type="hidden" name="utenteId" value="#{utente._id}")
+                                                button(type='submit' class='btn btn-success')
+                                                    | Conferma
                         td
                             form(role='form', action="/admin/updateUser",method="post")
                                 input(type="hidden" name="utenteId" value="#{utente._id}")

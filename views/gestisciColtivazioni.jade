@@ -21,6 +21,19 @@ block content
                         tr
                             td #{coltivazione}
                             td
-                                form(role='form', action="/user/removeColtivazione",method="post")
-                                    input(type="hidden" name="coltivazione" value="#{coltivazione}")
-                                    button(type="submit").btn.btn-default Rimuovi
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeColtivazioneModal#{coltivazione._id}').btn.btn-mug
+                                    | Rimuovi
+                                div(class='modal fade' tabindex='-1' role='dialog' id='removeColtivazioneModal#{coltivazione._id}' aria-labelledby='removeColtivazioneModalLabel#{coltivazione._id}')
+                                    div(class='modal-dialog' role='document')
+                                        form(role='form', action="/user/removeColtivazione",method="post").form-inline
+                                            .modal-content
+                                                .modal-header.text-center
+                                                    h2 Si è scelto di eliminare questa coltivazione:
+                                                .modal-body.text-center
+                                                    .row
+                                                        h3 #{coltivazione}
+                                                .modal-footer
+                                                    button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                    input(type="hidden" name="coltivazione" value="#{coltivazione}")
+                                                    button(type='submit' class='btn btn-success')
+                                                        | Conferma

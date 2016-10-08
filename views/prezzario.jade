@@ -17,9 +17,9 @@ block content
                     form(role='form', action="/admin/addPrezzo",method="post",id='prezzarioForm',encType="multipart/form-data").form-inline
                         .form-group
                             label(for='nome') Nome:&nbsp;
-                                input(type='text', name='nome', placeholder='Nome',required)
+                                input(type='text' id='nome' name='nome'  placeholder='Nome' required)
                             label(for='costo') &nbsp;Costo:&nbsp;
-                                input(type='number', name='costo', placeholder='Costo' min="0",required)
+                                input(type='number' id='costo'  name='costo'  placeholder='Costo' min="0" required)
                             |&nbsp;&nbsp;
                             .input-group.image-preview
                                 span.input-group-btn
@@ -50,6 +50,21 @@ block content
                             td #{prezzo.quantita}
                             td #{prezzo.costo}
                             td
-                                form(role='form', action="/admin/removePrezzo",method="post")
-                                    input(type="hidden" name="prodotto" value="#{prezzo._id}")
-                                    button(type="submit").btn.btn-default Rimuovi
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removePrezzoModal#{prezzo._id}').btn.btn-mug
+                                    | Rimuovi
+                                div(class='modal fade' tabindex='-1' role='dialog' id='removePrezzoModal#{prezzo._id}' aria-labelledby='removePrezzoModalLabel#{prezzo._id}')
+                                    div(class='modal-dialog' role='document')
+                                        form(role='form', action="/admin/removePrezzo",method="post").form-inline
+                                            .modal-content
+                                                .modal-header.text-center
+                                                    h2 Si è scelto di eliminare questo prezzo:
+                                                .modal-body.text-center
+                                                    .row
+                                                        h3 Nome: #{prezzo.nome}
+                                                    .row
+                                                        h3 Costo: #{prezzo.costo}
+                                                .modal-footer
+                                                    button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                    input(type="hidden" name="prodotto" value="#{prezzo._id}")
+                                                    button(type='submit' class='btn btn-success')
+                                                        | Conferma

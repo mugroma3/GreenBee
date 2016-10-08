@@ -48,23 +48,22 @@ block content
                         else
                             img(src='/imgOggetti/img_not_found.jpg' style='width:200px;height:200px;' alt='...').img-circle.img-responsive
                         #{oggetto.nome}
-                    div(class='modal fade' tabindex='-1' role='dialog' id='ortaggiModal#{oggetto._id}' aria-labelledby='ortaggiModalLabel#{oggetto._id}')
-                        div(class='modal-dialog' role='document')
+                    div(class='modal fade' data-backdrop="static" data-keyboard="false" tabindex='-1' role='dialog' id='ortaggiModal#{oggetto._id}' aria-labelledby='ortaggiModalLabel#{oggetto._id}')
+                        div(class='modal-dialog modal-sm' role='document')
                             form(action="/user/addSale",method="post").form-inline
                                 .modal-content
-                                    .modal-header
-                                        h4(id='ortaggiModalLabel#{oggetto._id}').modal-title #{oggetto.nome}
-                                    .modal-body
+                                    .modal-header.text-center
+                                        h2.text-mug(id='ortaggiModalLabel#{oggetto._id}').modal-title #{oggetto.nome}
+                                    .modal-body.text-center.text-mug
                                         .row
-                                            .col-md-4
-                                                | Quantità disponibile: #{oggetto.quantita}
-                                            .col-md-4
-                                                | Prezzo: #{oggetto.costo}
-                                            .col-md-6
-                                                | Scegli la quantità:
-                                                input(type='number' id='#{oggetto._id}' value='1' name='quantita' min='1' max='#{oggetto.quantita}').form-control
+                                            | Quantità disponibile: #{oggetto.quantita}
+                                        .row
+                                            | Prezzo: #{oggetto.costo}
+                                        .row
+                                            | Scegli la quantità:&nbsp;
+                                            input(type='number' id='#{oggetto._id}' value='1' name='quantita' min='1' max='#{oggetto.quantita}').form-control
                                     .modal-footer
-                                        button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Close
+                                        button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
                                         input(type="hidden" name="oggetto" value="#{oggetto.nome}")
                                         input(type="hidden" name="tipoTransazione" value="acquisto")
                                         button(type='submit' class='btn btn-success')

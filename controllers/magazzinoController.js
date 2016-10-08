@@ -91,6 +91,20 @@ module.exports = {
     },
 
     /**
+     * magazzinoController.remove()
+     */
+    remove: function (userData, callback) {
+        magazzinoModel.findByIdAndRemove(userData.id, function (err, magazzino) {
+            if (err) {
+                callback([500, 'Error when deleting the oggetto in magazzino.', err]);
+            }
+            else {
+                callback([204, "oggetto rimosso dal magazzino"]);
+            }
+        });
+    },
+
+    /**
      * magazzinoController.update()
      */
     update: function (userData, callback) {

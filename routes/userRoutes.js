@@ -66,7 +66,7 @@ router.post('/addColtivazione', function (req, res) {
     };
     utenteController.addOrtaggio(options, function(answer){
         if(answer[0]==200){
-            res.render('addColtivazione', { title: titolo, user : req.user});
+            res.render('addColtivazione', { title: titolo, user : req.user, coltivazione: options.ortaggio});
         } else {
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }

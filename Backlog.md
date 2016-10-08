@@ -5,9 +5,8 @@ TODO:
 23) Aggiungere controllo addOrtaggio che esista nel magazzino
 25) LO SCHEDULE!!!!
 26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
-27) @vitus89 Implementare la funzione remove prezzario/magazzino(magazzinoController)
 29) Implementare la pagina dei sensori
-30) @vitus89 modal for remove
+
 Credo non manchi altro al progetto...
 
 COMPLETATI:
@@ -44,4 +43,6 @@ COMPLETATI:
     //modifica addTransazione per fare calcoli di prezzo e scalare/aggiungere punti (verifica cliente abbastanza punti, presenza in magazzino, scala punti, scala magazzino)
 22) @vitus89 stampare nome utente dentro la navbar
 24) Aggiungere file upload di immagine in addPrezzo (nella pagina prezzario.jade)
+27) @vitus89 Implementare la funzione remove prezzario/magazzino(magazzinoController)
 28) Implementare le funzioni rinomina, cambia password e username, remove in getioneUtenti
+30) @vitus89 modal for remove
