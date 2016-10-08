@@ -11,7 +11,7 @@ var options = {
     nome: req.body.nome,
     username: req.body.username,
     password: req.body.password,
-    admin: req.body.admin
+    admin: req.body.admin}
 
 utenteController.create();
 

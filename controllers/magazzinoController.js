@@ -68,13 +68,16 @@ module.exports = {
         }
         var nomeOriginale = userData.immagine.name.split('.');
 
-        var pathImmagine = "./public/imgOggetti/"+uuid.v4()+"."+nomeOriginale[nomeOriginale.length-1];
+        var uuidName = uuid.v4();
+        var pathImmagineLocal = "./public/imgOggetti/"+uuidName+"."+nomeOriginale[nomeOriginale.length-1];
+        var pathImmagineStatic = "/imgOggetti/"+uuidName+"."+nomeOriginale[nomeOriginale.length-1];
 
-        userData.immagine.mv(pathImmagine, function(err) {
+
+        userData.immagine.mv(pathImmagineLocal, function(err) {
             if (err) {
                 callback(500, 'Errore nel salvataggio immagine', err);
             } else {
-                var magazzino = new magazzinoModel({nome: userData.nome, costo: userData.costo, immagine: pathImmagine});
+                var magazzino = new magazzinoModel({nome: userData.nome, costo: userData.costo, immagine: pathImmagineStatic});
 
                 magazzino.save(function (err, magazzino) {
                     if (err) {
