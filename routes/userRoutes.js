@@ -49,14 +49,21 @@ router.post('/addSale', function (req, res) {
 
 router.get('/gestisciColtivazioni', function (req, res) {
     var options = {id : req.user._id};
+    var magazzinos;
+    magazzinoController.listAll(null,function (answer){
+        if(answer[0]==200){
+            magazzinos = answer[1];
+        }else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
     utenteController.getColtivazioni(options, function(answer){
         if(answer[0]==200){
-            res.render('gestisciColtivazioni', {title: titolo, user: req.user, coltivazioni: answer[1]});
+            res.render('gestisciColtivazioni', {title: titolo, user: req.user, coltivazioni: answer[1],magazzino: magazzinos});
         } else {
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
     });
-
 });
 
 router.post('/addColtivazione', function (req, res) {

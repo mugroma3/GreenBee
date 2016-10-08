@@ -6,9 +6,18 @@ block content
             center
                 form(role='form', action="/user/addColtivazione",method="post").form-inline
                     .form-group
-                        | Aggiungi una coltivazione &nbsp;&nbsp;&nbsp;
-                        input(type='text', name='coltivazione', placeholder='Coltivazione')
-                        button(type='submit').btn.btn-default
+                        label(for='inputOggetto')
+                            | Aggiungi una coltivazione &nbsp;&nbsp;&nbsp;
+                        select(id="inputOggetto" style="width:170px;" name="coltivazione" required).form-control
+                            option(value="" selected disabled)
+                                | Scegli Coltivazione
+                            each oggetto in magazzino
+                                option(value="#{oggetto.nome}")
+                                    | #{oggetto.nome}
+
+                        //input(type='text', name='coltivazione', placeholder='Coltivazione')
+                        | &nbsp;&nbsp;&nbsp;
+                        button(type='submit').btn.btn-success
                             | Salva
                 br
                 table.table.table-striped

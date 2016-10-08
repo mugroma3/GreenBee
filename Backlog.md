@@ -2,11 +2,10 @@ TODO:
 
 7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
-23) Aggiungere controllo addOrtaggio che esista nel magazzino
 25) LO SCHEDULE!!!!
 26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
 29) Implementare la pagina dei sensori
-
+31) @kappa89 @vitus89 @lorenzo93 Controllo login fallito
 Credo non manchi altro al progetto...
 
 COMPLETATI:
@@ -42,6 +41,7 @@ COMPLETATI:
     //modifica market per far stampare prezzo
     //modifica addTransazione per fare calcoli di prezzo e scalare/aggiungere punti (verifica cliente abbastanza punti, presenza in magazzino, scala punti, scala magazzino)
 22) @vitus89 stampare nome utente dentro la navbar
+23) Aggiungere controllo addOrtaggio che esista nel magazzino
 24) Aggiungere file upload di immagine in addPrezzo (nella pagina prezzario.jade)
 27) @vitus89 Implementare la funzione remove prezzario/magazzino(magazzinoController)
 28) Implementare le funzioni rinomina, cambia password e username, remove in getioneUtenti
