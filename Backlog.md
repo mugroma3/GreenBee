@@ -4,7 +4,7 @@ TODO:
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
 25) LO SCHEDULE!!!!
 26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
-29) Implementare la pagina dei sensori
+29) IMPLEMENTARE LA PAGINA DEI SENSORI
 31) @kappa89 @vitus89 @lorenzo93 Controllo login fallito
 Credo non manchi altro al progetto...
 

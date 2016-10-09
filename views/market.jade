@@ -48,6 +48,8 @@ block content
                         else
                             img(src='/imgOggetti/img_not_found.jpg' style='width:200px;height:200px;' alt='...').img-circle.img-responsive
                         #{oggetto.nome}
+                    .caption
+                        | Costo: #{oggetto.costo}BioCoin
                     div(class='modal fade' data-backdrop="static" data-keyboard="false" tabindex='-1' role='dialog' id='ortaggiModal#{oggetto._id}' aria-labelledby='ortaggiModalLabel#{oggetto._id}')
                         div(class='modal-dialog modal-sm' role='document')
                             form(action="/user/addSale",method="post").form-inline
