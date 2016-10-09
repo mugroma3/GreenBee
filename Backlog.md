@@ -1,10 +1,10 @@
 TODO:
 
-15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
+15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato (Può non essere fatta!)
 25) LO SCHEDULE!!!!
 26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
 29) IMPLEMENTARE LA PAGINA DEI SENSORI
-31) @kappa89 @vitus89 @lorenzo93 Controllo login fallito
+31) @vitus89 Controllo login fallito già gestito in routes/index.js, provvedi te a reindirizzare dove vuoi
 Credo non manchi altro al progetto...
 
 COMPLETATI:
