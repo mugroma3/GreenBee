@@ -1,6 +1,5 @@
 TODO:
 
-7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato
 25) LO SCHEDULE!!!!
 26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
@@ -16,6 +15,7 @@ COMPLETATI:
 4) magazzinoController.create() Controllare che non ci sia già l'oggetto e in caso modificare e non aggiungere!
 5) magazzinoController.update() verificare che quantità sia >0
 6) magazzino evitare di esporre API?? Tanto ci pensa la gestione del mercato a fare tutto
+7) utenteController.addTransazione() Bisogna gesire qui dentro PUNTI UTENTE
 8) WebUI Admin Prezzario (listAll, modify e aggiungi)
 9) Aggiungere bootstrap a tutte le view
 10) Fare le api utente con ricerca, addIngresso, addUscita, addTransazione, addColtivazione, removeColtivazione tramite telegramID

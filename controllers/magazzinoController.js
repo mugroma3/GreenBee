@@ -145,8 +145,7 @@ module.exports = {
                 callback([500, "Errore: la roba che vendi non è accettata sul mercato"]);
             } else {
                 if (magazzino.quantita + userData.quantita >= 0) {
-                    magazzino.quantita = (magazzino.quantita - 0) + (userData.quantita - 0);
-                    console.log(magazzino);
+                    magazzino.quantita += (userData.quantita - 0);
                     magazzino.save(function (err, magazzino) {
                         if (err) {
                             callback([500, "Error when updating magazzino.", err]);

@@ -239,37 +239,55 @@ module.exports = {
             case 'acquisto' : dati = {'nome': userData.oggetto,'quantita': userData.quantita*(-1)}; break;
             default : callback([500, 'Tipo transazione non valido']); return;
         };
-        magazzinoController.updateQuantita(dati, function(anwser){
-            if(anwser[0]<299){ //Significa che ho un codice http minore di 299, quindi un codice di OK
-                utenteModel.findOne({_id: userData.user.id}, function (err, utente) {
-                    if (err) {
-                        //DB Sminchiato
-                        callback([500, 'Error when getting utente', err]);
-                    }
-                    if (!utente) {
-                        //DB Sminchiato
-                        callback([404, 'No such utente']);
-                    }
-                    else{
-                        var lastTrans = {
-                            'tipoTransazione': userData.tipoTransazione,
-                            'oggetto': userData.oggetto,
-                            'quantita': userData.quantita
-                        };
-                        utente.transazioni.push(lastTrans);
-                        utente.save(function (err) {
+        utenteModel.findOne({_id: userData.user.id}, function (err, utente) {
+            if (err) {
+                callback([500, 'Error when getting utente', err]);
+                return;
+            }
+            if (!utente) {
+                callback([404, 'No such utente']);
+                return;
+            }
+            magazzinoController.findByName({nome: userData.oggetto}, function (anwser) {
+                if (anwser[0] > 299) { //Significa che ho un codice http maggiore di 299, quindi un codice di errore
+                    callback([anwser[0], anwser[1]]);
+                    return;
+                }
+                if (utente.punti >= anwser[1].costo * (dati.quantita*(-1))) {
+                    var magazzino = anwser[1];
+                    if (magazzino.quantita + dati.quantita >= 0) {
+                        magazzino.quantita += (dati.quantita - 0);
+                        magazzino.save(function (err, magazzino) {
                             if (err) {
-                                //DB Sminchiato
-                                callback([500, 'Error when updating utente', err]);
-                            } else {
-                                callback([200, lastTrans]);
+                                callback([500, "Error when updating magazzino.", err]);
+                                return;
+                            }else{
+                                var lastTrans = {
+                                    'tipoTransazione': userData.tipoTransazione,
+                                    'oggetto': userData.oggetto,
+                                    'quantita': userData.quantita
+                                };
+                                utente.transazioni.push(lastTrans);
+                                utente.punti += anwser[1].costo * dati.quantita;
+                                utente.save(function (err) {
+                                    if (err) {
+                                        //DB Sminchiato
+                                        callback([500, 'Error when updating utente', err]);
+                                    } else {
+                                        callback([200, lastTrans]);
+                                    }
+                                });
                             }
                         });
+                    } else {
+                        callback([500, "Errore, non vi sono abbastanza oggetti in magazzino"]);
+                        return;
                     }
-                });
-            } else {
-                callback([anwser[0], anwser[1]]);
-            }
+                } else {
+                    callback([500, "Non sei abbastanza ricco!"]);
+                    return;
+                }
+            });
         });
     },
 
