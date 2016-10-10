@@ -110,4 +110,15 @@ router.put('/addUscita/:id', function (req, res) {
     });
 });
 
+/*
+ * POST complete schedule
+ *
+ */
+router.post('/completeSchedule/:id', function (req, res) {
+    var options = {scheduleId: req.body.scheduleId, utenteId: req.params.id};
+    utenteTelegramController.completeSchedule(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
 module.exports = router;

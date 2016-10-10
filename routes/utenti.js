@@ -138,7 +138,7 @@ router.put('/addUscita/:id', function (req, res) {
  *
  */
 router.post('/completeSchedule/:id', function (req, res) {
-    var options = {scheduleId: req.body.schedule, utenteId: req.user._id};
+    var options = {scheduleId: req.body.scheduleId, utenteId: req.params.id};
     utenteController.completeSchedule(options, function(answer){
         REST.generate(req, res, answer);
     });

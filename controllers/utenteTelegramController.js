@@ -302,5 +302,45 @@ module.exports = {
                     callback([200, 'Rimosso']);
                 }
         });
+    },
+
+    /**
+     * utenteController.completeSchedule()
+     */
+    completeSchedule: function (userData, callback) {
+        utenteModel.findOne({telegramID: userData.utenteId}, function (err, utente) {
+            if (err) {
+                callback([500, 'Error when getting utente', err]);
+                return;
+            }
+            if (!utente) {
+                callback([404, 'No such utente']);
+                return;
+            }
+            scheduleController.show({id: userData.scheduleId}, function (anwser) {
+                if (anwser[0] > 299) { //Significa che ho un codice http maggiore di 299, quindi un codice di errore
+                    callback([anwser[0], anwser[1]]);
+                    return;
+                }
+                var schedule = anwser[1];
+                schedule.scadenza = Date.now() + (schedule.attesa*24*60*60*1000);
+                schedule.save(function(err){
+                    if (err){
+                        callback([500,'Error when updating schedule.']);
+                    }else{
+                        utente.azioni.push({nome: schdeule.nome, ricompensa: schdeule.ricompensa, dataCompletamento: Date.now()});
+                        utente.punti += schedule.ricompensa;
+                        utente.save(function (err) {
+                            if (err){
+                                //DB Sminchiato
+                                callback([500,'Error when updating utente.']);
+                            }else{
+                                callback([200,schedule]);
+                            }
+                        });
+                    }
+                });
+            });
+        });
     }
 };
