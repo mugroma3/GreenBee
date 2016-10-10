@@ -11,6 +11,19 @@ module.exports = {
      * scheduleController.list()
      */
     list: function (scheduleData, callback) {
+        scheduleModel.find({scadenza: {$lte: Date.now()}},function (err, schedules) {
+            if (err) {
+                callback([500, "Error when getting schedules.", err]);
+            } else {
+                callback([200, schedules]);
+            }
+        });
+    },
+
+    /**
+     * scheduleController.listAll()
+     */
+    listAll: function (scheduleData, callback) {
         scheduleModel.find(function (err, schedules) {
             if (err) {
                 callback([500, "Error when getting schedules.", err]);

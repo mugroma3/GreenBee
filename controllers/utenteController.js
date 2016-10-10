@@ -358,7 +358,7 @@ module.exports = {
                     return;
                 }
                 var schedule = anwser[1];
-                schedule.ultimoReset = Date.now();
+                schedule.scadenza = Date.now() + (schedule.attesa*24*60*60*1000);
                 schedule.save(function(err){
                     if (err){
                         callback([500,'Error when updating schedule.']);

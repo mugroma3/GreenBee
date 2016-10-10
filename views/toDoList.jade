@@ -22,8 +22,8 @@ block content
                                 label(for='ricompensa') &nbsp;Ricompensa:&nbsp;
                                     input(type='number' id='ricompensa'  name='ricompensa'  placeholder='BioCoin' min="0" required)
                                 | &nbsp;&nbsp;
-                                label(for='scadenza') &nbsp;Scadenza:&nbsp;
-                                    input(type='number' id='scadenza'  name='scadenza'  placeholder='Giorni' min="0" required)
+                                label(for='attesa') &nbsp;Scadenza:&nbsp;
+                                    input(type='number' id='attesa'  name='attesa'  placeholder='Giorni' min="0" required)
                                 | &nbsp;&nbsp;
                             .form-group
                                 .col-xs-12.col-sm-12.col-md-6.col-lg-3
@@ -44,8 +44,8 @@ block content
                         tr
                             td #{schdeule.nome}
                             td #{schdeule.ricompensa}
-                            td #{schdeule.ultimoReset.toDateString()}
-                            td #{schdeule.scadenza}
+                            td #{schdeule.scadenza.toDateString()}
+                            td #{schdeule.attesa}
                             td
                                 button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#completeSchdeuleModal#{schdeule._id}').btn.btn-mug
                                     | Completa Azione
@@ -63,21 +63,3 @@ block content
                                                     input(type="hidden" name="schedule" value="#{schdeule._id}")
                                                     button(type='submit' class='btn btn-success')
                                                         | Conferma
-                                | &nbsp;&nbsp;&nbsp;
-                                if user.admin
-                                    button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeSchdeuleModal#{schdeule._id}').btn.btn-danger
-                                        | Rimuovi Azione
-                                    div(class='modal fade' tabindex='-1' role='dialog' id='removeSchdeuleModal#{schdeule._id}' aria-labelledby='removeSchdeuleModalLabel#{schdeule._id}')
-                                        div(class='modal-dialog' role='document')
-                                            form(role='form', action="/admin/removeSchedule",method="post").form-inline
-                                                .modal-content
-                                                    .modal-header.text-center
-                                                        h2 Si è scelto di rimuovere questa azione:
-                                                    .modal-body.text-center
-                                                        .row
-                                                            h3 #{schdeule.nome}
-                                                    .modal-footer
-                                                        button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
-                                                        input(type="hidden" name="schedule" value="#{schdeule._id}")
-                                                        button(type='submit' class='btn btn-success')
-                                                            | Conferma

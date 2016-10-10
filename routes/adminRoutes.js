@@ -136,8 +136,8 @@ router.post('/addSchedule', function (req, res) {
     var options = {
         nome: req.body.nome,
         ricompensa: req.body.ricompensa,
-        ultimoReset : Date.now(),
-        scadenza : req.body.scadenza
+        scadenza : Date.now()+(req.body.attesa*24*60*60*1000),
+        attesa : req.body.attesa
     };
     scheduleController.create(options, function(answer){
         if(answer[0]==201){

@@ -1,9 +1,8 @@
 TODO:
 
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato (Può non essere fatta!)
-25) LO SCHEDULE!!!!
-26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
 29) IMPLEMENTARE LA PAGINA DEI SENSORI
+31) @Vitus89 schdule admin
 Credo non manchi altro al progetto...
 
 COMPLETATI:
@@ -42,6 +41,8 @@ COMPLETATI:
 22) @vitus89 stampare nome utente dentro la navbar
 23) Aggiungere controllo addOrtaggio che esista nel magazzino
 24) Aggiungere file upload di immagine in addPrezzo (nella pagina prezzario.jade)
+25) LO SCHEDULE!!!!
+26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
 27) @vitus89 Implementare la funzione remove prezzario/magazzino(magazzinoController)
 28) Implementare le funzioni rinomina, cambia password e username, remove in getioneUtenti
 30) @vitus89 modal for remove
