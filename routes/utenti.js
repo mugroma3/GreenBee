@@ -133,4 +133,15 @@ router.put('/addUscita/:id', function (req, res) {
     });
 });
 
+/*
+ * POST complete schedule
+ *
+ */
+router.post('/completeSchedule/:id', function (req, res) {
+    var options = {scheduleId: req.body.schedule, utenteId: req.user._id};
+    utenteController.completeSchedule(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
 module.exports = router;
