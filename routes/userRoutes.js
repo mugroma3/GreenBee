@@ -3,6 +3,7 @@ var titolo = 'GreenBee';
 var router = express.Router();
 var magazzinoController = require('../controllers/magazzinoController');
 var utenteController = require('../controllers/utenteController');
+var scheduleController = require('../controllers/scheduleController');
 
 router.get('/', function (req, res) {
     res.render('index', { title: titolo, user : req.user});
@@ -28,7 +29,13 @@ router.get('/market', function (req, res) {
 });
 
 router.get('/toDoList', function(req, res){
-    res.render('toDoList', {title: titolo, user: req.user});
+    scheduleController.list(null,function (answer) {
+        if(answer[0]==200){
+            res.render('toDoList',{title: titolo, user: req.user, toDoList: answer[1]});
+        }else{
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
 });
 
 router.post('/addSale', function (req, res) {

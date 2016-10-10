@@ -10,85 +10,78 @@ module.exports = {
     /**
      * scheduleController.list()
      */
-    list: function (req, res) {
+    list: function (scheduleData, callback) {
         scheduleModel.find(function (err, schedules) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting schedule.',
-                    error: err
-                });
+                callback([500, "Error when getting schedules.", err]);
+            } else {
+                callback([200, schedules]);
             }
-            return res.json(schedules);
         });
     },
 
     /**
      * scheduleController.show()
      */
-    show: function (req, res) {
+    show: function (scheduleData, callback) {
         var id = req.params.id;
         scheduleModel.findOne({_id: id}, function (err, schedule) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting schedule.',
-                    error: err
-                });
+                callback([500, "Error when getting schedules.", err]);
+            }else{
+                if (!schedule) {
+                    callback([404, "No such schedule.", err]);
+                }else{
+                    callback([200, schedules]);
+                }
             }
-            if (!schedule) {
-                return res.status(404).json({
-                    message: 'No such schedule'
-                });
-            }
-            return res.json(schedule);
         });
     },
 
     /**
      * scheduleController.create()
      */
-    create: function (req, res) {
-        var schedule = new scheduleModel({			nome : req.body.nome,			ultimoReset : req.body.ultimoReset,			scadenza : req.body.scadenza
+    create: function (scheduleData, callback) {
+        var schedule = new scheduleModel({
+			nome : scheduleData.nome,
+			ultimoReset : scheduleDatay.ultimoReset,
+			scadenza : scheduleData.scadenza
         });
 
         schedule.save(function (err, schedule) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating schedule',
-                    error: err
-                });
+                callback([500, "Error when creating schedule", err]);
+            }else{
+                callback([201, schedule]);
             }
-            return res.status(201).json(schedule);
         });
     },
 
     /**
      * scheduleController.update()
      */
-    update: function (req, res) {
+    update: function (scheduleData, callback) {
         var id = req.params.id;
         scheduleModel.findOne({_id: id}, function (err, schedule) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting schedule',
-                    error: err
-                });
+                callback([500, 'Error when getting schedule', err]);
+                return;
             }
             if (!schedule) {
-                return res.status(404).json({
-                    message: 'No such schedule'
-                });
+                callback([404, 'No such schedule']);
+                return;
             }
 
-            schedule.nome = req.body.nome ? req.body.nome : schedule.nome;			schedule.ultimoReset = req.body.ultimoReset ? req.body.ultimoReset : schedule.ultimoReset;			schedule.scadenza = req.body.scadenza ? req.body.scadenza : schedule.scadenza;			
+            schedule.nome = req.body.nome ? req.body.nome : schedule.nome;
+			schedule.ultimoReset = req.body.ultimoReset ? req.body.ultimoReset : schedule.ultimoReset;
+			schedule.scadenza = req.body.scadenza ? req.body.scadenza : schedule.scadenza;
+
             schedule.save(function (err, schedule) {
                 if (err) {
-                    return res.status(500).json({
-                        message: 'Error when updating schedule.',
-                        error: err
-                    });
+                    callback([500, 'Error when updating schedule.', err]);
+                }else {
+                    callback([200, schedule]);
                 }
-
-                return res.json(schedule);
             });
         });
     },
@@ -96,16 +89,14 @@ module.exports = {
     /**
      * scheduleController.remove()
      */
-    remove: function (req, res) {
-        var id = req.params.id;
-        scheduleModel.findByIdAndRemove(id, function (err, schedule) {
+    remove: function (scheduleData, callback) {
+        scheduleModel.findByIdAndRemove(userData.id, function (err, utente) {
             if (err) {
-                return res.status(500).json({
-                    message: 'Error when deleting the schedule.',
-                    error: err
-                });
+                callback([500, 'Error when deleting the schedule.', err]);
             }
-            return res.status(204).json();
+            else {
+                callback([204, "schedule rimosso"]);
+            }
         });
     }
 };

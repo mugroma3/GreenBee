@@ -25,8 +25,9 @@ module.exports = {
         magazzinoModel.find(function (err, magazzinos) {
             if (err) {
                 callback([500, "Error when getting magazzini.", err]);
+            }else{
+                callback([200, magazzinos]);
             }
-            callback([200, magazzinos]);
         });
     },
 
@@ -37,11 +38,13 @@ module.exports = {
         magazzinoModel.findOne({_id: userData.id}, function (err, magazzino) {
             if (err) {
                 callback([500, "Error when getting magazzino.", err]);
+            }else{
+                if (!magazzino) {
+                    callback([404, 'No such magazzino']);
+                }else{
+                    callback([200, magazzino]);
+                }
             }
-            if (!magazzino) {
-                callback([404, 'No such magazzino']);
-            }
-            callback([200, magazzino]);
         });
     },
 
@@ -49,11 +52,13 @@ module.exports = {
         magazzinoModel.findOne({nome: userData.nome}, function (err, magazzino) {
             if (err) {
                 callback([500, "Error when getting magazzino.", err]);
+            }else {
+                if (!magazzino) {
+                    callback([404, 'No such magazzino']);
+                }else{
+                    callback([200, magazzino]);
+                }
             }
-            if (!magazzino) {
-                callback([404, 'No such magazzino']);
-            }
-            callback([200, magazzino]);
         });
     },
 
@@ -114,9 +119,11 @@ module.exports = {
         magazzinoModel.findOne({_id: userData.id}, function (err, magazzino) {
             if (err) {
                 callback([500, "Error when getting magazzino.", err]);
+                return;
             }
             if (!magazzino) {
                 callback([404, 'No such magazzino']);
+                return;
             }
 
             magazzino.nome = userData.nome ? userData.nome : magazzino.nome;
@@ -126,9 +133,9 @@ module.exports = {
             magazzino.save(function (err, magazzino) {
                 if (err) {
                     callback([500, "Error when updating magazzino.", err]);
+                }else{
+                    callback([200, magazzino]);
                 }
-
-                callback([200, magazzino]);
             });
         });
     },
@@ -140,6 +147,7 @@ module.exports = {
         magazzinoModel.findOne({nome: userData.nome}, function (err, magazzino) {
             if (err) {
                 callback([500, "Error when getting magazzino.", err]);
+                return;
             }
             if (!magazzino){
                 callback([500, "Errore: la roba che vendi non è accettata sul mercato"]);

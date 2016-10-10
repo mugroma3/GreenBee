@@ -6,7 +6,7 @@ var magazzinoController = require('../controllers/magazzinoController');
 var titolo = 'GreenBee';
 
 router.get('/', function (req, res) {
-    res.render('indexLogged', { title: titolo, user : req.user});
+    res.render('index', { title: titolo, user : req.user});
 });
 
 router.get('/userList', function (req, res) {

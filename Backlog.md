@@ -4,7 +4,6 @@ TODO:
 25) LO SCHEDULE!!!!
 26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
 29) IMPLEMENTARE LA PAGINA DEI SENSORI
-31) @vitus89 Controllo login fallito già gestito in routes/index.js, provvedi te a reindirizzare dove vuoi
 Credo non manchi altro al progetto...
 
 COMPLETATI:
@@ -46,3 +45,4 @@ COMPLETATI:
 27) @vitus89 Implementare la funzione remove prezzario/magazzino(magazzinoController)
 28) Implementare le funzioni rinomina, cambia password e username, remove in getioneUtenti
 30) @vitus89 modal for remove
+31) @vitus89 Controllo login fallito già gestito in routes/index.js, provvedi te a reindirizzare dove vuoi

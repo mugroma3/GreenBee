@@ -101,8 +101,9 @@ module.exports = {
         utente.save(function (err, utente) {
             if (err) {
                 callback([500, "Error when creating utente", err]);
+            }else{
+                callback([201, utente]);
             }
-            callback([201, utente]);
         });
     },
 
@@ -113,9 +114,11 @@ module.exports = {
         utenteModel.findOne({_id: userData.id}, function (err, utente) {
             if (err) {
                 callback([500, 'Error when getting utente', err]);
+                return;
             }
             if (!utente) {
                 callback([404, 'No such utente']);
+                return;
             }
             utente.admin = userData.admin ? userData.admin : utente.admin;
             utente.nome = userData.nome ? userData.nome : utente.nome;
