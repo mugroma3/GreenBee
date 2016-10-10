@@ -358,7 +358,23 @@ module.exports = {
                     return;
                 }
                 var schedule = anwser[1];
-               // schedule.
+                schedule.ultimoReset = Date.now();
+                schedule.save(function(err){
+                    if (err){
+                        callback([500,'Error when updating schedule.']);
+                    }else{
+                        utente.azioni.push({nome: schdeule.nome, ricompensa: schdeule.ricompensa, dataCompletamento: Date.now()});
+                        utente.punti += schedule.ricompensa;
+                        utente.save(function (err) {
+                            if (err){
+                                //DB Sminchiato
+                                callback([500,'Error when updating utente.']);
+                            }else{
+                                callback([200,schedule]);
+                            }
+                        });
+                    }
+                });
             });
         });
     }
