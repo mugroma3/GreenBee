@@ -24,8 +24,7 @@ module.exports = {
      * scheduleController.show()
      */
     show: function (scheduleData, callback) {
-        var id = req.params.id;
-        scheduleModel.findOne({_id: id}, function (err, schedule) {
+        scheduleModel.findOne({_id: scheduleData.id}, function (err, schedule) {
             if (err) {
                 callback([500, "Error when getting schedules.", err]);
             }else{

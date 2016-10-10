@@ -1,5 +1,5 @@
 var utenteModel = require('../models/utenteModel');
-
+var scheduleController = require('./scheduleController');
 var magazzinoController = require('./magazzinoController');
 /**
  * utenteController.js
@@ -336,6 +336,30 @@ module.exports = {
                     callback([500, 'Error when updating utente.', err]);
                 }
                 callback([200, data]);
+        });
+    },
+
+    /**
+     * utenteController.completeSchedule()
+     */
+    completeSchedule: function (userData, callback) {
+        utenteModel.findOne({_id: userData.utenteId}, function (err, utente) {
+            if (err) {
+                callback([500, 'Error when getting utente', err]);
+                return;
+            }
+            if (!utente) {
+                callback([404, 'No such utente']);
+                return;
+            }
+            scheduleController.show({id: userData.scheduleId}, function (anwser) {
+                if (anwser[0] > 299) { //Significa che ho un codice http maggiore di 299, quindi un codice di errore
+                    callback([anwser[0], anwser[1]]);
+                    return;
+                }
+                var schedule = anwser[1];
+               // schedule.
+            });
         });
     }
 };

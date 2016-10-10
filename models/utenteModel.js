@@ -19,7 +19,12 @@ var utenteSchema = new Schema({
 		'quantita': { type: Number, required: true },
 		'Data': { type: Date, default: Date.now()}
 		}],
-	'orto': [String]
+	'orto': [String],
+	'azione' : [{
+		'nome' : { type: String, unique: true, required: true },
+		'ricompensa' : { type: Number, required: true },
+		'dataCompletamento' : { type: Date, required: true },
+	}]
 });
 
 utenteSchema.methods.verifyPassword = function(pwd){
