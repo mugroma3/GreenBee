@@ -5,7 +5,7 @@ var magazzinoController = require('../controllers/magazzinoController');
 var utenteController = require('../controllers/utenteController');
 
 router.get('/', function (req, res) {
-    res.render('indexLogged', { title: titolo, user : req.user});
+    res.render('index', { title: titolo, user : req.user});
 });
 
 router.get('/logout', function (req, res) {

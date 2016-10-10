@@ -106,56 +106,57 @@ over-ride "Weak" message, show font in dark grey
     color: #333;
 }
 
-/*
-Reference:
-http://www.bootstrapzen.com/item/135/simple-login-form-logo/
+/*+
+* LogIn on Navbar
 */
 
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: none;
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
 }
-
-.form-control {
-    position: relative;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
+#login-dp .help-block{
+    font-size:12px
 }
-
-.login-form {
-    margin-top: 60px;
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
 }
-
-form[role=login] {
-    color: #5d5d5d;
-    background: #f2f2f2;
-    padding: 26px;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+#login-dp .social-buttons{
+    margin:12px 0
 }
-form[role=login] img {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 35px;
+#login-dp .social-buttons a{
+    width: 49%;
 }
-form[role=login] input,
-form[role=login] button {
-    font-size: 18px;
-    margin: 16px 0;
+#login-dp .form-group {
+    margin-bottom: 10px;
 }
-form[role=login] > div {
-    text-align: center;
-}
-
-.form-links {
-    text-align: center;
-    margin-top: 1em;
-    margin-bottom: 50px;
-}
-.form-links a {
+.btn-fb{
     color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
 }
