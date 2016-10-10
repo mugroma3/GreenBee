@@ -42,11 +42,7 @@ module.exports = {
      * scheduleController.create()
      */
     create: function (scheduleData, callback) {
-        var schedule = new scheduleModel({
-			nome : scheduleData.nome,
-			ultimoReset : scheduleDatay.ultimoReset,
-			scadenza : scheduleData.scadenza
-        });
+        var schedule = new scheduleModel(scheduleData);
 
         schedule.save(function (err, schedule) {
             if (err) {
@@ -73,6 +69,7 @@ module.exports = {
             }
 
             schedule.nome = req.body.nome ? req.body.nome : schedule.nome;
+            schedule.ricompensa = req.body.ricompensa ? req.body.ricompensa : schedule.ricompensa;
 			schedule.ultimoReset = req.body.ultimoReset ? req.body.ultimoReset : schedule.ultimoReset;
 			schedule.scadenza = req.body.scadenza ? req.body.scadenza : schedule.scadenza;
 
@@ -90,7 +87,7 @@ module.exports = {
      * scheduleController.remove()
      */
     remove: function (scheduleData, callback) {
-        scheduleModel.findByIdAndRemove(userData.id, function (err, utente) {
+        scheduleModel.findByIdAndRemove(scheduleData.id, function (err, utente) {
             if (err) {
                 callback([500, 'Error when deleting the schedule.', err]);
             }

@@ -102,4 +102,14 @@ router.post('/removeColtivazione', function (req, res) {
 });
 
 
+router.post('/completeSchedule', function (req, res) {
+    scheduleController.remove({id: req.body.schedule}, function(answer){
+        if(answer[0]==204){
+            res.redirect('toDoList');
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
+
 module.exports = router;

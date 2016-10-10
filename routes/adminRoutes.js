@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var utenteController = require('../controllers/utenteController');
+var scheduleController = require('../controllers/scheduleController.js');
 var magazzinoController = require('../controllers/magazzinoController');
-
 var titolo = 'GreenBee';
 
 router.get('/', function (req, res) {
@@ -116,6 +116,42 @@ router.post('/removeUtente', function (req, res) {
     utenteController.removeUtente(options, function(answer){
         if(answer[0]==204){
             res.redirect('/admin/userList');
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
+
+router.get('/toDoList', function(req, res){
+    scheduleController.list(null,function (answer) {
+        if(answer[0]==200){
+            res.render('toDoList',{title: titolo, user: req.user, toDoList: answer[1]});
+        }else{
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
+
+router.post('/addSchedule', function (req, res) {
+    var options = {
+        nome: req.body.nome,
+        ricompensa: req.body.ricompensa,
+        ultimoReset : Date.now(),
+        scadenza : req.body.scadenza
+    };
+    scheduleController.create(options, function(answer){
+        if(answer[0]==201){
+            res.render('addedSchedule', { title: titolo, user : req.user, schedule: answer[1]});
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
+
+router.post('/removeSchedule', function (req, res) {
+    scheduleController.remove({id: req.body.schedule}, function(answer){
+        if(answer[0]==204){
+            res.redirect('toDoList');
         } else {
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }

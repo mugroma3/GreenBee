@@ -1,8 +1,84 @@
 extends layout
 
 block content
-    .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-            center
-                h2.success Lista delle cose da fare
-                #{toDoList}
+    .container
+        if user.admin
+            .row
+                .col-xs-12.col-sm-12.col-md-2.col-lg-2
+                    button(type='button' id="btnNew" onclick="toggleElement('newObject');toggleElement('btnDelete');toggleElement('btnNew');").btn.btn-success.btn-lg.active
+                        text.h4
+                            | Aggiungi
+                    button(type='button' id="btnDelete" style="display: none;" onclick="toggleElement('newObject');toggleElement('btnDelete');toggleElement('btnNew');resetForm('prezzarioForm');").btn.btn-danger.btn-lg.active
+                        text.h4
+                            | Annulla
+            .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                    br
+                    div(style="display: none;" id='newObject')
+                        form(role='form', action="/admin/addSchedule",method="post",id='prezzarioForm',encType="multipart/form-data").form-inline
+                            .form-group
+                                label(for='nome') Nome:&nbsp;
+                                    input(type='text' id='nome' name='nome'  placeholder='Nome' required)
+                                label(for='ricompensa') &nbsp;Ricompensa:&nbsp;
+                                    input(type='number' id='ricompensa'  name='ricompensa'  placeholder='BioCoin' min="0" required)
+                                | &nbsp;&nbsp;
+                                label(for='scadenza') &nbsp;Scadenza:&nbsp;
+                                    input(type='number' id='scadenza'  name='scadenza'  placeholder='Giorni' min="0" required)
+                                | &nbsp;&nbsp;
+                            .form-group
+                                .col-xs-12.col-sm-12.col-md-6.col-lg-3
+                                    button(type='submit').btn.btn-success Salva
+        .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                h1.text-success.text-center Ecco la lista delle cose da fare
+                br
+                br
+                table.table.table-striped
+                    tr.success
+                        th Cosa Fare
+                        th Ricompensa
+                        th Data di inserimento
+                        th Scadenza in Giorni
+                        th Opzioni
+                    each schdeule in toDoList
+                        tr
+                            td #{schdeule.nome}
+                            td #{schdeule.ricompensa}
+                            td #{schdeule.ultimoReset.toDateString()}
+                            td #{schdeule.scadenza}
+                            td
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#completeSchdeuleModal#{schdeule._id}').btn.btn-mug
+                                    | Completa Azione
+                                div(class='modal fade' tabindex='-1' role='dialog' id='completeSchdeuleModal#{schdeule._id}' aria-labelledby='completeSchdeuleModalLabel#{schdeule._id}')
+                                    div(class='modal-dialog' role='document')
+                                        form(role='form', action="/user/completeSchedule",method="post").form-inline
+                                            .modal-content
+                                                .modal-header.text-center
+                                                    h2 Si è scelto di completare questa azione:
+                                                .modal-body.text-center
+                                                    .row
+                                                        h3 #{schdeule.nome}
+                                                .modal-footer
+                                                    button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                    input(type="hidden" name="schedule" value="#{schdeule._id}")
+                                                    input(type="hidden" name="user" value="#{user._id}")
+                                                    button(type='submit' class='btn btn-success')
+                                                        | Conferma
+                                | &nbsp;&nbsp;&nbsp;
+                                if user.admin
+                                    button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeSchdeuleModal#{schdeule._id}').btn.btn-danger
+                                        | Rimuovi Azione
+                                    div(class='modal fade' tabindex='-1' role='dialog' id='removeSchdeuleModal#{schdeule._id}' aria-labelledby='removeSchdeuleModalLabel#{schdeule._id}')
+                                        div(class='modal-dialog' role='document')
+                                            form(role='form', action="/admin/removeSchedule",method="post").form-inline
+                                                .modal-content
+                                                    .modal-header.text-center
+                                                        h2 Si è scelto di rimuovere questa azione:
+                                                    .modal-body.text-center
+                                                        .row
+                                                            h3 #{schdeule.nome}
+                                                    .modal-footer
+                                                        button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                        input(type="hidden" name="schedule" value="#{schdeule._id}")
+                                                        button(type='submit' class='btn btn-success')
+                                                            | Conferma

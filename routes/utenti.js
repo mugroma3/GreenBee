@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var utenteController = require('../controllers/utenteController.js');
-
 var REST = require('../utils/REST');
-
 /*
  * GET lista tutti gli utenti
  */
