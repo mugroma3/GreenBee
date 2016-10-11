@@ -44,7 +44,7 @@ module.exports = {
                 if (!schedule) {
                     callback([404, "No such schedule.", err]);
                 }else{
-                    callback([200, schedules]);
+                    callback([200, schedule]);
                 }
             }
         });
