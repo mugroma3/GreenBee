@@ -21,7 +21,7 @@ var utenteSchema = new Schema({
 		}],
 	'orto': [String],
 	'azioni' : [{
-		'nome' : { type: String, unique: true, required: true },
+		'nome' : { type: String, required: true },
 		'ricompensa' : { type: Number, required: true },
 		'dataCompletamento' : { type: Date, required: true },
 	}]

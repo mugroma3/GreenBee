@@ -15,6 +15,16 @@ router.get('/:id', function (req, res) {
 });
 
 /*
+ * GET punti utente tramite TelegramID  nell'url
+ */
+router.get('/getPunti/:id', function (req, res) {
+    var options = {id: req.params.id};
+    utenteTelegramController.getPunti(options, function(answer){
+        REST.generate(req, res, answer);
+    });
+});
+
+/*
  * GET l'utente è nell'orto tramite TelegramID [vero/falso]
  */
 router.get('/isNellOrto/:id', function (req, res) {

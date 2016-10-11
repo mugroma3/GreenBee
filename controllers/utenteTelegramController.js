@@ -15,9 +15,11 @@ module.exports = {
         utenteModel.findOne({telegramID: userData.id},{ password:0,
                                                         username:0,
                                                         punti:0,
+                                                        _id:0,
                                                         ultimoAccesso:0,
-                                                        accessi:{$slice: 5},
-                                                        transazioni:{$slice: 5}},
+                                                        accessi:0,
+                                                        transazioni:0,
+                                                        admin:0},
                                                         function (err, utente) {
             if (err) {
                 callback([500, "Error when getting utente.", err]);
@@ -29,6 +31,35 @@ module.exports = {
                 }
             }
         });
+    },
+
+    /**
+     * utenteTelegramController.getPunti()
+     */
+    getPunti: function (userData, callback) {
+        utenteModel.findOne({telegramID: userData.id},{ __v:0,
+                _id:0,
+                admin:0,
+                nome:0,
+                username:0,
+                password:0,
+                telegramID:0,
+                ultimoAccesso:0,
+                accessi:0,
+                transazioni:0,
+                orto:0,
+                azioni:0 },
+            function (err, utente) {
+                if (err) {
+                    callback([500, "Error when getting utente.", err]);
+                }else {
+                    if (!utente) {
+                        callback([404, 'No such utente']);
+                    } else {
+                        callback([200, utente]);
+                    }
+                }
+            });
     },
 
     getColtivazioni: function (userData, callback) {
