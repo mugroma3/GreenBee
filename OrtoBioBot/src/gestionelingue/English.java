@@ -9,6 +9,11 @@ public class English {
 	public final static String TASK= "Task";
 	public final static String BUY= "Buy";
 	public final static String DONTBUY= "Don't Buy";
+	public final static String NONHAIPUNTI = "Non hai abbastanza punti per comprare una singola unità di ";
+	public final static String VUOICOMP = "Sei interessato a comprare ";
+	public final static String ALCOSTO = " al costo unitario di ";
+	public final static String ALKILO = " al kilo?";	
+	public final static String REMAININGPOINTS = "Remaining points";
 	public final static String SETLANGUAGE= "Set language 🇮🇹🇬🇧";
 	public final static String REPENTER= "Report entry";
 	public final static String CONFENT= "Segnalazione ingresso confermata";

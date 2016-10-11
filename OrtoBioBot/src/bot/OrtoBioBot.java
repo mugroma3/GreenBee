@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.botticelli.bot.Bot;
 import com.botticelli.bot.request.methods.MessageToSend;
-import com.botticelli.bot.request.methods.PhotoFileToSend;
 import com.botticelli.bot.request.methods.types.CallbackQuery;
 import com.botticelli.bot.request.methods.types.ChosenInlineResult;
 import com.botticelli.bot.request.methods.types.InlineQuery;
@@ -196,7 +195,8 @@ public class OrtoBioBot extends Bot {
 			if (stato.getSezione() == SezioniBot.MARKET) {
 				stato.setMagazzino(API.getMagazzino());
 				stato.setSezione(SezioniBot.MARKETCONSULTA);
-				sendPhotoFile(new PhotoFileToSend(arg0.getChat().getId(), API.saveImage(stato.getMagazzino().get(0).getImmagine())));
+				VoceMercato vm = new VoceMercato(stato.getMagazzino().get(0), arg0, this, stato);
+				vm.sendVoce();
 			} else
 				inviaMenu(arg0, stato);
 		}
@@ -342,6 +342,7 @@ public class OrtoBioBot extends Bot {
 	@Override
 	public void photoMessage(Message arg0) {
 
+		System.out.println(arg0.getPhoto().get(0).getFileID());
 	}
 
 	@Override
@@ -452,5 +453,16 @@ public class OrtoBioBot extends Bot {
 
 	private boolean checkRisp(String text) {
 		return text.equals(Italiano.MENUITALIANO) || text.equals(English.ENGLISHMENU);
+	}
+	
+	private void consultaMarket(Message arg0, StatoUtente stato)
+	{
+		if (stato.getSezione() == SezioniBot.MARKET) {
+			stato.setMagazzino(API.getMagazzino());
+			stato.setSezione(SezioniBot.MARKETCONSULTA);
+			VoceMercato vm = new VoceMercato(stato.getMagazzino().get(0), arg0, this, stato);
+			vm.sendVoce();
+		} else
+			inviaMenu(arg0, stato);
 	}
 }

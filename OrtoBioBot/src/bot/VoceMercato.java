@@ -1,6 +1,5 @@
 package bot;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import com.botticelli.bot.request.methods.MessageToSend;
 import com.botticelli.bot.request.methods.PhotoFileToSend;
 import com.botticelli.bot.request.methods.PhotoReferenceToSend;
 import com.botticelli.bot.request.methods.types.ActionToSend;
-import com.botticelli.bot.request.methods.types.Chat;
 import com.botticelli.bot.request.methods.types.KeyboardButton;
 import com.botticelli.bot.request.methods.types.Message;
 import com.botticelli.bot.request.methods.types.ReplyKeyboardMarkupWithButtons;
@@ -38,7 +36,7 @@ public class VoceMercato {
 		VoceMercato.buildMenu();
 	}
 
-	public static void buildMenu()
+	private static void buildMenu()
 	{
 		if(compraMenu == null)
 		{
@@ -52,8 +50,12 @@ public class VoceMercato {
 		}
 	}
 
-	public void sendVoce()
+	/*
+	 * torna false se l'utente non può comprare
+	 */
+	public boolean sendVoce() 
 	{
+		boolean ricco = true;
 		MessageToSend mts;
 		if(oggetto.getTelegramRefImg() == null)
 		{
@@ -63,18 +65,37 @@ public class VoceMercato {
 		else
 			bot.sendPhotobyReference(new PhotoReferenceToSend(m.getChat().getId(), oggetto.getTelegramRefImg()));
 		Punti p = APINod.getIstance().getPunti(m.getFrom().getId());
+		p.setPunti(189); //TODO togliere appena porco dio
+		if(p.getPunti() < oggetto.getCosto())
+			ricco = false;
+		//TODO fare punti
 		
-		String testo = Italiano.COMPITI;
 		if(stato.getLingua() == Lingue.INGLESE)
-			
-			testo = English.ADD;
-		
-		mts = new MessageToSend(m.getChat().getId(), testo);
-		
-		mts.setReplyMarkup(OrtoBioBot.getBrowseMenu());
+		{
+			if(ricco)
+			{
+				mts = new MessageToSend(m.getChat().getId(),English.VUOICOMP + oggetto.getNome() + English.ALCOSTO +
+					(oggetto.getCosto()) +English.ALKILO);
+				mts.setReplyMarkup(VoceMercato.buyMenu);
+			}
+			else
+				mts = new MessageToSend(m.getChat().getId(), Italiano.NONHAIPUNTI + oggetto.getNome());			
+		}
+		else
+		{
+			if(ricco)
+			{
+				mts = new MessageToSend(m.getChat().getId(),Italiano.VUOICOMP + oggetto.getNome() + Italiano.ALCOSTO +
+					(oggetto.getCosto()) + Italiano.ALKILO);
+				mts.setReplyMarkup(VoceMercato.compraMenu);
+			}
+			else
+				mts = new MessageToSend(m.getChat().getId(), Italiano.NONHAIPUNTI + oggetto.getNome());
+		}
 		
 		bot.sendMessage(mts);
 	    
+		return ricco;
 	}
 
 }

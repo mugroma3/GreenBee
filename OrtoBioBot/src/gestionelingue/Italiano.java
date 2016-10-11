@@ -8,8 +8,14 @@ public class Italiano {
 	public final static String MERCATO= "Mercato";
 	public final static String COMPITI= "Compiti";
 	public final static String IMPOSTALINGUA = "Imposta lingua 🇮🇹🇬🇧";
+	public final static String NONHAIPUNTI = "Non hai abbastanza punti per comprare una singola unità di ";
+	public final static String VUOICOMP = "Sei interessato a comprare ";
+	public final static String ALCOSTO = " al costo unitario di ";
+	public final static String ALKILO = " al kilo?";	
 	public final static String COMPRA= "Compra";
 	public final static String NOCOMPRA= "Non comprare";
+	public final static String PUNTIRESIDUI = "Punti Residui";
+	public final static String PUNTIATTUALI = "Punti Attuali";
 	public final static String SEGENT= "Segnala ingresso";
 	public final static String CONFENT= "Segnalazione ingresso confermata";
 	public final static String ERRENT= "Sembrerebbe che sei già dentro l'orto";
