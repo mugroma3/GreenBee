@@ -5,11 +5,11 @@ block content
         // Wrapper for slides
         .carousel-inner
             .item.active
-                img(src='/img/7.png',alt='banner').center-block
+                img(src='/img/1.png',alt='banner').center-block
             .item
-                img(src='/img/8.png',alt='Responsive image').center-block
+                img(src='/img/2.png',alt='Responsive image').center-block
             .item
-                img.img-responsive(src='/img/sfondoLegnoTransparent.png',alt='Responsive image').center-block
+                img(src='/img/3.png',alt='Responsive image').center-block
         // Controls
         a.left.carousel-control(href='#carousel-example-generic', role='button', data-slide='prev')
             span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
@@ -21,20 +21,21 @@ block content
         .container
             .row
                 .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                    h1.text-success.text-center=title
+                    h1.text-success.text-center(style='font-weight:bold')=title
                     p.text-muted(style='font-size:20px') Questo progetto è nato in maniera del tutto casuale: un giorno, in un orto urbano dimenticato di Roma, abbiamo trovato delle arnie di api. Da qui la nostra idea di unire le capacità collaborative tipiche delle api alla gestione di un orto sociale. Per l'appunto, “GreenBee”.
             br
             br
+            br
             .row
-                .col-xs-3.col-sm-3.col-md-3.col-lg-4
+                .col-xs-4.col-sm-4.col-md-3.col-lg-4
                     a(href='#')
                         img.img-responsive(src='/img/l1.png' style='width:80px')
                     p Gli orti
-                .col-xs-3.col-sm-3.col-md-3.col-lg-4
+                .col-xs-4.col-sm-4.col-md-4.col-lg-4
                     a(href='#')
                         img.img-responsive(src='/img/l4.png' style='width:80px')
                     p Social
-                .col-xs-3.col-sm-3.col-md-3.col-lg-4
+                .col-xs-4.col-sm-4.col-md-4.col-lg-4
                     a(href='#')
                         img.img-responsive(src='/img/l3.png' style='width:80px')
                     p Chi siamo
