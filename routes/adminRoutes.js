@@ -43,7 +43,6 @@ router.post('/updatedUser', function (req, res) {
         admin: req.body.admin,
         telegramID: req.body.telegramID
     };
-    console.log(options);
     utenteController.update(options, function(answer){
         if(answer[0]==200){
             res.render('updatedUser', { title: titolo, user : req.user});
@@ -131,6 +130,7 @@ router.get('/toDoListAdmin', function(req, res){
         }
     });
 });
+
 router.post('/addSchedule', function (req, res) {
     var options = {
         nome: req.body.nome,
@@ -152,6 +152,21 @@ router.post('/removeSchedule', function (req, res) {
     scheduleController.remove({id: req.body.schedule}, function(answer){
         if(answer[0]==204){
             res.redirect('toDoListAdmin');
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
+
+router.post('/updateSchedule', function (req, res) {
+    var options = {
+        id: req.body.schedule,
+        ricompensa: req.body.ricompensa,
+        attesa: req.body.attesa
+    };
+    scheduleController.update(options, function(answer){
+        if(answer[0]==200){
+            res.render('updatedSchedule', { title: titolo, user : req.user});
         } else {
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }

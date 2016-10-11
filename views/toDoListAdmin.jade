@@ -19,7 +19,7 @@ block content
                             label(for='nome') Nome:&nbsp;
                                 input(type='text' id='nome' name='nome'  placeholder='Nome' required)
                             label(for='ricompensa') &nbsp;Ricompensa:&nbsp;
-                                input(type='number' id='ricompensa'  name='ricompensa'  placeholder='BioCoin' min="0" required)
+                                input(type='number' id='ricompensa'  name='ricompensa'  placeholder='BioCoin' min="1" required)
                             | &nbsp;&nbsp;
                             label(for='attesa') &nbsp;Scadenza:&nbsp;
                                 input(type='number' id='attesa'  name='attesa'  placeholder='Giorni' min="0" required)
@@ -46,6 +46,29 @@ block content
                             td #{schdeule.scadenza.toDateString()}
                             td #{schdeule.attesa}
                             td
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#updateSchdeuleModal#{schdeule._id}').btn.btn-mug
+                                    | Modifica Azione
+                                div(class='modal fade' tabindex='-1' role='dialog' id='updateSchdeuleModal#{schdeule._id}' aria-labelledby='updateSchdeuleModalLabel#{schdeule._id}')
+                                    div(class='modal-dialog' role='document')
+                                        form(role='form', action="/admin/updateSchedule",method="post").form-inline
+                                            .modal-content
+                                                .modal-header.text-center
+                                                    h2 Si è scelto di modificare questa azione: #{schdeule.nome}
+                                                .modal-body.text-center
+                                                    .row
+                                                        .form-group
+                                                            label(for='ricompensa') &nbsp;Ricompensa:&nbsp;
+                                                                input(type='number' id='ricompensa'  name='ricompensa'  placeholder='BioCoin' min="1" value='#{schdeule.ricompensa}' required)
+                                                            | &nbsp;&nbsp;
+                                                            label(for='attesa') &nbsp;Scadenza:&nbsp;
+                                                                input(type='number' id='attesa'  name='attesa'  placeholder='Giorni' min="1" value='#{schdeule.attesa}' required)
+                                                            | &nbsp;&nbsp;
+                                                .modal-footer
+                                                    button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                    input(type="hidden" name="schedule" value="#{schdeule._id}")
+                                                    button(type='submit' class='btn btn-success')
+                                                        | Conferma
+                                | &nbsp;&nbsp;&nbsp;
                                 button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeSchdeuleModal#{schdeule._id}').btn.btn-danger
                                     | Rimuovi Azione
                                 div(class='modal fade' tabindex='-1' role='dialog' id='removeSchdeuleModal#{schdeule._id}' aria-labelledby='removeSchdeuleModalLabel#{schdeule._id}')
