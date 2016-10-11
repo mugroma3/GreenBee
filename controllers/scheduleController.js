@@ -69,8 +69,7 @@ module.exports = {
      * scheduleController.update()
      */
     update: function (scheduleData, callback) {
-        var id = req.params.id;
-        scheduleModel.findOne({_id: id}, function (err, schedule) {
+        scheduleModel.findOne({_id: scheduleData.id}, function (err, schedule) {
             if (err) {
                 callback([500, 'Error when getting schedule', err]);
                 return;
@@ -80,10 +79,10 @@ module.exports = {
                 return;
             }
 
-            schedule.nome = req.body.nome ? req.body.nome : schedule.nome;
-            schedule.ricompensa = req.body.ricompensa ? req.body.ricompensa : schedule.ricompensa;
-			schedule.ultimoReset = req.body.ultimoReset ? req.body.ultimoReset : schedule.ultimoReset;
-			schedule.scadenza = req.body.scadenza ? req.body.scadenza : schedule.scadenza;
+            schedule.nome = scheduleData.nome ? scheduleData.nome : schedule.nome;
+            schedule.ricompensa = scheduleData.ricompensa ? scheduleData.ricompensa : schedule.ricompensa;
+			schedule.scadenza = scheduleData.scadenza ? scheduleData.scadenza : schedule.scadenza;
+			schedule.attesa = scheduleData.attesa ? scheduleData.attesa : schedule.attesa;
 
             schedule.save(function (err, schedule) {
                 if (err) {
