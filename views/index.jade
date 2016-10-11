@@ -30,16 +30,25 @@ block content
             br
             .row
                 .col-xs-4.col-sm-4.col-md-3.col-lg-4
-                    a(href='#')
+                    a(data-toggle='collapse',href='#collapseExample', aria-expanded='false', aria-controls='collapseExample')
                         img.img-responsive(src='/img/l1.png' style='width:80px')
+                    #collapseExample.collapse
+                        .well
+                            | Qui ci andrà la mappa con gli orti
                     p Gli orti
                 .col-xs-4.col-sm-4.col-md-4.col-lg-4
-                    a(href='#')
+                    a(data-toggle='collapse',href='#collapseExample1', aria-expanded='false', aria-controls='collapseExample1')
                         img.img-responsive(src='/img/l4.png' style='width:80px')
+                    #collapseExample1.collapse
+                        .well
+                            | Qui ci andranno le info sul social
                     p Social
                 .col-xs-4.col-sm-4.col-md-4.col-lg-4
-                    a(href='#')
+                    a(data-toggle='collapse',href='#collapseExample2', aria-expanded='false', aria-controls='collapseExample2')
                         img.img-responsive(src='/img/l3.png' style='width:80px')
+                    #collapseExample2.collapse
+                        .well
+                            | Qui ci andranno le nostre foto o altro
                     p Chi siamo
                 //.col-xs-3.col-sm-3.col-md-3.col-lg-3
                     a(href='#')
@@ -48,4 +57,4 @@ block content
             br
             br
             br
-            
+
