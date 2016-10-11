@@ -1,18 +1,25 @@
 extends layout
 
 block content
+    script(type='text/javascript').
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "Basic Column Chart"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: [
+                        {y: #{listaCentraline[0].battery_lvl}, label: "Battery"},
+                        {y: #{listaCentraline[0].luminosity}, label: "Luminosity"},s
+                    ]
+                }]
+            });
+            chart.render();
+        }
+    script(src='/canvasjs-1.9.2/canvasjs.min.js')
     .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
             center
             br
-
-            .table.text-center
-                table.table.table-striped
-                    tr
-                        th(colspan="4").success.text-center
-                            | Sensori dell'orto
-                    tr
-                        th.text-center info
-                        th.text-center info
-                        th.text-center info
-            #{listaCentraline}
+            div( id="chartContainer" style="height: 400px; width: 100%;")
