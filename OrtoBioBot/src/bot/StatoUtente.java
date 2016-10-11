@@ -1,6 +1,9 @@
 package bot;
 
+import java.util.List;
+
 import gestionelingue.Lingue;
+import oggettijson.ItemMag;
 
 public class StatoUtente {
 
@@ -8,7 +11,7 @@ public class StatoUtente {
 	private int pagina = 0;
 	private Lingue lingua = Lingue.ITALIANO;
 	private boolean inOrto = false;
-	
+	private List<ItemMag> magazzino;
 	public StatoUtente() 
 	{
 		this.sezione = SezioniBot.SCEGLILINGUA;
@@ -50,4 +53,14 @@ public class StatoUtente {
 	{
 		this.inOrto = inOrto;
 	}
+
+	public List<ItemMag> getMagazzino() {
+		return magazzino;
+	}
+
+	public void setMagazzino(List<ItemMag> magazzino) {
+		this.magazzino = magazzino;
+	}
+	
+	
 }

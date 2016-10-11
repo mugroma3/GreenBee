@@ -136,25 +136,24 @@ public class OrtoBioBot extends Bot {
 		if (userIsNew(arg0.getFrom().getId()))
 			statiUtenti.put(arg0.getFrom().getId(), new StatoUtente());
 
-		System.out.println(statiUtenti.get(arg0.getFrom().getId()).isInOrto());
-		
-		
+		StatoUtente stato = statiUtenti.get(arg0.getFrom().getId());
+
 		if (text.equals(Italiano.ITALIANO)) {
-			if (statiUtenti.get(arg0.getFrom().getId()).getSezione() == SezioniBot.SCEGLILINGUA)
-				statiUtenti.get(arg0.getFrom().getId()).setLingua(Lingue.ITALIANO);
-			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			if (stato.getSezione() == SezioniBot.SCEGLILINGUA)
+				stato.setLingua(Lingue.ITALIANO);
+			inviaMenu(arg0, stato);
 			return;
 		}
 
 		if (text.equals(English.ENGLISH)) {
-			if (statiUtenti.get(arg0.getFrom().getId()).getSezione() == SezioniBot.SCEGLILINGUA)
-				statiUtenti.get(arg0.getFrom().getId()).setLingua(Lingue.INGLESE);
-			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			if (stato.getSezione() == SezioniBot.SCEGLILINGUA)
+				stato.setLingua(Lingue.INGLESE);
+			inviaMenu(arg0, stato);
 			return;
 		}
 
 		if (text.equals(Italiano.IMPOSTALINGUA) || text.equals(English.SETLANGUAGE)) {
-			chooseLanguage(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			chooseLanguage(arg0, stato);
 			return;
 		}
 
@@ -164,25 +163,34 @@ public class OrtoBioBot extends Bot {
 		}
 
 		if (text.equals(Italiano.MERCATO) || text.equals(English.MARKET)) {
-			inviaMenuMercato(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			inviaMenuMercato(arg0, stato);
 			return;
 		}
 
 		if (text.equals(Italiano.COMPITI) || text.equals(English.TASK)) {
-			inviaMenuCompiti(arg0, statiUtenti.get(arg0.getFrom().getId()));
+			inviaMenuCompiti(arg0, stato);
 			return;
 		}
 
+		if (text.equals(Italiano.CONSULTA) || text.equals(English.BROWSE)) {
+			if (stato.getSezione() == SezioniBot.MARKET) {
+				stato.setMagazzino(API.getMagazzino());
+				stato.setSezione(SezioniBot.MARKETCONSULTA);
+				System.out.println(stato.getMagazzino().get(0).getId());
+			} else
+				inviaMenu(arg0, stato);
+		}
+
 		if (text.equals(back)) {
-			switch (statiUtenti.get(arg0.getFrom().getId()).getSezione()) {
+			switch (stato.getSezione()) {
 			case MARKET:
-				inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				inviaMenu(arg0, stato);
 				break;
 			case MARKETCONSULTA:
-				inviaMenuMercato(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				inviaMenuMercato(arg0, stato);
 				break;
 			case MARKETSTORICO:
-				inviaMenuMercato(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				inviaMenuMercato(arg0, stato);
 				break;
 			case MENU:
 
@@ -191,7 +199,7 @@ public class OrtoBioBot extends Bot {
 
 				break;
 			case TASK:
-				inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
+				inviaMenu(arg0, stato);
 				break;
 
 			case TASKCONSULTA:
@@ -245,7 +253,6 @@ public class OrtoBioBot extends Bot {
 	@Override
 	public void inLineQuery(InlineQuery arg0) {
 
-
 	}
 
 	@Override
@@ -265,37 +272,32 @@ public class OrtoBioBot extends Bot {
 			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
 			return;
 		}
-		
+
 		checkInOrto(arg0, statiUtenti.get(arg0.getFrom().getId()));
-		
+
 		if (!statiUtenti.get(arg0.getFrom().getId()).isInOrto()) {
-			
-			if (addIngresso(arg0, statiUtenti.get(arg0.getFrom().getId())))
-			{
+
+			if (addIngresso(arg0, statiUtenti.get(arg0.getFrom().getId()))) {
 				statiUtenti.get(arg0.getFrom().getId()).setInOrto(true);
 				if (statiUtenti.get(arg0.getFrom().getId()).getLingua() == Lingue.ITALIANO)
 					sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.CONFENT));
 				else
 					sendMessage(new MessageToSend(arg0.getChat().getId(), English.CONFENT));
-			}
-			else 
-			if (statiUtenti.get(arg0.getFrom().getId()).getLingua() == Lingue.ITALIANO)
+			} else if (statiUtenti.get(arg0.getFrom().getId()).getLingua() == Lingue.ITALIANO)
 				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.ERRENT));
 			else
 				sendMessage(new MessageToSend(arg0.getChat().getId(), English.ERRENT));
 			inviaMenu(arg0, statiUtenti.get(arg0.getFrom().getId()));
 			return;
 		}
-		
-		if (addUscita(arg0, statiUtenti.get(arg0.getFrom().getId())))
-		{
+
+		if (addUscita(arg0, statiUtenti.get(arg0.getFrom().getId()))) {
 			statiUtenti.get(arg0.getFrom().getId()).setInOrto(false);
 			if (statiUtenti.get(arg0.getFrom().getId()).getLingua() == Lingue.ITALIANO)
 				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.CONFUSC));
 			else
 				sendMessage(new MessageToSend(arg0.getChat().getId(), English.CONFEXT));
-		}
-		else if (statiUtenti.get(arg0.getFrom().getId()).getLingua() == Lingue.ITALIANO)
+		} else if (statiUtenti.get(arg0.getFrom().getId()).getLingua() == Lingue.ITALIANO)
 			sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.ERRUSC));
 		else
 			sendMessage(new MessageToSend(arg0.getChat().getId(), English.ERREXIT));
@@ -305,18 +307,15 @@ public class OrtoBioBot extends Bot {
 	@Override
 	public void newChatMemberMessage(Message arg0) {
 
-
 	}
 
 	@Override
 	public void newChatPhotoMessage(Message arg0) {
 
-
 	}
 
 	@Override
 	public void newChatTitleMessage(Message arg0) {
-		
 
 	}
 
@@ -333,18 +332,15 @@ public class OrtoBioBot extends Bot {
 	@Override
 	public void venueMessage(Message arg0) {
 
-
 	}
 
 	@Override
 	public void videoMessage(Message arg0) {
 
-
 	}
 
 	@Override
 	public void voiceMessage(Message arg0) {
-
 
 	}
 
@@ -374,7 +370,7 @@ public class OrtoBioBot extends Bot {
 		} else {
 			if (stato.isInOrto()) {
 				mts = new MessageToSend(arg0.getFrom().getId(), English.ENGLISHMENU);
-				mts.setReplyMarkup(englishMenuExit); 
+				mts.setReplyMarkup(englishMenuExit);
 			} else {
 				mts = new MessageToSend(arg0.getFrom().getId(), English.ENGLISHMENU);
 				mts.setReplyMarkup(englishMenuEntry);
