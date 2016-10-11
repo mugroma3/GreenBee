@@ -14,8 +14,23 @@ router.get('/logout', function (req, res) {
     res.redirect('../');
 });
 
-router.get('/storicoTransazioni', function(req, res){
-    res.render('storicoTransazioni', {title: titolo, user: req.user});
+router.get('/ilMioOrto', function(req, res){
+    var options = {id : req.user._id};
+    var magazzinos;
+    magazzinoController.listAll(null,function (answer){
+        if(answer[0]==200){
+            magazzinos = answer[1];
+        }else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+    utenteController.getColtivazioni(options, function(answer){
+        if(answer[0]==200){
+            res.render('ilMioOrto', {title: titolo, user: req.user, coltivazioni: answer[1],magazzino: magazzinos});
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
 });
 
 router.get('/market', function (req, res) {
@@ -38,25 +53,6 @@ router.post('/addSale', function (req, res) {
     utenteController.addTransazione(options, function(answer){
         if(answer[0]==200){
             res.render('addedSale', {title: titolo, user: req.user, sale: answer[1]});
-        } else {
-            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
-        }
-    });
-});
-
-router.get('/gestisciColtivazioni', function (req, res) {
-    var options = {id : req.user._id};
-    var magazzinos;
-    magazzinoController.listAll(null,function (answer){
-        if(answer[0]==200){
-            magazzinos = answer[1];
-        }else {
-            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
-        }
-    });
-    utenteController.getColtivazioni(options, function(answer){
-        if(answer[0]==200){
-            res.render('gestisciColtivazioni', {title: titolo, user: req.user, coltivazioni: answer[1],magazzino: magazzinos});
         } else {
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
