@@ -7,6 +7,8 @@ public class English {
 	public final static String CONTACT= "Contact";
 	public final static String MARKET= "Market";
 	public final static String TASK= "Task";
+	public final static String BUY= "Buy";
+	public final static String DONTBUY= "Don't Buy";
 	public final static String SETLANGUAGE= "Set language 🇮🇹🇬🇧";
 	public final static String REPENTER= "Report entry";
 	public final static String CONFENT= "Segnalazione ingresso confermata";

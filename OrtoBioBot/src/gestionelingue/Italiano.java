@@ -7,7 +7,9 @@ public class Italiano {
 	public final static String CONTATTI= "Contatti";
 	public final static String MERCATO= "Mercato";
 	public final static String COMPITI= "Compiti";
-	public final static String IMPOSTALINGUA= "Imposta lingua 🇮🇹🇬🇧";
+	public final static String IMPOSTALINGUA = "Imposta lingua 🇮🇹🇬🇧";
+	public final static String COMPRA= "Compra";
+	public final static String NOCOMPRA= "Non comprare";
 	public final static String SEGENT= "Segnala ingresso";
 	public final static String CONFENT= "Segnalazione ingresso confermata";
 	public final static String ERRENT= "Sembrerebbe che sei già dentro l'orto";

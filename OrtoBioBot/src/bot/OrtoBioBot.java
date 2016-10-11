@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.botticelli.bot.Bot;
 import com.botticelli.bot.request.methods.MessageToSend;
+import com.botticelli.bot.request.methods.PhotoFileToSend;
 import com.botticelli.bot.request.methods.types.CallbackQuery;
 import com.botticelli.bot.request.methods.types.ChosenInlineResult;
 import com.botticelli.bot.request.methods.types.InlineQuery;
@@ -30,8 +31,13 @@ public class OrtoBioBot extends Bot {
 	public static final String contact = "Powered by MUG Roma tre: \nhttps://telegram.me/mugroma3 \nhttp://muglab.uniroma3.it/  "
 			+ "\nhttps://www.facebook.com/mugroma3 " + "\nhttps://www.twitter.com/mugroma3  ";
 
-	private static final String back = "🔙";
-
+	private static final String BACK = "🔙";
+	private static final String REFRESH = "🔄";
+	private static final String LEFT = "⬅️";
+	private static final String RIGHT = "➡️";
+	
+	
+	
 	private ReplyKeyboardMarkupWithButtons languageKeyboard;
 	private HashMap<Long, StatoUtente> statiUtenti;
 	private ReplyKeyboardMarkupWithButtons englishMenuEntry;
@@ -42,10 +48,12 @@ public class OrtoBioBot extends Bot {
 	private ReplyKeyboardMarkupWithButtons marketMenu;
 	private ReplyKeyboardMarkupWithButtons menuCompiti;
 	private ReplyKeyboardMarkupWithButtons taskMenu;
-
+	private static ReplyKeyboardMarkupWithButtons browseMenu;
+	
+	
 	public OrtoBioBot(String token) {
 		super(token);
-		API = new APINod();
+		API = APINod.getIstance();
 
 		statiUtenti = new HashMap<>();
 		List<List<KeyboardButton>> keyboard = new ArrayList<List<KeyboardButton>>();
@@ -99,26 +107,38 @@ public class OrtoBioBot extends Bot {
 
 		keyboard = new ArrayList<List<KeyboardButton>>();
 		menuMercato = new ReplyKeyboardMarkupWithButtons(keyboard);
-		menuMercato.addLine(Italiano.CONSULTA, Italiano.AGGIUNGI, Italiano.STORICO, back);
+		menuMercato.addLine(Italiano.CONSULTA, Italiano.AGGIUNGI, Italiano.STORICO, BACK);
 		menuMercato.setResizeKeyboard(true);
 
 		keyboard = new ArrayList<List<KeyboardButton>>();
 		marketMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
-		marketMenu.addLine(English.BROWSE, English.ADD, English.HISTORY, back);
+		marketMenu.addLine(English.BROWSE, English.ADD, English.HISTORY, BACK);
 		marketMenu.setResizeKeyboard(true);
 
 		keyboard = new ArrayList<List<KeyboardButton>>();
 		menuCompiti = new ReplyKeyboardMarkupWithButtons(keyboard);
-		menuCompiti.addLine(Italiano.CONSULTA, Italiano.AGGIUNGI, back);
+		menuCompiti.addLine(Italiano.CONSULTA, Italiano.AGGIUNGI, BACK);
 		menuCompiti.setResizeKeyboard(true);
 
 		keyboard = new ArrayList<List<KeyboardButton>>();
 		taskMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
-		taskMenu.addLine(English.BROWSE, English.ADD, back);
+		taskMenu.addLine(English.BROWSE, English.ADD, BACK);
 		taskMenu.setResizeKeyboard(true);
-
+		browseMenu = getBrowseMenu();
 	}
 
+	
+	public static ReplyKeyboardMarkupWithButtons getBrowseMenu()
+	{
+		if(browseMenu == null)
+		{
+			browseMenu = new ReplyKeyboardMarkupWithButtons(new ArrayList<List<KeyboardButton>>());
+			browseMenu.addLine(LEFT, RIGHT, REFRESH, BACK);
+			browseMenu.setResizeKeyboard(true);
+		}
+		return browseMenu;
+	}
+	
 	@Override
 	public void textMessage(Message arg0) {
 
@@ -176,12 +196,12 @@ public class OrtoBioBot extends Bot {
 			if (stato.getSezione() == SezioniBot.MARKET) {
 				stato.setMagazzino(API.getMagazzino());
 				stato.setSezione(SezioniBot.MARKETCONSULTA);
-				System.out.println(stato.getMagazzino().get(0).getId());
+				sendPhotoFile(new PhotoFileToSend(arg0.getChat().getId(), API.saveImage(stato.getMagazzino().get(0).getImmagine())));
 			} else
 				inviaMenu(arg0, stato);
 		}
 
-		if (text.equals(back)) {
+		if (text.equals(BACK)) {
 			switch (stato.getSezione()) {
 			case MARKET:
 				inviaMenu(arg0, stato);

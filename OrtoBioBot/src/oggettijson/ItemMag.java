@@ -11,7 +11,10 @@ public class ItemMag {
 	private String immagine;
 
 	private int quantita;
+	
+	private String telegramRefImg;
 
+	
 	/**
 	 *
 	 * @return The id
@@ -95,8 +98,20 @@ public class ItemMag {
 	 * @param quantita
 	 *            The quantita
 	 */
-	public void setQuantita(int quantita) {
+	public void setQuantita(int quantita) 
+	{
 		this.quantita = quantita;
 	}
 
+	public String getTelegramRefImg() 
+	{
+		return telegramRefImg;
+	}
+
+	public void setTelegramRefImg(String telegramRefImg) 
+	{
+		this.telegramRefImg = telegramRefImg;
+	}
+
+	
 }
