@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+            center
+            br
+
+            .table.text-center
+                table.table.table-striped
+                    tr
+                        th(colspan="4").success.text-center
+                            | Sensori dell'orto
+                    tr
+                        th.text-center info
+                        th.text-center info
+                        th.text-center info
+            #{listaCentraline}

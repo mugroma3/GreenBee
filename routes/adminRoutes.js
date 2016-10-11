@@ -3,6 +3,7 @@ var router = express.Router();
 var utenteController = require('../controllers/utenteController');
 var scheduleController = require('../controllers/scheduleController.js');
 var magazzinoController = require('../controllers/magazzinoController');
+var centralinaController = require('../controllers/centralinaController');
 var titolo = 'GreenBee';
 
 router.get('/', function (req, res) {
@@ -52,8 +53,14 @@ router.post('/updatedUser', function (req, res) {
     });
 });
 
-router.get('/sensori', function (req, res) {
-    res.render('sensori', { title: titolo, user : req.user});
+router.get('/centralina', function (req, res) {
+    centralinaController.list(null, function (answer) {
+        if(answer[0]==200){
+            res.render('centralina', {title: titolo, user: req.user, listaCentraline: answer[1]});
+        } else {
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
 });
 
 router.post('/addUser', function (req, res) {

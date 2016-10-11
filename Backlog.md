@@ -3,6 +3,7 @@ TODO:
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato (Può non essere fatta!)
 29) @Vitus89 IMPLEMENTARE LA PAGINA DEI SENSORI
 31) @Vitus89 schdule admin
+31) @Vitus89 customize bootstrap color navbar success-mug
 Credo non manchi altro al progetto...
 
 COMPLETATI:
