@@ -363,7 +363,7 @@ module.exports = {
                     if (err){
                         callback([500,'Error when updating schedule.']);
                     }else{
-                        utente.azioni.push({nome: schdeule.nome, ricompensa: schdeule.ricompensa, dataCompletamento: Date.now()});
+                        utente.azioni.push({nome: schedule.nome, ricompensa: schedule.ricompensa, dataCompletamento: Date.now()});
                         utente.punti += schedule.ricompensa;
                         utente.save(function (err) {
                             if (err){

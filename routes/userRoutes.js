@@ -28,16 +28,6 @@ router.get('/market', function (req, res) {
     });
 });
 
-router.get('/toDoList', function(req, res){
-    scheduleController.list(null,function (answer) {
-        if(answer[0]==200){
-            res.render('toDoList',{title: titolo, user: req.user, toDoList: answer[1]});
-        }else{
-            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
-        }
-    });
-});
-
 router.post('/addSale', function (req, res) {
     var options = {
         tipoTransazione : req.body.tipoTransazione,
@@ -101,6 +91,15 @@ router.post('/removeColtivazione', function (req, res) {
     });
 });
 
+router.get('/toDoList', function(req, res){
+    scheduleController.list(null,function (answer) {
+        if(answer[0]==200){
+            res.render('toDoList',{title: titolo, user: req.user, toDoList: answer[1]});
+        }else{
+            res.render('error', {title: titolo, message: answer[1], status: answer[2]});
+        }
+    });
+});
 
 router.post('/completeSchedule', function (req, res) {
     utenteController.completeSchedule({scheduleId: req.body.schedule, utenteId: req.user._id}, function(answer){

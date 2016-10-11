@@ -122,16 +122,15 @@ router.post('/removeUtente', function (req, res) {
     });
 });
 
-router.get('/toDoList', function(req, res){
-    scheduleController.list(null,function (answer) {
+router.get('/toDoListAdmin', function(req, res){
+    scheduleController.listAll(null,function (answer) {
         if(answer[0]==200){
-            res.render('toDoList',{title: titolo, user: req.user, toDoList: answer[1]});
+            res.render('toDoListAdmin',{title: titolo, user: req.user, toDoList: answer[1]});
         }else{
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
     });
 });
-
 router.post('/addSchedule', function (req, res) {
     var options = {
         nome: req.body.nome,
@@ -151,7 +150,7 @@ router.post('/addSchedule', function (req, res) {
 router.post('/removeSchedule', function (req, res) {
     scheduleController.remove({id: req.body.schedule}, function(answer){
         if(answer[0]==204){
-            res.redirect('toDoList');
+            res.redirect('toDoListAdmin');
         } else {
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
