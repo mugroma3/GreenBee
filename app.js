@@ -9,6 +9,19 @@ var fileUpload = require('express-fileupload');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/ortoBioDB'); //Localhost/nomeDB
 
+function defaultContentTypeMiddleware (req, res, next) {
+  req.headers['content-type'] = req.headers['content-type'] || 'application/json';
+  if(req.headers['content-type'] == 'application/javascript'){
+    req.headers['content-type']='application/json';
+    next();
+  } else {
+    next();
+  }
+}
+
+
+
+
 var routes = require('./routes/index');
 var api = require('./routes/apiRoutes');
 var routesAdmin = require('./routes/adminRoutes');
@@ -27,6 +40,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public/img', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(defaultContentTypeMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
