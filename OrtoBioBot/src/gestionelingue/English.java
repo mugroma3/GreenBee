@@ -26,6 +26,7 @@ public class English {
 	public final static String BROWSE= "Browse";
 	public final static String ADD= "Add";
 	public final static String HISTORY= "History";
+	public final static String AMOUNT= "available amount: ";
 	public final static String ENGLISHMENU = "Welcome in GreenBeeBot, an urban-social-smart garden made by MUG Roma Tre and managed with a Telegram bot.\nChoose an option:";
 	
 }

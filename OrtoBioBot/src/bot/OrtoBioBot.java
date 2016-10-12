@@ -30,10 +30,10 @@ public class OrtoBioBot extends Bot {
 	public static final String contact = "Powered by MUG Roma tre: \nhttps://telegram.me/mugroma3 \nhttp://muglab.uniroma3.it/  "
 			+ "\nhttps://www.facebook.com/mugroma3 " + "\nhttps://www.twitter.com/mugroma3  ";
 
-	private static final String BACK = "🔙";
-	private static final String REFRESH = "🔄";
-	private static final String LEFT = "⬅️";
-	private static final String RIGHT = "➡️";
+	public static final String BACK = "🔙";
+	public static final String REFRESH = "🔄";
+	public static final String LEFT = "⬅️";
+	public static final String RIGHT = "➡️";
 	
 	
 	
@@ -187,20 +187,36 @@ public class OrtoBioBot extends Bot {
 		}
 
 		if (text.equals(Italiano.COMPITI) || text.equals(English.TASK)) {
-			inviaMenuCompiti(arg0, stato);
+			if (stato.getSezione() == SezioniBot.MENU)
+			    inviaMenuCompiti(arg0, stato);
+			else
+				inviaMenu(arg0, stato);
 			return;
 		}
 
 		if (text.equals(Italiano.CONSULTA) || text.equals(English.BROWSE)) {
 			if (stato.getSezione() == SezioniBot.MARKET) {
-				stato.setMagazzino(API.getMagazzino());
-				stato.setSezione(SezioniBot.MARKETCONSULTA);
-				VoceMercato vm = new VoceMercato(stato.getMagazzino().get(0), arg0, this, stato);
-				vm.sendVoce();
+				consultaMarket(arg0, stato);
+				return;
 			} else
 				inviaMenu(arg0, stato);
 		}
 
+		
+		if(text.equals(Italiano.NOCOMPRA) || text.equals(English.DONTBUY))
+		{
+			if(stato.getSezione() == SezioniBot.MARKETCONSULTA)
+				consultaMarket(arg0, stato);
+			else
+				inviaMenu(arg0, stato);
+			return;
+		}
+		
+		if(text.equals(Italiano.COMPRA) || text.equals(English.BUY))
+		{
+			
+		}
+		
 		if (text.equals(BACK)) {
 			switch (stato.getSezione()) {
 			case MARKET:
@@ -232,6 +248,7 @@ public class OrtoBioBot extends Bot {
 
 			return;
 		}
+		
 
 	}
 
@@ -421,11 +438,6 @@ public class OrtoBioBot extends Bot {
 	}
 
 	private void inviaMenuCompiti(Message arg0, StatoUtente stato) {
-		if (stato.getSezione() != SezioniBot.MENU) {
-			inviaMenu(arg0, stato);
-			return;
-		}
-
 		stato.setSezione(SezioniBot.TASK);
 		MessageToSend mts;
 		if (stato.getLingua() == Lingue.ITALIANO) {
@@ -457,12 +469,12 @@ public class OrtoBioBot extends Bot {
 	
 	private void consultaMarket(Message arg0, StatoUtente stato)
 	{
-		if (stato.getSezione() == SezioniBot.MARKET) {
 			stato.setMagazzino(API.getMagazzino());
 			stato.setSezione(SezioniBot.MARKETCONSULTA);
+			sendMessage(NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato.getMagazzino(), 0, stato.getMagazzino().size()));
+			/*
 			VoceMercato vm = new VoceMercato(stato.getMagazzino().get(0), arg0, this, stato);
 			vm.sendVoce();
-		} else
-			inviaMenu(arg0, stato);
+			*/
 	}
 }
