@@ -471,7 +471,7 @@ public class OrtoBioBot extends Bot {
 	{
 			stato.setMagazzino(API.getMagazzino());
 			stato.setSezione(SezioniBot.MARKETCONSULTA);
-			sendMessage(NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato.getMagazzino(), 0, stato.getMagazzino().size()));
+			sendMessage(NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato));
 			/*
 			VoceMercato vm = new VoceMercato(stato.getMagazzino().get(0), arg0, this, stato);
 			vm.sendVoce();

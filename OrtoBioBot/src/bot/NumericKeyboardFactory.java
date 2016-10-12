@@ -14,11 +14,11 @@ public class NumericKeyboardFactory {
 	
 	private static List<ReplyKeyboardMarkupWithButtons> numericKeyboards;
 	private static NumericKeyboardFactory mySelf; 
-	
+	public static final int PAGESIZE = 4;
 	private NumericKeyboardFactory()
 	{
 		numericKeyboards = new ArrayList<>();
-		String[] ask = new String[4];
+		String[] ask = new String[PAGESIZE];
 		ask[0] = " ";
 		ask[1] = " ";
 		ask[2] = " ";
@@ -41,26 +41,13 @@ public class NumericKeyboardFactory {
 			mySelf = new NumericKeyboardFactory();
 		return mySelf;
 	}
+	
 	/*
 	 * end è escluso!
 	 */
-	public static MessageToSend getStandardBrowseMessage(long chat_id, List<ItemMag> magazzino, int begin, int end)
+	public static MessageToSend getStandardBrowseMessage(long chat_id, StatoUtente stato)
 	{
-
-		if(end > magazzino.size())
-			end = magazzino.size();
-		if(begin < 0)
-			begin = 0;
-		int len = Math.min(end - begin, 4);
-		String [] ask = new String[len];
-		int c = 0;
-		for(int i = begin; i < end && c < 4; i++)
-		{
-			ask[c] = magazzino.get(i).getNome() + " " + Italiano.QUANTITA + magazzino.get(i).getQuantita() +" "+ Italiano.ALCOSTO + magazzino.get(i).getCosto();
-			c++;
-		}
-		
-		return getStandardBrowseMessage( chat_id, ask);
+		return getStandardBrowseMessage( chat_id, stato.buildItemMagStringArray());
 	}
 	
 	public static MessageToSend getStandardBrowseMessage(long chat_id, String... strs)
@@ -69,7 +56,7 @@ public class NumericKeyboardFactory {
 		
 		if(strs.length == 0)
 			return new MessageToSend(chat_id, " ");
-		int len = Math.min(4, strs.length);
+		int len = Math.min(PAGESIZE, strs.length);
 		String text = "";
 		for(int i = 0; i < len; i++)
 		{

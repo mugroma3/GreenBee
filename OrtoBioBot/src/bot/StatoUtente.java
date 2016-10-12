@@ -2,13 +2,15 @@ package bot;
 
 import java.util.List;
 
+import gestionelingue.English;
+import gestionelingue.Italiano;
 import gestionelingue.Lingue;
 import oggettijson.ItemMag;
 
 public class StatoUtente {
 
 	private SezioniBot sezione;
-	private int pagina = 0;
+	private int paginaMagazzino = 0;
 	private Lingue lingua = Lingue.ITALIANO;
 	private boolean inOrto = false;
 	private List<ItemMag> magazzino;
@@ -27,13 +29,23 @@ public class StatoUtente {
 	}
 	public int getPagina() 
 	{
-		return pagina;
-	}
-	public void setPagina(int pagina)
-	{
-		this.pagina = pagina;
+		return paginaMagazzino;
 	}
 
+	public int paginaMagAvanti()
+	{
+		paginaMagazzino++;
+		paginaMagazzino = Math.min(magazzino.size() / NumericKeyboardFactory.PAGESIZE, paginaMagazzino);
+		return paginaMagazzino;
+	}
+	
+	public int paginaMagIndietro()
+	{
+		paginaMagazzino--;
+		paginaMagazzino = Math.max(0, paginaMagazzino);
+		return paginaMagazzino;
+	}
+	
 	public Lingue getLingua() 
 	{
 		return lingua;
@@ -62,5 +74,33 @@ public class StatoUtente {
 		this.magazzino = magazzino;
 	}
 	
+	
+	public String[] buildItemMagStringArray()
+	{
+		if(magazzino.size() == 0)
+			return new String[0];
+		
+		int begin = paginaMagazzino * NumericKeyboardFactory.PAGESIZE;
+		int end = Math.min(begin + 4, magazzino.size());
+		int len = Math.min(end - begin, 4);
+		String [] ask = new String[len];
+		int c = 0;
+		
+		String quant = Italiano.QUANTITA;
+		String cost = Italiano.ALCOSTO;
+		
+		if(lingua == Lingue.INGLESE)
+		{
+			quant = English.AMOUNT;
+			cost = English.ALCOSTO;
+		}
+		
+		for(int i = begin; i < end && c < 4; i++)
+		{
+			ask[c] = magazzino.get(i).getNome() + " " + quant + magazzino.get(i).getQuantita() +" "+ cost + magazzino.get(i).getCosto();
+			c++;
+		}
+		return ask;
+	}
 	
 }
