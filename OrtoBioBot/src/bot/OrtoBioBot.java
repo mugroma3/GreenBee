@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.botticelli.bot.Bot;
 import com.botticelli.bot.request.methods.MessageToSend;
+import com.botticelli.bot.request.methods.StickerReferenceToSend;
 import com.botticelli.bot.request.methods.types.CallbackQuery;
 import com.botticelli.bot.request.methods.types.ChosenInlineResult;
 import com.botticelli.bot.request.methods.types.ForceReply;
@@ -40,6 +41,11 @@ public class OrtoBioBot extends Bot {
 	public static final String LEFT = "⬅️";
 	public static final String RIGHT = "➡️";
 
+	
+	private static final String CESARESTICKERUP = "BQADBAADEgADyIsGAAE-gRk5Wrs8NwI";
+	private static final String CESARESTICKERDOWN = "BQADBAADIAADyIsGAAGwI-I5pMSEdQI";
+	
+	
 	private ReplyKeyboardMarkupWithButtons languageKeyboard;
 	private HashMap<Long, StatoUtente> statiUtenti;
 	private ReplyKeyboardMarkupWithButtons englishMenuEntry;
@@ -219,14 +225,27 @@ public class OrtoBioBot extends Bot {
 						TipoTransazione.acquisto, stato.getSelezionato().getNome(), Integer.valueOf(text)));
 				if(tr.getOggetto() == null)
 				{
-					sendMessage(new MessageToSend(arg0.getChat().getId(), "dio cane"));
+					String t = Italiano.TRANSFALL;
+					if(stato.getLingua() == Lingue.INGLESE)
+						t = English.TRANSFALL;
+					sendMessage(new MessageToSend(arg0.getChat().getId(), t));
+					
+					sendStickerbyReference(new StickerReferenceToSend(arg0.getChat().getId(), CESARESTICKERDOWN));
 				}
 				else
 				{
-					sendMessage(new MessageToSend(arg0.getChat().getId(), "OK DAJE"));
+					String t = Italiano.TRANSRIUSC;
+					if(stato.getLingua() == Lingue.INGLESE)
+						t = English.TRANSRIUSC;
+					sendMessage(new MessageToSend(arg0.getChat().getId(), t));
+					
+					sendStickerbyReference(new StickerReferenceToSend(arg0.getChat().getId(), CESARESTICKERUP));
 				}
+				
+				
+				consultaMarket(arg0, stato);
+				return;
 			}
-			
 			return;
 		}
 		if (text.equals(Italiano.COMPRA) || text.equals(English.BUY)) {
@@ -435,8 +454,9 @@ public class OrtoBioBot extends Bot {
 	}
 
 	@Override
-	public void stickerMessage(Message arg0) {
-
+	public void stickerMessage(Message arg0) 
+	{
+		System.out.println(arg0.getSticker().getFileID());
 	}
 
 	@Override

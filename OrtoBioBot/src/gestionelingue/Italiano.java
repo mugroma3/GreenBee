@@ -12,6 +12,8 @@ public class Italiano {
 	public final static String IMPOSTALINGUA = "Imposta lingua 🇮🇹🇬🇧";
 	public final static String NONHAIPUNTI = "Non hai abbastanza punti per comprare una singola unità di ";
 	public final static String VUOICOMP = "Sei interessato a comprare ";
+	public final static String TRANSRIUSC = "Transazione riuscita";
+	public final static String TRANSFALL = "Transazione fallita";
 	public final static String ALCOSTO = " al costo unitario di ";
 	public final static String ALKILO = " al kilo?";	
 	public final static String COMPRA= "Compra";

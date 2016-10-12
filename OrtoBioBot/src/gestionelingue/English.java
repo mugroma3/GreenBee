@@ -11,6 +11,8 @@ public class English {
 	public final static String TASK= "Task";
 	public final static String BUY= "Buy";
 	public final static String DONTBUY= "Don't Buy";
+	public final static String TRANSRIUSC = "Successful transaction";
+	public final static String TRANSFALL = "Failed transaction";
 	public final static String NONHAIPUNTI = "You don't have enough points to buy a single unit of ";
 	public final static String VUOICOMP = "You would buy ";
 	public final static String ALCOSTO = " at the unitary cost of ";

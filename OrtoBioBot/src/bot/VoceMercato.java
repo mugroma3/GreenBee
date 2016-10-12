@@ -65,7 +65,6 @@ public class VoceMercato {
 		Punti p = APINod.getIstance().getPunti(m.getFrom().getId());
 		if (p.getPunti() < oggetto.getCosto())
 			ricco = false;
-System.out.println(p.getPunti());
 		if (stato.getLingua() == Lingue.INGLESE) {
 			if (ricco) {
 				mts = new MessageToSend(m.getChat().getId(),

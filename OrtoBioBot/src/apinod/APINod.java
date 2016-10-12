@@ -38,12 +38,15 @@ public class APINod {
 	private String addUscita = "addUscita/";
 	private String addTransazione = "addTransazione/";
 	private String getPunti ="getPunti/";
+	private String listTransazioni = "listTransazioni/";
 	private String urlIsNellOrto;
 	private String urlAddIngresso;
 	private String urlAddUscita;
 	private String urlMagazzino;
 	private String urlPunti;
 	private String urlTransazione;
+	private String urlListTransazione;
+	
 	private ChiamatoreAPI API;
 
 	private APINod() {
@@ -55,6 +58,7 @@ public class APINod {
 		urlMagazzino = ip + porta + apiMagazzino;
 		urlPunti = sitoBase + getPunti;
 		urlTransazione = sitoBase + addTransazione;
+		urlListTransazione = sitoBase + listTransazioni;
 		API = new ChiamatoreAPI();
 		
 	}
@@ -84,6 +88,12 @@ public class APINod {
 		}.getType());
 	}
 
+	public List<Transazione> getStorico(long id) {
+		String json = API.getAlServer(urlListTransazione + String.valueOf(id));
+		return gson.fromJson(json, new TypeToken<ArrayList<Transazione>>() {
+		}.getType());
+	}
+	
 	public synchronized File saveImage(String urlIMG) {
 
 		try {
@@ -101,9 +111,7 @@ public class APINod {
 	
 	public Transazione addTransazione(long id, RichiestaTransazione rt)
 	{
-		System.out.println(gson.toJson(rt));
 		String json = API.putAlServer(urlTransazione + String.valueOf(id), gson.toJson(rt));
-		System.out.println(json);
 		return gson.fromJson(json, Transazione.class);
 	}
 	
