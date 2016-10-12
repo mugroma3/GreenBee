@@ -63,7 +63,7 @@ module.exports = {
      * utenteController.showByName()
      */
     showByName: function (centralinaData, callback) {
-        centralinaModel.find({name: centralinaData.name}).limit(20).exec(function (err, centralina) {
+        centralinaModel.find({name: centralinaData.name}).sort('-Data').limit(20).exec(function (err, centralina) {
             if (err) {
                 callback([500, "Error when getting lettura.", err]);
             }

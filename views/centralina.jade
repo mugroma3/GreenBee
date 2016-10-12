@@ -1,10 +1,75 @@
 extends layout
-
 block content
-
     .row
         .col-xs-12.col-sm-12.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3
+            script(type='text/javascript').
+
+                window.onload = function () {
+                    var battery = [];
+                    var luminosity = [];
+                    var lettureCentralina = !{JSON.stringify(lettureCentralina)};
+                    for (var i = 0; i < lettureCentralina.length; i++) {
+                        battery.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].battery_lvl});
+                        luminosity.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].luminosity});
+                    }
+                    console.log(luminosity);
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        title: {
+                            text: "Dati della centralina",
+                            fontSize: 30
+                        },
+                        animationEnabled: true,
+                        axisX: {
+                            gridColor: "Silver",
+                            tickColor: "silver",
+                            valueFormatString: "DD/MMM HH:MM"
+                        },
+                        toolTip: {
+                            shared: true
+                        },
+                        theme: "theme2",
+                        axisY: {
+                            gridColor: "Silver",
+                            tickColor: "silver"
+                        },
+                        legend: {
+                            verticalAlign: "center",
+                            horizontalAlign: "right"
+                        },
+                        data: [
+                            {
+                                type: "line",
+                                showInLegend: true,
+                                lineThickness: 2,
+                                name: "Visits",
+                                markerType: "square",
+                                color: "#F08080",
+                                dataPoints: battery
+                            },
+                            {
+                                type: "line",
+                                showInLegend: true,
+                                name: "Unique Visits",
+                                color: "#20B2AA",
+                                lineThickness: 2,
+                                dataPoints: luminosity
+                            }
+                        ],
+                        legend: {
+                            cursor: "pointer",
+                            itemclick: function (e) {
+                                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                                    e.dataSeries.visible = false;
+                                }
+                                else {
+                                    e.dataSeries.visible = true;
+                                }
+                                chart.render();
+                            }
+                        }
+                    });
+                    chart.render();
+                    console.log(chart);
+                };
             center
-            br
-            #{listaCentraline}
-            //div( id="chartContainer" style="height: 400px; width: 100%;")
+            #chartContainer(style='height: 400px; width: 100%;')
