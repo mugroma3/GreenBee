@@ -19,6 +19,9 @@ import gestionelingue.English;
 import gestionelingue.Italiano;
 import gestionelingue.Lingue;
 import oggettijson.ItemMag;
+import oggettijson.RichiestaTransazione;
+import oggettijson.TipoTransazione;
+import oggettijson.Transazione;
 
 public class OrtoBioBot extends Bot {
 
@@ -209,28 +212,33 @@ public class OrtoBioBot extends Bot {
 			return;
 		}
 
-		if(arg0.getReplyToMessage() != null && (arg0.getReplyToMessage().getText().equals(English.SELEZIONAQUANTITA) || 
-				arg0.getReplyToMessage().getText().equals(Italiano.SELEZIONAQUANTITA)))
+		if (arg0.getReplyToMessage() != null && (arg0.getReplyToMessage().getText().equals(English.SELEZIONAQUANTITA)
+				|| arg0.getReplyToMessage().getText().equals(Italiano.SELEZIONAQUANTITA))) {
+			if (isNumeric(text)) {
+				Transazione tr = APINod.getIstance().addTransazione(arg0.getFrom().getId(), new RichiestaTransazione(
+						TipoTransazione.acquisto, stato.getSelezionato().getNome(), Integer.valueOf(text)));
+				if(tr.getOggetto() == null)
 				{
-			if(isNumeric(text))
-			{
-				
-			}
+					sendMessage(new MessageToSend(arg0.getChat().getId(), "dio cane"));
 				}
-		
-		
+				else
+				{
+					sendMessage(new MessageToSend(arg0.getChat().getId(), "OK DAJE"));
+				}
+			}
+			
+			return;
+		}
 		if (text.equals(Italiano.COMPRA) || text.equals(English.BUY)) {
-			if(stato.getSezione() == SezioniBot.MARKETCOMPRA)
-			{
+			if (stato.getSezione() == SezioniBot.MARKETCOMPRA) {
 				stato.setSezione(SezioniBot.MARKETQUANTITA);
 				String testoQ = English.SELEZIONAQUANTITA;
-				if(stato.getLingua() == Lingue.ITALIANO)
-				    testoQ = Italiano.SELEZIONAQUANTITA;
+				if (stato.getLingua() == Lingue.ITALIANO)
+					testoQ = Italiano.SELEZIONAQUANTITA;
 				MessageToSend mts = new MessageToSend(arg0.getChat().getId(), testoQ);
 				mts.setReplyMarkup(new ForceReply(true));
 				sendMessage(mts);
-			}
-			else
+			} else
 				inviaMenu(arg0, stato);
 			return;
 		}
@@ -301,11 +309,11 @@ public class OrtoBioBot extends Bot {
 					text = text.substring(1);
 				int index = Integer.valueOf(text);
 				ItemMag im = stato.getItemMagFromInexPage(index);
-				if (im != null) 
-				{
+				if (im != null) {
+					stato.setSelezionato(im);
 					VoceMercato vm = new VoceMercato(im, arg0, this, stato);
-					if(vm.sendVoce())
-					    stato.setSezione(SezioniBot.MARKETCOMPRA);
+					if (vm.sendVoce())
+						stato.setSezione(SezioniBot.MARKETCOMPRA);
 					else
 						consultaMarket(arg0, stato);
 				}
@@ -543,19 +551,14 @@ public class OrtoBioBot extends Bot {
 		 * this, stato); vm.sendVoce();
 		 */
 	}
-	
-	
-	  public static boolean isNumeric(String str)
-	  {
-	    try
-	    {
-	      int d = Integer.parseInt(str);
-	    }
-	    catch(NumberFormatException nfe)
-	    {
-	      return false;
-	    }
-	    return true;
-	  }
-	
+
+	public static boolean isNumeric(String str) {
+		try {
+			int d = Integer.parseInt(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+
 }

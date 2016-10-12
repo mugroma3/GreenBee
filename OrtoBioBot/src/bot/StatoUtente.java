@@ -15,6 +15,8 @@ public class StatoUtente {
 	private boolean inOrto = false;
 	private List<ItemMag> magazzino;
 	private int maxMagPages = 0;
+	private ItemMag selezionato;
+	
 	public StatoUtente() 
 	{
 		this.sezione = SezioniBot.SCEGLILINGUA;
@@ -121,5 +123,15 @@ public class StatoUtente {
 		}
 		return ask;
 	}
+
+	public ItemMag getSelezionato() {
+		return selezionato;
+	}
+
+	public void setSelezionato(ItemMag selezionato) {
+		this.selezionato = selezionato;
+	}
+	
+	
 	
 }

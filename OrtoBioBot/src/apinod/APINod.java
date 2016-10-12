@@ -101,7 +101,9 @@ public class APINod {
 	
 	public Transazione addTransazione(long id, RichiestaTransazione rt)
 	{
+		System.out.println(gson.toJson(rt));
 		String json = API.putAlServer(urlTransazione + String.valueOf(id), gson.toJson(rt));
+		System.out.println(json);
 		return gson.fromJson(json, Transazione.class);
 	}
 	
