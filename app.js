@@ -95,8 +95,6 @@ passport.use(new localStrategy(
     }
 ));
 
-
-
 passport.serializeUser(utenteModel.serializeUser());
 passport.deserializeUser(utenteModel.deserializeUser());
 
