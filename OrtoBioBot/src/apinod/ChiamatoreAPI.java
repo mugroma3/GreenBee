@@ -1,7 +1,6 @@
 package apinod;
 
 import java.io.IOException;
-
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,8 +29,8 @@ public class ChiamatoreAPI {
 		return "";
 	}
 
-	public String putAlServer(String url) {
-		RequestBody body = RequestBody.create(JSON, "");
+	public String putAlServer(String url, String json) {
+		RequestBody body = RequestBody.create(JSON, json);
 		Request request = new Request.Builder().url(url).put(body).build();
 		try (Response response = client.newCall(request).execute()) {
 			return response.body().string();
@@ -41,6 +40,8 @@ public class ChiamatoreAPI {
 		return "";
 	}
 	
-	
+	public String putAlServer(String url) {
+		return putAlServer(url, "");
+	}
 
 }

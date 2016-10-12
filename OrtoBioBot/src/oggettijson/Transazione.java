@@ -2,7 +2,7 @@ package oggettijson;
 
 public class Transazione {
 
-	private String tipoTransazione;
+	private TipoTransazione tipoTransazione;
 	private String oggetto;
 	private Double quantita;
 	private String id;
@@ -12,7 +12,7 @@ public class Transazione {
 	* @return
 	* The tipoTransazione
 	*/
-	public String getTipoTransazione() {
+	public TipoTransazione getTipoTransazione() {
 	return tipoTransazione;
 	}
 
@@ -21,7 +21,7 @@ public class Transazione {
 	* @param tipoTransazione
 	* The tipoTransazione
 	*/
-	public void setTipoTransazione(String tipoTransazione) {
+	public void setTipoTransazione(TipoTransazione tipoTransazione) {
 	this.tipoTransazione = tipoTransazione;
 	}
 

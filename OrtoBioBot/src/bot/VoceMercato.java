@@ -63,10 +63,8 @@ public class VoceMercato {
 		} else
 			bot.sendPhotobyReference(new PhotoReferenceToSend(m.getChat().getId(), oggetto.getTelegramRefImg()));
 		Punti p = APINod.getIstance().getPunti(m.getFrom().getId());
-		p.setPunti(189); // TODO togliere appena porco dio
 		if (p.getPunti() < oggetto.getCosto())
 			ricco = false;
-		// TODO fare punti
 
 		if (stato.getLingua() == Lingue.INGLESE) {
 			if (ricco) {

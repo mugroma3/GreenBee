@@ -15,6 +15,8 @@ import com.google.gson.reflect.TypeToken;
 
 import oggettijson.ItemMag;
 import oggettijson.Punti;
+import oggettijson.RichiestaTransazione;
+import oggettijson.Transazione;
 
 public class APINod {
 
@@ -34,12 +36,14 @@ public class APINod {
 	private String isNellOrto = "isNellOrto/";
 	private String addIngresso = "addIngresso/";
 	private String addUscita = "addUscita/";
+	private String addTransazione = "addTransazione/";
 	private String getPunti ="getPunti/";
 	private String urlIsNellOrto;
 	private String urlAddIngresso;
 	private String urlAddUscita;
 	private String urlMagazzino;
 	private String urlPunti;
+	private String urlTransazione;
 	private ChiamatoreAPI API;
 
 	private APINod() {
@@ -50,6 +54,7 @@ public class APINod {
 		urlAddUscita = sitoBase + addUscita;
 		urlMagazzino = ip + porta + apiMagazzino;
 		urlPunti = sitoBase + getPunti;
+		urlTransazione = sitoBase + addTransazione;
 		API = new ChiamatoreAPI();
 		
 	}
@@ -92,6 +97,12 @@ public class APINod {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Transazione addTransazione(long id, RichiestaTransazione rt)
+	{
+		String json = API.putAlServer(urlTransazione + String.valueOf(id), gson.toJson(rt));
+		return gson.fromJson(json, Transazione.class);
 	}
 	
 	public Punti getPunti(long id)

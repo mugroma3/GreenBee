@@ -8,6 +8,7 @@ import com.botticelli.bot.Bot;
 import com.botticelli.bot.request.methods.MessageToSend;
 import com.botticelli.bot.request.methods.types.CallbackQuery;
 import com.botticelli.bot.request.methods.types.ChosenInlineResult;
+import com.botticelli.bot.request.methods.types.ForceReply;
 import com.botticelli.bot.request.methods.types.InlineQuery;
 import com.botticelli.bot.request.methods.types.KeyboardButton;
 import com.botticelli.bot.request.methods.types.Message;
@@ -208,7 +209,29 @@ public class OrtoBioBot extends Bot {
 			return;
 		}
 
+		if(arg0.getReplyToMessage() != null && (arg0.getReplyToMessage().getText().equals(English.SELEZIONAQUANTITA) || 
+				arg0.getReplyToMessage().getText().equals(Italiano.SELEZIONAQUANTITA)))
+				{
+			if(isNumeric(text))
+			{
+				
+			}
+				}
+		
+		
 		if (text.equals(Italiano.COMPRA) || text.equals(English.BUY)) {
+			if(stato.getSezione() == SezioniBot.MARKETCOMPRA)
+			{
+				stato.setSezione(SezioniBot.MARKETQUANTITA);
+				String testoQ = English.SELEZIONAQUANTITA;
+				if(stato.getLingua() == Lingue.ITALIANO)
+				    testoQ = Italiano.SELEZIONAQUANTITA;
+				MessageToSend mts = new MessageToSend(arg0.getChat().getId(), testoQ);
+				mts.setReplyMarkup(new ForceReply(true));
+				sendMessage(mts);
+			}
+			else
+				inviaMenu(arg0, stato);
 			return;
 		}
 
@@ -520,4 +543,19 @@ public class OrtoBioBot extends Bot {
 		 * this, stato); vm.sendVoce();
 		 */
 	}
+	
+	
+	  public static boolean isNumeric(String str)
+	  {
+	    try
+	    {
+	      int d = Integer.parseInt(str);
+	    }
+	    catch(NumberFormatException nfe)
+	    {
+	      return false;
+	    }
+	    return true;
+	  }
+	
 }
