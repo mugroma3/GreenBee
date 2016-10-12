@@ -11,13 +11,13 @@ var utenteSchema = new Schema({
 	'punti' : { type: Number, default: 0 },
 	'ultimoAccesso' : { type: Schema.Types.ObjectId },
 	'accessi' : [{
-		'ingresso': { type: Date, required: true, default: Date.now() },
+		'ingresso': { type: Date, required: true, default: Date.now },
 		'uscita': Date }],
 	'transazioni' : [{
 		'tipoTransazione': { type: String, enum: ['acquisto', 'vendo'] },
 		'oggetto': { type: String, required: true },
 		'quantita': { type: Number, required: true },
-		'Data': { type: Date, default: Date.now()}
+		'Data': { type: Date, default: Date.now}
 		}],
 	'orto': [String],
 	'azioni' : [{

@@ -7,7 +7,7 @@ var centralinaSchema = new Schema({
 	'name': {type: String, required: true },
 	'battery_lvl': Number,
 	'luminosity': Number,
-	'Data' : { type: Date, default: Date.now() },
+	'Data' : { type: Date, default: Date.now },
 	'ble_servers': [sensoreSchema]
 });
 

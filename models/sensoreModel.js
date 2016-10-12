@@ -7,7 +7,7 @@ var sensoreSchema = new Schema({
 	'temperature': Number,
 	'humidity_gnd': Number,
 	'battery_lvl': Number,
-	'humidity_ai': Number,
+	'humidity_air': Number,
 	'ph': Number
 });
 
