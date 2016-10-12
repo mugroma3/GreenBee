@@ -72,7 +72,7 @@ System.out.println(p.getPunti());
 						English.VUOICOMP + oggetto.getNome() + English.ALCOSTO + (oggetto.getCosto()) + English.ALKILO);
 				mts.setReplyMarkup(VoceMercato.buyMenu);
 			} else
-				mts = new MessageToSend(m.getChat().getId(), Italiano.NONHAIPUNTI + oggetto.getNome());
+				mts = new MessageToSend(m.getChat().getId(), English.NONHAIPUNTI + oggetto.getNome());
 		} else {
 			if (ricco) {
 				mts = new MessageToSend(m.getChat().getId(), Italiano.VUOICOMP + oggetto.getNome() + Italiano.ALCOSTO
