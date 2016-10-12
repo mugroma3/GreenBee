@@ -1,6 +1,7 @@
 extends layout
 
 block content
+
     div(id='carousel-example-generic' data-ride='carousel').carousel.slide
         // Wrapper for slides
         .carousel-inner
@@ -34,7 +35,9 @@ block content
                         img.img-responsive(src='/img/l1.png' style='width:80px')
                     #collapseExample.collapse
                         .well
-                            | Qui ci andrà la mappa con gli orti
+                            //| Qui ci andrà la mappa con gli orti
+                            br
+                            img(src="https://maps.googleapis.com/maps/api/staticmap?center=Fiera+Di+Roma,Roma+Italia&zoom=13&size=300x300&markers=41.807097,12.3194695&sensor=false")
                     p Gli orti
                 .col-xs-4.col-sm-4.col-md-4.col-lg-4
                     a(data-toggle='collapse',href='#collapseExample1', aria-expanded='false', aria-controls='collapseExample1')
@@ -57,4 +60,3 @@ block content
             br
             br
             br
-
