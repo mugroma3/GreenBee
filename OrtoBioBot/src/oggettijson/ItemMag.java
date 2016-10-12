@@ -12,7 +12,7 @@ public class ItemMag {
 
 	private int quantita;
 	
-	private String telegramRefImg = "AgADBAADA7ExG8rHcQQn7VqnXoZZeAx3ZxkABC_oZzGUcVlRX9UBAAEC"; //TODO togliere quando sarà
+	private String telegramRefImg;/* = "AgADBAADA7ExG8rHcQQn7VqnXoZZeAx3ZxkABC_oZzGUcVlRX9UBAAEC"; //TODO togliere quando sarà
 
 	
 	/**

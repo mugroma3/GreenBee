@@ -14,6 +14,7 @@ public class StatoUtente {
 	private Lingue lingua = Lingue.ITALIANO;
 	private boolean inOrto = false;
 	private List<ItemMag> magazzino;
+	private int maxMagPages = 0;
 	public StatoUtente() 
 	{
 		this.sezione = SezioniBot.SCEGLILINGUA;
@@ -35,7 +36,8 @@ public class StatoUtente {
 	public int paginaMagAvanti()
 	{
 		paginaMagazzino++;
-		paginaMagazzino = Math.min(magazzino.size() / NumericKeyboardFactory.PAGESIZE + 1, paginaMagazzino);
+		//System.out.println(maxMagPages);
+		paginaMagazzino = Math.min(maxMagPages - 1, paginaMagazzino);
 		return paginaMagazzino;
 	}
 	
@@ -81,6 +83,9 @@ public class StatoUtente {
 			    i++;
 		}
 		paginaMagazzino = 0;
+		maxMagPages = magazzino.size() / NumericKeyboardFactory.PAGESIZE;
+		if(magazzino.size() % NumericKeyboardFactory.PAGESIZE > 0)
+			maxMagPages++;
 	}
 	
 	public ItemMag getItemMagFromInexPage(int index)
@@ -96,7 +101,7 @@ public class StatoUtente {
 	{
 		if(magazzino.size() == 0)
 			return new String[0];
-		
+		System.out.println(paginaMagazzino);
 		int begin = paginaMagazzino * NumericKeyboardFactory.PAGESIZE;
 		int end = Math.min(begin + NumericKeyboardFactory.PAGESIZE, magazzino.size());
 		int len = Math.min(end - begin, NumericKeyboardFactory.PAGESIZE);

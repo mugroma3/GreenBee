@@ -26,11 +26,11 @@ public class NumericKeyboardFactory {
 		for(int i = 0; i < ask.length ;i++)
 		{
 			ReplyKeyboardMarkupWithButtons keyboard = new ReplyKeyboardMarkupWithButtons(new ArrayList<List<KeyboardButton>>());
-			keyboard.addLine(OrtoBioBot.LEFT, OrtoBioBot.RIGHT, OrtoBioBot.REFRESH, OrtoBioBot.BACK);
 			ask[i] = String.valueOf(i+1);
 			numbers.add(ask[i]);
 			numbers.add("/"+ask[i]);
 			keyboard.addLine(ask);
+			keyboard.addLine(OrtoBioBot.LEFT, OrtoBioBot.RIGHT, OrtoBioBot.REFRESH, OrtoBioBot.BACK);
 			keyboard.setResizeKeyboard(true);
 			numericKeyboards.add(keyboard);
 		}

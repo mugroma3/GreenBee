@@ -7,6 +7,7 @@ public class English {
 	public final static String CONTACT= "Contact";
 	public final static String MARKET= "Market";
 	public final static String EMPTYMARKET= "Empty market";
+	public final static String SELEZIONAQUANTITA= "Dimmi la quantità";
 	public final static String TASK= "Task";
 	public final static String BUY= "Buy";
 	public final static String DONTBUY= "Don't Buy";

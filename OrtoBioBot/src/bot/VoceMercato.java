@@ -27,7 +27,7 @@ public class VoceMercato {
 	private StatoUtente stato;
 	private static ReplyKeyboardMarkupWithButtons buyMenu;
 	private static ReplyKeyboardMarkupWithButtons compraMenu;
-	
+
 	public VoceMercato(ItemMag oggetto, Message m, OrtoBioBot bot, StatoUtente stato) {
 		this.oggetto = oggetto;
 		this.m = m;
@@ -36,14 +36,12 @@ public class VoceMercato {
 		VoceMercato.buildMenu();
 	}
 
-	private static void buildMenu()
-	{
-		if(compraMenu == null)
-		{
+	private static void buildMenu() {
+		if (compraMenu == null) {
 			compraMenu = new ReplyKeyboardMarkupWithButtons(new ArrayList<List<KeyboardButton>>());
 			compraMenu.addLine(Italiano.COMPRA, Italiano.NOCOMPRA);
 			compraMenu.setResizeKeyboard(true);
-			
+
 			buyMenu = new ReplyKeyboardMarkupWithButtons(new ArrayList<List<KeyboardButton>>());
 			buyMenu.addLine(English.BUY, English.DONTBUY);
 			buyMenu.setResizeKeyboard(true);
@@ -53,48 +51,41 @@ public class VoceMercato {
 	/*
 	 * torna false se l'utente non può comprare
 	 */
-	public boolean sendVoce() 
-	{
+	public boolean sendVoce() {
 		boolean ricco = true;
 		MessageToSend mts;
-		if(oggetto.getTelegramRefImg() == null)
-		{
-			bot.sendChatAction(new ChatActionToSend(m.getChat().getId(), ActionToSend.UPLOADPHOTO));
-			bot.sendPhotoFile(new PhotoFileToSend(m.getChat().getId(), APINod.getIstance().saveImage(oggetto.getImmagine())));
-		}
-		else
+		if (oggetto.getTelegramRefImg() == null) {
+			if (oggetto.getImmagine() == null) {
+				bot.sendChatAction(new ChatActionToSend(m.getChat().getId(), ActionToSend.UPLOADPHOTO));
+				bot.sendPhotoFile(
+						new PhotoFileToSend(m.getChat().getId(), APINod.getIstance().saveImage(oggetto.getImmagine())));
+			}
+		} else
 			bot.sendPhotobyReference(new PhotoReferenceToSend(m.getChat().getId(), oggetto.getTelegramRefImg()));
 		Punti p = APINod.getIstance().getPunti(m.getFrom().getId());
-		p.setPunti(189); //TODO togliere appena porco dio
-		if(p.getPunti() < oggetto.getCosto())
+		p.setPunti(189); // TODO togliere appena porco dio
+		if (p.getPunti() < oggetto.getCosto())
 			ricco = false;
-		//TODO fare punti
-		
-		if(stato.getLingua() == Lingue.INGLESE)
-		{
-			if(ricco)
-			{
-				mts = new MessageToSend(m.getChat().getId(),English.VUOICOMP + oggetto.getNome() + English.ALCOSTO +
-					(oggetto.getCosto()) +English.ALKILO);
+		// TODO fare punti
+
+		if (stato.getLingua() == Lingue.INGLESE) {
+			if (ricco) {
+				mts = new MessageToSend(m.getChat().getId(),
+						English.VUOICOMP + oggetto.getNome() + English.ALCOSTO + (oggetto.getCosto()) + English.ALKILO);
 				mts.setReplyMarkup(VoceMercato.buyMenu);
-			}
-			else
-				mts = new MessageToSend(m.getChat().getId(), Italiano.NONHAIPUNTI + oggetto.getNome());			
-		}
-		else
-		{
-			if(ricco)
-			{
-				mts = new MessageToSend(m.getChat().getId(),Italiano.VUOICOMP + oggetto.getNome() + Italiano.ALCOSTO +
-					(oggetto.getCosto()) + Italiano.ALKILO);
+			} else
+				mts = new MessageToSend(m.getChat().getId(), Italiano.NONHAIPUNTI + oggetto.getNome());
+		} else {
+			if (ricco) {
+				mts = new MessageToSend(m.getChat().getId(), Italiano.VUOICOMP + oggetto.getNome() + Italiano.ALCOSTO
+						+ (oggetto.getCosto()) + Italiano.ALKILO);
 				mts.setReplyMarkup(VoceMercato.compraMenu);
-			}
-			else
+			} else
 				mts = new MessageToSend(m.getChat().getId(), Italiano.NONHAIPUNTI + oggetto.getNome());
 		}
-		
+
 		bot.sendMessage(mts);
-	    
+
 		return ricco;
 	}
 
