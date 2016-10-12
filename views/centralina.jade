@@ -4,164 +4,24 @@ block content
     .row
         .col-xs-12.col-sm-12.col-md-6.col-md-offset-3.col-lg-8.col-lg-offset-2
             script(type='text/javascript').
-                window.onload = function () {
 
-                    var battery_centralina = [];
-                    var luminosity_centralina = [];
-                    var battery_ble = [];
-                    var humidity_gnd_ble = [];
-                    var humidity_air_ble = [];
-                    var ph_ble = [];
-                    var temperature_ble = [];
+                window.onload = function () {
                     var lettureCentralina = !{JSON.stringify(lettureCentralina)};
                     var bleNumber = lettureCentralina[0].ble_servers.length;
+                    var chart =  chartCentralina(lettureCentralina);
 
-                    for (var i = 0; i < lettureCentralina.length; i++) {
-                        battery_centralina.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].battery_lvl});
-                        luminosity_centralina.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].luminosity});
-                        if(lettureCentralina[i].ble_servers[0].reachable == 'yes'){
-                            battery_ble.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].ble_servers[0].battery_lvl});
-                            humidity_gnd_ble.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].ble_servers[0].humidity_gnd});
-                            humidity_air_ble.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].ble_servers[0].humidity_air});
-                            ph_ble.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].ble_servers[0].ph});
-                            temperature_ble.push({x: new Date(lettureCentralina[i].Data), y: lettureCentralina[i].ble_servers[0].temperature});
-                        }
-                    }
-                    /*var json={
-                        nome: #{lettureCentralina[0].name},
-                        text: "Dati della centralina",
-                        data: [
-                            {
-                                name: "Battery Level",
-                                color: "#00ff00",
-                                dataPoints: battery_centralina
-                            }
-                        ]
-                    };*/
-                    var chart = new CanvasJS.Chart("#{lettureCentralina[0].name}", {
-                        title: {
-                            text: "Dati della centralina",
-                            fontSize: 30
-                        },
-                        animationEnabled: true,
-                        axisX: {
-                            gridColor: "Silver",
-                            tickColor: "silver",
-                            valueFormatString: "DD/MMM HH:MM"
-                        },
-                        toolTip: {
-                            shared: true
-                        },
-                        theme: "theme2",
-                        axisY: {
-                            gridColor: "Silver",
-                            tickColor: "silver"
-                        },
-                        legend: {
-                            verticalAlign: "center",
-                            horizontalAlign: "right"
-                        },
-                        data: [
-                            {
-                                type: "line",
-                                showInLegend: true,
-                                lineThickness: 2,
-                                name: "Battery Level",
-                                markerType: "square",
-                                color: "#00ff00",
-                                dataPoints: battery_centralina
-                            },
-                            {
-                                type: "line",
-                                showInLegend: true,
-                                name: "Luminosity",
-                                color: "#170fe7",
-                                lineThickness: 2,
-                                dataPoints: luminosity_centralina
-                            }
-                        ]
-                    });
                     chart.render();
-                    console.log(chart);
-                    var chart2 = new CanvasJS.Chart("#{lettureCentralina[0].ble_servers[0].id_ble}", {
-                        animationEnabled: true,
-                        axisX: {
-                            gridColor: "Silver",
-                            tickColor: "silver",
-                            valueFormatString: "DD/MMM HH:MM"
-                        },
-                        toolTip: {
-                            shared: true
-                        },
-                        theme: "theme2",
-                        axisY: {
-                            gridColor: "Silver",
-                            tickColor: "silver"
-                        },
 
-                        data: [
-                            {
-                                type: "line",
-                                showInLegend: true,
-                                lineThickness: 2,
-                                name: "Battery Level",
-                                markerType: "square",
-                                color: "#00ff00",
-                                dataPoints: battery_ble
-                            },
-                            {
-                                type: "line",
-                                showInLegend: true,
-                                name: "Humidity Land",
-                                color: "#6b6e92",
-                                lineThickness: 2,
-                                dataPoints: humidity_gnd_ble
-                            },
-                            {
-                                type: "line",
-                                showInLegend: true,
-                                name: "Humidity Air",
-                                color: "#170fe7",
-                                lineThickness: 2,
-                                dataPoints: humidity_air_ble
-                            },
-                            {
-                                type: "line",
-                                showInLegend: true,
-                                name: "PH",
-                                color: "#31698a",
-                                lineThickness: 2,
-                                dataPoints: ph_ble
-                            },
-                            {
-                                type: "line",
-                                showInLegend: true,
-                                name: "Temperature",
-                                color: "#f4200d",
-                                lineThickness: 2,
-                                dataPoints: temperature_ble
-                            }
-                        ],
-                        legend: {
-                            cursor: "pointer",
-                            itemclick: function (e) {
-                                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                                    e.dataSeries.visible = false;
-                                }
-                                else {
-                                    e.dataSeries.visible = true;
-                                }
-                                chart2.render();
-                            }
-                        }
-                    });
-                    chart2.render();
-                    console.log(chart2);
+                    for (var i = 0; i < bleNumber; i++) {
+                        chart = chartSensore(lettureCentralina,i);
+                        chart.render();
+                    }
                 };
             center
             div(id='#{lettureCentralina[0].name}',style='height: 400px; width: 100%;')
             br
     .row
-        .col-xs-12.col-sm-12.col-md-6.col-md-offset-3.col-lg-8.col-lg-offset-2
-            center
-            div(id = '#{lettureCentralina[0].ble_servers[0].id_ble}', style = 'height: 400px; width: 100%;')
+        each i in lettureCentralina[0].ble_servers
+            .col-xs-12.col-sm-12.col-md-6.col-lg-6
+                center
+                div(id = '#{i.id_ble}', style = 'height: 400px; width: 100%;')
