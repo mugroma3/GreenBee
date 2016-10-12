@@ -9,6 +9,10 @@ router.get('/', function (req, res) {
     res.render('index', { title: titolo, user : req.user});
 });
 
+router.get('/chat', function (req, res) {
+    res.render('chat', { title: titolo, user : req.user});
+});
+
 router.get('/logout', function (req, res) {
     req.logout();
     res.redirect('../');

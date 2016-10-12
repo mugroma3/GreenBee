@@ -5,7 +5,6 @@ html
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='stylesheet', href='/bootstrap-3.3.7/css/bootstrap.min.css')
         link(rel='stylesheet', href='/stylesheets/style.css')
-        //meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
         meta(charset='UTF-8')
         meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
@@ -33,6 +32,9 @@ html
                             li(id='toDoList')
                                 a(href='/user/toDoList')
                                     | Cosa c'è da fare
+                            li(id='chat')
+                                a(href='/user/chat')
+                                    | Chat
                             if user.admin
                                 li.dropdown
                                     a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
@@ -76,7 +78,7 @@ html
                                                         input.form-control(type='text',id='username',name="username",placeholder='Enter Username',required)
                                                     .form-group
                                                         label(class="sr-only" for="password") Password
-                                                        input.form-control(type='password',id='password',name="password",placeholder='Enter Password',required)
+                                                        input.form-control(type='password',name="password",placeholder='Enter Password',required)
                                                     .form-group
                                                         button(type='submit').btn.btn-primary.btn-block
                                                             | Sing In

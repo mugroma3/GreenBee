@@ -12,13 +12,9 @@ router.get('/',function (req, res) {
   	}
 });
 
-router.get('/login', function(req, res){
-  res.render('login', {title: titolo, user : req.user});
-});
-
 router.post('/login', passport.authenticate('local', {
 	successRedirect: '/user',
-	failureRedirect: '/', // see text
+	failureRedirect: '/',
 }));
 
 module.exports = router;

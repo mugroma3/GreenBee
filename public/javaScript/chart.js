@@ -38,14 +38,14 @@ function chartCentralina(input){
                 lineThickness: 2,
                 name: "Battery Level",
                 markerType: "square",
-                color: "#00ff00",
+                color: "#20d43e",
                 dataPoints: battery_centralina
             },
             {
                 type: "line",
                 showInLegend: true,
                 name: "Luminosity",
-                color: "#170fe7",
+                color: "#ffe700",
                 lineThickness: 2,
                 dataPoints: luminosity_centralina
             }
@@ -100,14 +100,14 @@ function chartSensore(input, indexSensore){
                 lineThickness: 2,
                 name: "Battery Level",
                 markerType: "square",
-                color: "#00ff00",
+                color: "#20d43e",
                 dataPoints: battery_ble
             },
             {
                 type: "line",
                 showInLegend: true,
                 name: "Humidity Land",
-                color: "#6b6e92",
+                color: "#c3bf7f",
                 lineThickness: 2,
                 dataPoints: humidity_gnd_ble
             },
@@ -115,7 +115,7 @@ function chartSensore(input, indexSensore){
                 type: "line",
                 showInLegend: true,
                 name: "Humidity Air",
-                color: "#170fe7",
+                color: "#00cef5",
                 lineThickness: 2,
                 dataPoints: humidity_air_ble
             },
@@ -123,7 +123,7 @@ function chartSensore(input, indexSensore){
                 type: "line",
                 showInLegend: true,
                 name: "PH",
-                color: "#31698a",
+                color: "#794c79",
                 lineThickness: 2,
                 dataPoints: ph_ble
             },
