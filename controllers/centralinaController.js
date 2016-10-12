@@ -60,6 +60,26 @@ module.exports = {
     },
 
     /**
+     * utenteController.showByName()
+     */
+    showByName: function (centralinaData, callback) {
+        centralinaModel.find({name: centralinaData.name}).limit(20).exec(function (err, centralina) {
+            if (err) {
+                callback([500, "Error when getting lettura.", err]);
+            }
+            else{
+                if (!centralina) {
+                    callback([404, 'No such lettura']);
+                }
+                else{
+                    callback([200, centralina]);
+                }
+            }
+
+        });
+    },
+
+    /**
      * centralinaController.update()
      */
     update: function (req, res) {

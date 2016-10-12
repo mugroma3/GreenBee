@@ -12,7 +12,6 @@ router.post('/', function (req, res) {
         name: req.body.name,
         battery_lvl: req.body.battery_lvl,
         luminosity: req.body.luminosity,
-        Data: req.body.Date,
         ble_servers: req.body.ble_servers};
     centralinaController.create(options, function(answer){
         REST.generate(req, res, answer);

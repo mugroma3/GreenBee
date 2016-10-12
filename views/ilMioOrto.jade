@@ -31,9 +31,9 @@ block content
                         tr
                             td #{coltivazione}
                             td
-                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeColtivazioneModal#{coltivazione._id}').btn.btn-mug
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeColtivazioneModal#{coltivazione}').btn.btn-mug
                                     | Rimuovi
-                                div(class='modal fade' tabindex='-1' role='dialog' id='removeColtivazioneModal#{coltivazione._id}' aria-labelledby='removeColtivazioneModalLabel#{coltivazione._id}')
+                                div(class='modal fade' tabindex='-1' role='dialog' id='removeColtivazioneModal#{coltivazione}' aria-labelledby='removeColtivazioneModalLabel#{coltivazione}')
                                     div(class='modal-dialog' role='document')
                                         form(role='form', action="/user/removeColtivazione",method="post").form-inline
                                             .modal-content

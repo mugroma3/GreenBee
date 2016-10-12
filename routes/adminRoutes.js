@@ -54,7 +54,7 @@ router.post('/updatedUser', function (req, res) {
 });
 
 router.get('/centralina', function (req, res) {
-    centralinaController.list(null, function (answer) {
+    centralinaController.showByName({name: "359110060100520"}, function (answer) {
         if(answer[0]==200){
             res.render('centralina', {title: titolo, user: req.user, listaCentraline: answer[1]});
         } else {

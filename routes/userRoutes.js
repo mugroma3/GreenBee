@@ -80,7 +80,7 @@ router.post('/removeColtivazione', function (req, res) {
     };
     utenteController.removeOrtaggio(options, function(answer){
         if(answer[0]==200){
-            res.redirect('gestisciColtivazioni');
+            res.redirect('ilMioOrto');
         } else {
             res.render('error', {title: titolo, message: answer[1], status: answer[2]});
         }
