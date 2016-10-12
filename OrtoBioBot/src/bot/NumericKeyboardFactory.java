@@ -7,9 +7,6 @@ import com.botticelli.bot.request.methods.MessageToSend;
 import com.botticelli.bot.request.methods.types.KeyboardButton;
 import com.botticelli.bot.request.methods.types.ReplyKeyboardMarkupWithButtons;
 
-import gestionelingue.Italiano;
-import oggettijson.ItemMag;
-
 public class NumericKeyboardFactory {
 	
 	private static List<ReplyKeyboardMarkupWithButtons> numericKeyboards;
@@ -45,12 +42,12 @@ public class NumericKeyboardFactory {
 	/*
 	 * end è escluso!
 	 */
-	public static MessageToSend getStandardBrowseMessage(long chat_id, StatoUtente stato)
+	public MessageToSend getStandardBrowseMessage(long chat_id, StatoUtente stato)
 	{
 		return getStandardBrowseMessage( chat_id, stato.buildItemMagStringArray());
 	}
 	
-	public static MessageToSend getStandardBrowseMessage(long chat_id, String... strs)
+	public  MessageToSend getStandardBrowseMessage(long chat_id, String... strs)
 	{
 		MessageToSend mts;
 		

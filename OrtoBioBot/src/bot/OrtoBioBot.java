@@ -217,6 +217,35 @@ public class OrtoBioBot extends Bot {
 			
 		}
 		
+		if(text.equals(LEFT))
+		{
+			if(stato.getSezione() == SezioniBot.MARKETCONSULTA)
+			{
+				stato.paginaMagIndietro();
+				sendMessage(NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato));
+			}
+			
+			return;
+		}
+		
+		if(text.equals(RIGHT))
+		{
+			if(stato.getSezione() == SezioniBot.MARKETCONSULTA)
+			{
+				stato.paginaMagAvanti();
+				sendMessage(NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato));
+			}
+			
+			return;
+		}
+		
+		if(text.equals(REFRESH))
+		{
+			if(stato.getSezione() == SezioniBot.MARKETCONSULTA)
+			   consultaMarket(arg0, stato);
+			return;
+		}
+		
 		if (text.equals(BACK)) {
 			switch (stato.getSezione()) {
 			case MARKET:

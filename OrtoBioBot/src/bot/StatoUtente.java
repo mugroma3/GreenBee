@@ -72,6 +72,7 @@ public class StatoUtente {
 
 	public void setMagazzino(List<ItemMag> magazzino) {
 		this.magazzino = magazzino;
+		paginaMagazzino = 0;
 	}
 	
 	
