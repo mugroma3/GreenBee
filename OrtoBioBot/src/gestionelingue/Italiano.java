@@ -6,6 +6,7 @@ public class Italiano {
 	public final static String ITALIANO =  "🇮🇹 Italiano";
 	public final static String CONTATTI= "Contatti";
 	public final static String MERCATO= "Mercato";
+	public final static String MERCATOVUOTO= "Mercato vuoto";
 	public final static String COMPITI= "Compiti";
 	public final static String IMPOSTALINGUA = "Imposta lingua 🇮🇹🇬🇧";
 	public final static String NONHAIPUNTI = "Non hai abbastanza punti per comprare una singola unità di ";

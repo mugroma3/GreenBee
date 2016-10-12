@@ -35,7 +35,7 @@ public class StatoUtente {
 	public int paginaMagAvanti()
 	{
 		paginaMagazzino++;
-		paginaMagazzino = Math.min(magazzino.size() / NumericKeyboardFactory.PAGESIZE, paginaMagazzino);
+		paginaMagazzino = Math.min(magazzino.size() / NumericKeyboardFactory.PAGESIZE + 1, paginaMagazzino);
 		return paginaMagazzino;
 	}
 	
@@ -72,9 +72,25 @@ public class StatoUtente {
 
 	public void setMagazzino(List<ItemMag> magazzino) {
 		this.magazzino = magazzino;
+		int i = 0;
+		while(i < magazzino.size())
+		{
+			if(magazzino.get(i).getQuantita() == 0)
+				magazzino.remove(i);
+			else
+			    i++;
+		}
 		paginaMagazzino = 0;
 	}
 	
+	public ItemMag getItemMagFromInexPage(int index)
+	{
+		index = (index - 1) + paginaMagazzino * NumericKeyboardFactory.PAGESIZE;
+		index = Math.min(magazzino.size() - 1, index);
+		if(index < 0)
+		    return null;
+		return magazzino.get(index);
+	}
 	
 	public String[] buildItemMagStringArray()
 	{
@@ -82,11 +98,10 @@ public class StatoUtente {
 			return new String[0];
 		
 		int begin = paginaMagazzino * NumericKeyboardFactory.PAGESIZE;
-		int end = Math.min(begin + 4, magazzino.size());
-		int len = Math.min(end - begin, 4);
+		int end = Math.min(begin + NumericKeyboardFactory.PAGESIZE, magazzino.size());
+		int len = Math.min(end - begin, NumericKeyboardFactory.PAGESIZE);
 		String [] ask = new String[len];
 		int c = 0;
-		
 		String quant = Italiano.QUANTITA;
 		String cost = Italiano.ALCOSTO;
 		

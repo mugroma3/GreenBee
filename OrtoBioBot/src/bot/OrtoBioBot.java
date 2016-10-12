@@ -182,7 +182,10 @@ public class OrtoBioBot extends Bot {
 		}
 
 		if (text.equals(Italiano.MERCATO) || text.equals(English.MARKET)) {
-			inviaMenuMercato(arg0, stato);
+			if(stato.getSezione() == SezioniBot.MENU)
+			    inviaMenuMercato(arg0, stato);
+			else
+				inviaMenu(arg0, stato);
 			return;
 		}
 
@@ -214,7 +217,7 @@ public class OrtoBioBot extends Bot {
 		
 		if(text.equals(Italiano.COMPRA) || text.equals(English.BUY))
 		{
-			
+			return;
 		}
 		
 		if(text.equals(LEFT))
@@ -278,6 +281,21 @@ public class OrtoBioBot extends Bot {
 			return;
 		}
 		
+		if(NumericKeyboardFactory.getIstance().isNumericString(text))
+		{
+			if(stato.getSezione() == SezioniBot.MARKETCONSULTA)
+			{
+				if(text.contains("/"))
+				    text = text.substring(1);
+				int index = Integer.valueOf(text);
+				VoceMercato vm = new VoceMercato(stato.getItemMagFromInexPage(index), arg0, this, stato);
+				vm.sendVoce();
+				//TODO sono arrivato fin qua
+				
+			}
+			return;
+		}
+		inviaMenu(arg0, stato);
 
 	}
 
@@ -448,11 +466,6 @@ public class OrtoBioBot extends Bot {
 	}
 
 	private void inviaMenuMercato(Message arg0, StatoUtente stato) {
-		if (stato.getSezione() != SezioniBot.MENU) {
-			inviaMenu(arg0, stato);
-			return;
-		}
-
 		stato.setSezione(SezioniBot.MARKET);
 		MessageToSend mts;
 		if (stato.getLingua() == Lingue.ITALIANO) {
@@ -499,6 +512,15 @@ public class OrtoBioBot extends Bot {
 	private void consultaMarket(Message arg0, StatoUtente stato)
 	{
 			stato.setMagazzino(API.getMagazzino());
+			if(stato.getMagazzino().size() == 0)
+			{
+				if(stato.getLingua() == Lingue.ITALIANO)
+					sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.MERCATOVUOTO));
+				else
+					sendMessage(new MessageToSend(arg0.getChat().getId(), English.EMPTYMARKET));
+				inviaMenuMercato(arg0, stato);
+				return;
+			}
 			stato.setSezione(SezioniBot.MARKETCONSULTA);
 			sendMessage(NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato));
 			/*

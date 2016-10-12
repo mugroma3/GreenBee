@@ -1,6 +1,7 @@
 package bot;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import com.botticelli.bot.request.methods.MessageToSend;
@@ -12,9 +13,11 @@ public class NumericKeyboardFactory {
 	private static List<ReplyKeyboardMarkupWithButtons> numericKeyboards;
 	private static NumericKeyboardFactory mySelf; 
 	public static final int PAGESIZE = 4;
+	private HashSet<String> numbers;
 	private NumericKeyboardFactory()
 	{
 		numericKeyboards = new ArrayList<>();
+		numbers = new HashSet<>();
 		String[] ask = new String[PAGESIZE];
 		ask[0] = " ";
 		ask[1] = " ";
@@ -25,12 +28,18 @@ public class NumericKeyboardFactory {
 			ReplyKeyboardMarkupWithButtons keyboard = new ReplyKeyboardMarkupWithButtons(new ArrayList<List<KeyboardButton>>());
 			keyboard.addLine(OrtoBioBot.LEFT, OrtoBioBot.RIGHT, OrtoBioBot.REFRESH, OrtoBioBot.BACK);
 			ask[i] = String.valueOf(i+1);
+			numbers.add(ask[i]);
+			numbers.add("/"+ask[i]);
 			keyboard.addLine(ask);
 			keyboard.setResizeKeyboard(true);
 			numericKeyboards.add(keyboard);
 		}
 	}
 
+	public boolean isNumericString(String n)
+	{
+		return numbers.contains(n);
+	}
 	
 	public static NumericKeyboardFactory getIstance()
 	{
