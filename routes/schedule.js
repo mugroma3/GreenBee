@@ -6,7 +6,7 @@ var REST = require('../utils/REST');
  * GET lista tutte le schedule
  */
 router.get('/', function (req, res) {
-    scheduleController.listAll(null, function(answer){
+    scheduleController.list(null, function(answer){
         REST.generate(req, res, answer);
     });
 });
