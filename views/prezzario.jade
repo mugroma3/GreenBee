@@ -50,7 +50,7 @@ block content
                             td #{prezzo.quantita}
                             td #{prezzo.costo}
                             td
-                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removePrezzoModal#{prezzo._id}').btn.btn-mug
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removePrezzoModal#{prezzo._id}').btn.btn-info
                                     | Rimuovi
                                 div(class='modal fade' tabindex='-1' role='dialog' id='removePrezzoModal#{prezzo._id}' aria-labelledby='removePrezzoModalLabel#{prezzo._id}')
                                     div(class='modal-dialog' role='document')

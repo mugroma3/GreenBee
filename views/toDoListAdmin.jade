@@ -46,7 +46,7 @@ block content
                             td #{schdeule.scadenza.toDateString()}
                             td #{schdeule.attesa}
                             td
-                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#updateSchdeuleModal#{schdeule._id}').btn.btn-mug
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#updateSchdeuleModal#{schdeule._id}').btn.btn-info
                                     | Modifica Azione
                                 div(class='modal fade' tabindex='-1' role='dialog' id='updateSchdeuleModal#{schdeule._id}' aria-labelledby='updateSchdeuleModalLabel#{schdeule._id}')
                                     div(class='modal-dialog' role='document')

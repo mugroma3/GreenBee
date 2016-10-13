@@ -19,7 +19,7 @@ block content
                             td #{schdeule.ricompensa}
                             td #{schdeule.scadenza.toDateString()}
                             td
-                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#completeSchdeuleModal#{schdeule._id}').btn.btn-mug
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#completeSchdeuleModal#{schdeule._id}').btn.btn-info
                                     | Completa Azione
                                 div(class='modal fade' tabindex='-1' role='dialog' id='completeSchdeuleModal#{schdeule._id}' aria-labelledby='completeSchdeuleModalLabel#{schdeule._id}')
                                     div(class='modal-dialog' role='document')
