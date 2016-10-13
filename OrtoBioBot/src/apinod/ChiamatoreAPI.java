@@ -40,6 +40,17 @@ public class ChiamatoreAPI {
 		return "";
 	}
 	
+	public String postAlServer(String url, String json) {
+		RequestBody body = RequestBody.create(JSON, json);
+		Request request = new Request.Builder().url(url).post(body).build();
+		try (Response response = client.newCall(request).execute()) {
+			return response.body().string();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return "";
+	}
+	
 	public String putAlServer(String url) {
 		return putAlServer(url, "");
 	}

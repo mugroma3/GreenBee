@@ -41,6 +41,7 @@ public class APINod {
 	private String addIngresso = "addIngresso/";
 	private String addUscita = "addUscita/";
 	private String addTransazione = "addTransazione/";
+	private String completeTask = "completeSchedule/";
 	private String getPunti ="getPunti/";
 	private String listTransazioni = "listTransazioni/";
 	private String urlIsNellOrto;
@@ -51,6 +52,7 @@ public class APINod {
 	private String urlTransazione;
 	private String urlListTransazione;
 	private String urlListTask;
+	private String urlCompleteTask;
 	
 	private ChiamatoreAPI API;
 
@@ -65,6 +67,8 @@ public class APINod {
 		urlTransazione = sitoBase + addTransazione;
 		urlListTransazione = sitoBase + listTransazioni;
 		urlListTask = ip + porta + apiTask;
+		urlCompleteTask = sitoBase + completeTask;
+		
 		API = new ChiamatoreAPI();
 		
 	}
@@ -139,7 +143,7 @@ public class APINod {
 	}
 	
 	public Task completeTask(long id, RichiestaTask rt){
-		String json = "API.postAlServer(rt)";
+		String json = API.postAlServer(urlCompleteTask+String.valueOf(id),gson.toJson(rt));
 		return gson.fromJson(json, Task.class);
 	}
 	

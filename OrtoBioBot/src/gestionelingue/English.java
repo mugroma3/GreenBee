@@ -37,4 +37,7 @@ public class English {
 	public final static String COMPRATO =  "bought ";
 	public final static String VENDUTO =  "sold ";
 	public final static String KGDI =  "kilos of  ";
+	public final static String TASKRICHIESTA = "Here's the task list:";
+	public final static String TASKCOMPLETO = "You have completed: ";
+	public final static String TASKGUADAGNO = "Well done! You've hearned these BioCoins: ";
 }
