@@ -39,6 +39,11 @@ block content
             addChatMessage(msg);
         });
         function addChatMessage(msg){
-            $('#messages').append("<li class='mar-btm' ><div class='media-left text-success'>"+msg.username+"</div><div class='media-body pad-hor'><div class='speech text-default'><p>"+msg.message+"</p></div></div></li>");
+            if(msg.username=='#{user.username}'){
+                $('#messages').append("<li class='mar-btm' ><div class='media-right text-success'>"+msg.username+"</div><div class='media-body pad-hor speech-right'><div class='speech text-default'><p>"+msg.message+"</p></div></div></li>");
+            } else {
+                $('#messages').append("<li class='mar-btm' ><div class='media-left text-success'>"+msg.username+"</div><div class='media-body pad-hor'><div class='speech text-default'><p>"+msg.message+"</p></div></div></li>");
+            }
+            
             //$('#messages').append("<div><font color='blue'> <b>"+msg.username+":</b></font> <font color='grey'>"+msg.message+"</font></div>");
         };
