@@ -15,7 +15,9 @@ import com.google.gson.reflect.TypeToken;
 
 import oggettijson.ItemMag;
 import oggettijson.Punti;
+import oggettijson.RichiestaTask;
 import oggettijson.RichiestaTransazione;
+import oggettijson.Task;
 import oggettijson.Transazione;
 
 public class APINod {
@@ -32,7 +34,9 @@ public class APINod {
 	private String sitoBase;
 	private String apiBase = "/rest-api/utenteTelegram/";
 	private String apiMagazzino = "/rest-api/Magazzino/";
+	private String apiTask = "/rest-api/schedule";
 
+	
 	private String isNellOrto = "isNellOrto/";
 	private String addIngresso = "addIngresso/";
 	private String addUscita = "addUscita/";
@@ -46,6 +50,7 @@ public class APINod {
 	private String urlPunti;
 	private String urlTransazione;
 	private String urlListTransazione;
+	private String urlListTask;
 	
 	private ChiamatoreAPI API;
 
@@ -59,6 +64,7 @@ public class APINod {
 		urlPunti = sitoBase + getPunti;
 		urlTransazione = sitoBase + addTransazione;
 		urlListTransazione = sitoBase + listTransazioni;
+		urlListTask = ip + porta + apiTask;
 		API = new ChiamatoreAPI();
 		
 	}
@@ -125,4 +131,16 @@ public class APINod {
 	{
 		return gson.fromJson(API.getAlServer(urlPunti + String.valueOf(id)), Punti.class);
 	}
+	
+	public List<Task> getTask() {
+		String json = API.getAlServer(urlListTask);
+		return gson.fromJson(json, new TypeToken<ArrayList<Task>>() {
+		}.getType());
+	}
+	
+	public Task completeTask(long id, RichiestaTask rt){
+		String json = "API.postAlServer(rt)";
+		return gson.fromJson(json, Task.class);
+	}
+	
 }

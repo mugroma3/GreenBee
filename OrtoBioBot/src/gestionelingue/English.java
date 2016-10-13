@@ -33,8 +33,8 @@ public class English {
 	public final static String HISTORY= "History";
 	public final static String AMOUNT= "available amount: ";
 	public final static String ENGLISHMENU = "Welcome in GreenBeeBot, an urban-social-smart garden made by MUG Roma Tre and managed with a Telegram bot.\nChoose an option:";
-	public final static String HAI =  "Hai ";
-	public final static String COMPRATO =  "comprato ";
-	public final static String VENDUTO =  "venduto ";
-	public final static String KGDI =  "Kg di  ";
+	public final static String HAI =  "You have ";
+	public final static String COMPRATO =  "bought ";
+	public final static String VENDUTO =  "sold ";
+	public final static String KGDI =  "kilos of  ";
 }
