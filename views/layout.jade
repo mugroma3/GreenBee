@@ -59,6 +59,10 @@ html
                                                 | Gesctisci Schedule
 
                     ul(class="nav navbar-nav navbar-right")
+                        if authMessage
+                            li(id='failed')
+                                a(href='#' style="cursor:text;")
+                                    |  #{authMessage}
                         if user
                             li(id='welcome')
                                 a(href='#' style="cursor:text;")

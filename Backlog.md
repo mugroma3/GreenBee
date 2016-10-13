@@ -1,9 +1,7 @@
 TODO:
 
 15) Implementare rollback per utentecontroller.addTransazione() e togliere i commenti di DB Sminchiato (Può non essere fatta!)
-29) @Vitus89 IMPLEMENTARE LA PAGINA DEI SENSORI
-31) @Vitus89 schdule admin
-31) @Vitus89 customize bootstrap color navbar success-mug
+
 Credo non manchi altro al progetto...
 
 COMPLETATI:
@@ -46,5 +44,8 @@ COMPLETATI:
 26) @kappa89 @Vitus89 @lorenzo93 Implementazione lato GUI e lato back-end (lato back-end?) toDoList Orto
 27) @vitus89 Implementare la funzione remove prezzario/magazzino(magazzinoController)
 28) Implementare le funzioni rinomina, cambia password e username, remove in getioneUtenti
+29) @Vitus89 IMPLEMENTARE LA PAGINA DEI SENSORI
 30) @vitus89 modal for remove
 31) @vitus89 Controllo login fallito già gestito in routes/index.js, provvedi te a reindirizzare dove vuoi
+32) @Vitus89 schdule admin
+33) @Vitus89 customize bootstrap color navbar success-mug

@@ -1,14 +1,9 @@
-doctype html
-html
-    head
-        title= title
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        link(rel='stylesheet', href='/bootstrap-3.3.7/css/bootstrap.min.css')
-        link(rel='stylesheet', href='/stylesheets/style.css')
-    body
-        h1= message
-        h2= error
-        pre #{error}
+extends layout
 
-        script(src='/bootstrap-3.3.7/js/jquery-3.1.1.min.js')
-        script(src='/bootstrap-3.3.7/js/bootstrap.min.js')
+block content
+
+    .row
+        .col-xs-12.col-sm-12.col-md-6.col-lg-6
+            h1= message
+            h2= error
+            pre #{error}
