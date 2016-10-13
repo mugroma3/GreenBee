@@ -63,6 +63,11 @@ public class APINod {
 		
 	}
 
+	public APINod (String tb)
+	{
+		
+	}
+	
 	public static APINod getIstance()
 	{
 		if(mySelf == null)
