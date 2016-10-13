@@ -6,6 +6,7 @@ import gestionelingue.English;
 import gestionelingue.Italiano;
 import gestionelingue.Lingue;
 import oggettijson.ItemMag;
+import oggettijson.TipoTransazione;
 import oggettijson.Transazione;
 
 public class StatoUtente {
@@ -144,18 +145,26 @@ public class StatoUtente {
 		int len = Math.min(end - begin, NumericKeyboardFactory.PAGESIZE);
 		String [] ask = new String[len];
 		int c = 0;
-		String quant = Italiano.QUANTITA;
-		String cost = Italiano.ALCOSTO;
+		String hai = Italiano.HAI;
+		String comprato = Italiano.COMPRATO;
+		String venduto = Italiano.VENDUTO;
+		String kg = Italiano.KGDI;
 		
 		if(lingua == Lingue.INGLESE)
 		{
-			quant = English.AMOUNT;
-			cost = English.ALCOSTO;
+			hai = English.HAI;
+			comprato = English.COMPRATO;
+			venduto = English.VENDUTO;
+		    kg = English.KGDI;
 		}
 		
 		for(int i = begin; i < end && c < NumericKeyboardFactory.PAGESIZE; i++)
 		{
-			ask[c] = storicoM.get(i).getOggetto() + " " + quant + storicoM.get(i).getQuantita();
+			Transazione tr = storicoM.get(i);
+			String azione = comprato;
+			if(tr.getTipoTransazione() == TipoTransazione.vendo)
+				azione = venduto;
+			ask[c] = hai + azione + tr.getQuantita() + kg + tr.getOggetto();
 			c++;
 		}
 		return ask;

@@ -264,6 +264,13 @@ public class OrtoBioBot extends Bot {
 				stato.paginaMagIndietro();
 				sendMessage(
 						NumericKeyboardFactory.getIstance().getMagazzinoBrowseMessage(arg0.getChat().getId(), stato));
+				return;
+			}
+			//TODO
+			if (stato.getSezione() == SezioniBot.MARKETSTORICO) {
+				stato.paginaStoricoIndietro();
+				sendMessage(NumericKeyboardFactory.getIstance().getMarketStoricoBrowseMessage(arg0.getChat().getId(), stato));
+				return;
 			}
 
 			return;
@@ -274,8 +281,13 @@ public class OrtoBioBot extends Bot {
 				stato.paginaMagAvanti();
 				sendMessage(
 						NumericKeyboardFactory.getIstance().getMagazzinoBrowseMessage(arg0.getChat().getId(), stato));
+				return;
 			}
-
+			if (stato.getSezione() == SezioniBot.MARKETSTORICO) {
+				stato.paginaStoricoAvanti();
+				sendMessage(NumericKeyboardFactory.getIstance().getMarketStoricoBrowseMessage(arg0.getChat().getId(), stato));
+				return;
+			}
 			return;
 		}
 
@@ -289,7 +301,15 @@ public class OrtoBioBot extends Bot {
 		
 		if (text.equals(REFRESH)) {
 			if (stato.getSezione() == SezioniBot.MARKETCONSULTA)
+			{
 				consultaMarket(arg0, stato);
+				return;
+			}
+			if(stato.getSezione() == SezioniBot.MARKETSTORICO)
+			{
+				storicoMarket(arg0, stato);
+				return;
+			}
 			return;
 		}
 
@@ -599,7 +619,7 @@ public class OrtoBioBot extends Bot {
 			return;
 		}
 		stato.setSezione(SezioniBot.MARKETSTORICO);
-		
+		sendMessage(NumericKeyboardFactory.getIstance().getMarketStoricoBrowseMessage(arg0.getChat().getId(), stato));
 	}
 
 }
