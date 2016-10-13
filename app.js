@@ -92,17 +92,19 @@ api.setApp(app);  //setting rest-api calls
 
 //passport config
 var utenteModel = require('./models/utenteModel');
-passport.use(new localStrategy(
-    function(username, password, done){
+passport.use(new localStrategy({
+  passReqToCallback: true
+  },
+    function(req, username, password, done){
       utenteModel.findOne({username: username},{_id:0, admin:0, nome:0, telegramID:0, punti:0, ultimoAccesso:0, accessi:0, transazioni:0, orto:0}, function (err, utente) {
         if (err) {
           return done(err)
         }
         if (!utente) {
-          return done(null, false);
+          return done(null, false, req.flash('authMessage', 'Login Failed'));
         }
         if(!utente.verifyPassword(password)){
-          return done(null, false);
+          return done(null, false, req.flash('authMessage', 'Login Failed'));
         }
         return done(null, utente);
       });

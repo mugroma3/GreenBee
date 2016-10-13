@@ -8,13 +8,14 @@ router.get('/',function (req, res) {
 	if(req.isAuthenticated()) {
 		res.redirect('/user');
   	} else {
-		res.render('index', { title: titolo});
+		res.render('index', { title: titolo, authMessage: req.flash('authMessage')});
   	}
 });
 
 router.post('/login', passport.authenticate('local', {
 	successRedirect: '/user',
 	failureRedirect: '/',
+	failureFlash: true
 }));
 
 module.exports = router;
