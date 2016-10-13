@@ -1,5 +1,7 @@
 extends layout
+
 block content
+
     div(id='carousel-example-generic' data-ride='carousel').carousel.slide
         // Wrapper for slides
         .carousel-inner
@@ -34,7 +36,7 @@ block content
                     #collapseExample.collapse
                         //.well
                             //| Qui ci andrà la mappa con gli orti
-                            //img.img-responsive(src="https://maps.googleapis.com/maps/api/staticmap?center=Fiera+Di+Roma,Roma+Italia&zoom=13&size=300x300&markers=41.807097,12.3194695&sensor=false")
+                            //img(src="https://maps.googleapis.com/maps/api/staticmap?center=Fiera+Di+Roma,Roma+Italia&zoom=13&size=300x300&markers=41.807097,12.3194695&sensor=false")
                         iframe(src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11895.937500531732!2d12.319469530945941!3d41.80709701463151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1325f4304366abb1%3A0x9b4b3a2f45eee1eb!2sFiera+di+Roma!5e0!3m2!1sit!2sit!4v1476276840628', width='300', height='300', frameborder='0', style='border:0', allowfullscreen='')
                     p Gli orti
                 .col-xs-4.col-sm-4.col-md-4.col-lg-4
@@ -48,7 +50,7 @@ block content
                     p Social
                 .col-xs-4.col-sm-4.col-md-4.col-lg-4
                     a(data-toggle='collapse',href='#collapseExample2', aria-expanded='false', aria-controls='collapseExample2')
-                        img.img-responsive(src='/img/tomato.png' style='width:80px')
+                        img.img-responsive(src='/img/l3.png' style='width:80px')
                     #collapseExample2.collapse
                         .well.text-justify
                             | Qui ci andranno le nostre foto o altro
@@ -60,4 +62,3 @@ block content
             br
             br
             br
-            //div(style='background-image: url("/img/wallpaper.jpg");')
