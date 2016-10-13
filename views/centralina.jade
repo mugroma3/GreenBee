@@ -2,7 +2,7 @@ extends layout
 block content
     script(src='/javaScript/chart.js')
     .row
-        .col-xs-12.col-sm-12.col-md-6.col-lg-8
+        .col-xs-12.col-sm-12.col-md-6.col-md-offset-3.col-lg-8.col-lg-offset-2
             script(type='text/javascript').
 
                 window.onload = function () {
@@ -19,12 +19,13 @@ block content
                 };
             center
             div(id='#{lettureCentralina[0].name}',style='height: 400px; width: 100%;')
-        .col-xs-12.col-sm-12.col-md-6.col-lg-4
             br
-            br
-            iframe(width="450" height="260" style='border: 1px solid #cccccc;', src='https://thingspeak.com/channels/78396/charts/1?average=15&bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=120&type=line&yaxismin=0')
-            br
+
     .row
+        .col-xs-12.col-sm-12.col-md-6.col-lg-6
+            br
+            iframe(style='height: 350px; width: 100%; border: 1px solid #cccccc;', src='https://thingspeak.com/channels/78396/charts/1?width=800&height=340&average=15&bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=120&type=line&yaxismin=0&days=14')
+            br
         each i in lettureCentralina[0].ble_servers
             .col-xs-12.col-sm-12.col-md-6.col-lg-6
                 center
