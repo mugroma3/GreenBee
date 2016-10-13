@@ -51,12 +51,20 @@ public class NumericKeyboardFactory {
 	/*
 	 * end è escluso!
 	 */
-	public MessageToSend getStandardBrowseMessage(long chat_id, StatoUtente stato)
+	public MessageToSend getMagazzinoBrowseMessage(long chat_id, StatoUtente stato)
 	{
-		return getStandardBrowseMessage( chat_id, stato.buildItemMagStringArray());
+		return getStandardBrowseMessage( chat_id,true, stato.buildItemMagStringArray());
 	}
 	
-	public  MessageToSend getStandardBrowseMessage(long chat_id, String... strs)
+	/*
+	 * end è escluso!
+	 */
+	public MessageToSend getMarketStoricoBrowseMessage(long chat_id, StatoUtente stato)
+	{
+		return getStandardBrowseMessage( chat_id,false, stato.buildItemStocStringArray());
+	}
+	
+	public  MessageToSend getStandardBrowseMessage(long chat_id, boolean numeric, String... strs)
 	{
 		MessageToSend mts;
 		
@@ -66,10 +74,15 @@ public class NumericKeyboardFactory {
 		String text = "";
 		for(int i = 0; i < len; i++)
 		{
-			text += "/" + (i+1) +" "+ strs[i] +"\n";
+			if(numeric)
+				text += "/" + (i+1) +" ";
+			text +=  strs[i] +"\n";
 		}
 		mts = new MessageToSend(chat_id, text);
-		mts.setReplyMarkup(numericKeyboards.get(len - 1));
+		if (numeric )
+		    mts.setReplyMarkup(numericKeyboards.get(len - 1));
+		else
+			mts.setReplyMarkup(OrtoBioBot.getBrowseMenu());
 		return mts;
 	}
 	

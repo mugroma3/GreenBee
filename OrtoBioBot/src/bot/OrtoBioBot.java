@@ -26,8 +26,6 @@ import oggettijson.Transazione;
 
 public class OrtoBioBot extends Bot {
 
-	private APINod API;
-
 	public static final String testoScegliLingua = "Scegli la tua lingua \nChoose your language";
 	public static final String testoBenvenuto = "Benvenuto in GreenBeeBot \nWelcome in GreenBeeBot  \n\n"
 			+ "Powered by MUG Roma tre: \nhttps://telegram.me/mugroma3 \nhttp://muglab.uniroma3.it/  "
@@ -60,7 +58,6 @@ public class OrtoBioBot extends Bot {
 
 	public OrtoBioBot(String token) {
 		super(token);
-		API = APINod.getIstance();
 
 		statiUtenti = new HashMap<>();
 		List<List<KeyboardButton>> keyboard = new ArrayList<List<KeyboardButton>>();
@@ -266,7 +263,7 @@ public class OrtoBioBot extends Bot {
 			if (stato.getSezione() == SezioniBot.MARKETCONSULTA) {
 				stato.paginaMagIndietro();
 				sendMessage(
-						NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato));
+						NumericKeyboardFactory.getIstance().getMagazzinoBrowseMessage(arg0.getChat().getId(), stato));
 			}
 
 			return;
@@ -276,12 +273,20 @@ public class OrtoBioBot extends Bot {
 			if (stato.getSezione() == SezioniBot.MARKETCONSULTA) {
 				stato.paginaMagAvanti();
 				sendMessage(
-						NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato));
+						NumericKeyboardFactory.getIstance().getMagazzinoBrowseMessage(arg0.getChat().getId(), stato));
 			}
 
 			return;
 		}
 
+		if(text.equals(Italiano.STORICO) || text.equals(English.HISTORY))
+		{
+			if(stato.getSezione() == SezioniBot.MARKET)
+				storicoMarket(arg0, stato);
+			return;
+		}
+		
+		
 		if (text.equals(REFRESH)) {
 			if (stato.getSezione() == SezioniBot.MARKETCONSULTA)
 				consultaMarket(arg0, stato);
@@ -327,7 +332,7 @@ public class OrtoBioBot extends Bot {
 				if (text.contains("/"))
 					text = text.substring(1);
 				int index = Integer.valueOf(text);
-				ItemMag im = stato.getItemMagFromInexPage(index);
+				ItemMag im = stato.getItemMagFromIndexPage(index);
 				if (im != null) {
 					stato.setSelezionato(im);
 					VoceMercato vm = new VoceMercato(im, arg0, this, stato);
@@ -539,15 +544,15 @@ public class OrtoBioBot extends Bot {
 	}
 
 	private void checkInOrto(Message arg0, StatoUtente stato) {
-		stato.setInOrto(API.isNellOrto(arg0.getFrom().getId()));
+		stato.setInOrto(APINod.getIstance().isNellOrto(arg0.getFrom().getId()));
 	}
 
 	private boolean addIngresso(Message arg0, StatoUtente stato) {
-		return API.addIngresso(arg0.getFrom().getId());
+		return APINod.getIstance().addIngresso(arg0.getFrom().getId());
 	}
 
 	private boolean addUscita(Message arg0, StatoUtente stato) {
-		return API.addUscita(arg0.getFrom().getId());
+		return APINod.getIstance().addUscita(arg0.getFrom().getId());
 	}
 
 	private boolean checkRisp(String text) {
@@ -555,7 +560,7 @@ public class OrtoBioBot extends Bot {
 	}
 
 	private void consultaMarket(Message arg0, StatoUtente stato) {
-		stato.setMagazzino(API.getMagazzino());
+		stato.setMagazzino(APINod.getIstance().getMagazzino());
 		if (stato.getMagazzino().size() == 0) {
 			if (stato.getLingua() == Lingue.ITALIANO)
 				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.MERCATOVUOTO));
@@ -565,7 +570,7 @@ public class OrtoBioBot extends Bot {
 			return;
 		}
 		stato.setSezione(SezioniBot.MARKETCONSULTA);
-		sendMessage(NumericKeyboardFactory.getIstance().getStandardBrowseMessage(arg0.getChat().getId(), stato));
+		sendMessage(NumericKeyboardFactory.getIstance().getMagazzinoBrowseMessage(arg0.getChat().getId(), stato));
 		/*
 		 * VoceMercato vm = new VoceMercato(stato.getMagazzino().get(0), arg0,
 		 * this, stato); vm.sendVoce();
@@ -579,6 +584,22 @@ public class OrtoBioBot extends Bot {
 			return false;
 		}
 		return true;
+	}
+	
+	public void storicoMarket(Message arg0, StatoUtente stato)
+	{
+		
+		stato.setStorico(APINod.getIstance().getStorico(arg0.getFrom().getId()));
+		if (stato.getStorico().size() == 0) {
+			if (stato.getLingua() == Lingue.ITALIANO)
+				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.STORICOVUOTO));
+			else
+				sendMessage(new MessageToSend(arg0.getChat().getId(), English.STORICOVUOTO));
+			inviaMenuMercato(arg0, stato);
+			return;
+		}
+		stato.setSezione(SezioniBot.MARKETSTORICO);
+		
 	}
 
 }

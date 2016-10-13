@@ -95,6 +95,7 @@ public class APINod {
 
 	public List<Transazione> getStorico(long id) {
 		String json = API.getAlServer(urlListTransazione + String.valueOf(id));
+		System.out.println(json);
 		return gson.fromJson(json, new TypeToken<ArrayList<Transazione>>() {
 		}.getType());
 	}

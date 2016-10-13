@@ -24,6 +24,7 @@ public class English {
 	public final static String ERRENT= "It seams that you are already in the garden";
 	public final static String REPEXIT= "Report exit";
 	public final static String CONFEXT= "Exit confirmed";
+	public final static String STORICOVUOTO = "You have no transaction";
 	public final static String ERREXIT= "You are not in the garden... do you?";
 	public final static String WELCOMEMARKET = "Welcome in the market!\nHere you can sell your products, buy something or see the history of your transactions.";
 	public final static String WELCOMETASK = "Here you can find all the available tasks in the garden: browse the task list and choose what to do.";
@@ -32,5 +33,8 @@ public class English {
 	public final static String HISTORY= "History";
 	public final static String AMOUNT= "available amount: ";
 	public final static String ENGLISHMENU = "Welcome in GreenBeeBot, an urban-social-smart garden made by MUG Roma Tre and managed with a Telegram bot.\nChoose an option:";
-	
+	public final static String HAI =  "Hai ";
+	public final static String COMPRATO =  "comprato ";
+	public final static String VENDUTO =  "venduto ";
+	public final static String KGDI =  "Kg di  ";
 }

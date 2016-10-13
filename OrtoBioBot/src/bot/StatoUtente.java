@@ -6,20 +6,22 @@ import gestionelingue.English;
 import gestionelingue.Italiano;
 import gestionelingue.Lingue;
 import oggettijson.ItemMag;
+import oggettijson.Transazione;
 
 public class StatoUtente {
 
 	private SezioniBot sezione;
-	private int paginaMagazzino = 0;
 	private Lingue lingua = Lingue.ITALIANO;
 	private boolean inOrto = false;
-	private List<ItemMag> magazzino;
-	private int maxMagPages = 0;
 	private ItemMag selezionato;
+	private GestorePagine<ItemMag> magazzino;
+	private GestorePagine<Transazione> storicoM; 
 	
 	public StatoUtente() 
 	{
 		this.sezione = SezioniBot.SCEGLILINGUA;
+		magazzino = new GestorePagine<>();
+		storicoM = new GestorePagine<>();
 	}
 	
 	public SezioniBot getSezione() 
@@ -30,23 +32,25 @@ public class StatoUtente {
 	{
 		this.sezione = sezione;
 	}
-	public int getPagina() 
-	{
-		return paginaMagazzino;
-	}
 
+	public int paginaStoricoAvanti()
+	{
+		return storicoM.paginaAvanti();
+	}
+	
 	public int paginaMagAvanti()
 	{
-		paginaMagazzino++;
-		paginaMagazzino = Math.min(maxMagPages - 1, paginaMagazzino);
-		return paginaMagazzino;
+		return magazzino.paginaAvanti();
 	}
 	
 	public int paginaMagIndietro()
 	{
-		paginaMagazzino--;
-		paginaMagazzino = Math.max(0, paginaMagazzino);
-		return paginaMagazzino;
+		return magazzino.paginaIndietro();
+	}
+	
+	public int paginaStoricoIndietro()
+	{
+		return storicoM.paginaIndietro();
 	}
 	
 	public Lingue getLingua() 
@@ -70,39 +74,45 @@ public class StatoUtente {
 	}
 
 	public List<ItemMag> getMagazzino() {
-		return magazzino;
+		return magazzino.getRaccoglitore();
 	}
 
-	public void setMagazzino(List<ItemMag> magazzino) {
-		this.magazzino = magazzino;
+	public List<Transazione> getStorico()
+	{
+		return storicoM.getRaccoglitore();
+	}
+	public void setMagazzino(List<ItemMag> mag) {
 		int i = 0;
-		while(i < magazzino.size())
+		while(i < mag.size())
 		{
-			if(magazzino.get(i).getQuantita() == 0)
-				magazzino.remove(i);
+			if(mag.get(i).getQuantita() == 0)
+				mag.remove(i);
 			else
 			    i++;
 		}
-		paginaMagazzino = 0;
-		maxMagPages = magazzino.size() / NumericKeyboardFactory.PAGESIZE;
-		if(magazzino.size() % NumericKeyboardFactory.PAGESIZE > 0)
-			maxMagPages++;
+		this.magazzino.setRaccoglitore(mag);
 	}
 	
-	public ItemMag getItemMagFromInexPage(int index)
+	public void setStorico(List<Transazione> sto)
 	{
-		index = (index - 1) + paginaMagazzino * NumericKeyboardFactory.PAGESIZE;
-		index = Math.min(magazzino.size() - 1, index);
-		if(index < 0)
-		    return null;
-		return magazzino.get(index);
+		storicoM.setRaccoglitore(sto);
+	}
+	
+	public ItemMag getItemMagFromIndexPage(int index)
+	{
+		return magazzino.getItemMagFromInexPage(index);
+	}
+	
+	public Transazione getItemStoriFromIndexPage(int index)
+	{
+		return storicoM.getItemMagFromInexPage(index);
 	}
 	
 	public String[] buildItemMagStringArray()
 	{
 		if(magazzino.size() == 0)
 			return new String[0];
-		int begin = paginaMagazzino * NumericKeyboardFactory.PAGESIZE;
+		int begin = magazzino.getPagina() * NumericKeyboardFactory.PAGESIZE;
 		int end = Math.min(begin + NumericKeyboardFactory.PAGESIZE, magazzino.size());
 		int len = Math.min(end - begin, NumericKeyboardFactory.PAGESIZE);
 		String [] ask = new String[len];
@@ -116,7 +126,7 @@ public class StatoUtente {
 			cost = English.ALCOSTO;
 		}
 		
-		for(int i = begin; i < end && c < 4; i++)
+		for(int i = begin; i < end && c < NumericKeyboardFactory.PAGESIZE; i++)
 		{
 			ask[c] = magazzino.get(i).getNome() + " " + quant + magazzino.get(i).getQuantita() +" "+ cost + magazzino.get(i).getCosto();
 			c++;
@@ -124,6 +134,34 @@ public class StatoUtente {
 		return ask;
 	}
 
+	
+	public String[] buildItemStocStringArray()
+	{
+		if(storicoM.size() == 0)
+			return new String[0];
+		int begin = storicoM.getPagina() * NumericKeyboardFactory.PAGESIZE;
+		int end = Math.min(begin + NumericKeyboardFactory.PAGESIZE, storicoM.size());
+		int len = Math.min(end - begin, NumericKeyboardFactory.PAGESIZE);
+		String [] ask = new String[len];
+		int c = 0;
+		String quant = Italiano.QUANTITA;
+		String cost = Italiano.ALCOSTO;
+		
+		if(lingua == Lingue.INGLESE)
+		{
+			quant = English.AMOUNT;
+			cost = English.ALCOSTO;
+		}
+		
+		for(int i = begin; i < end && c < NumericKeyboardFactory.PAGESIZE; i++)
+		{
+			ask[c] = storicoM.get(i).getOggetto() + " " + quant + storicoM.get(i).getQuantita();
+			c++;
+		}
+		return ask;
+	}
+	
+	
 	public ItemMag getSelezionato() {
 		return selezionato;
 	}

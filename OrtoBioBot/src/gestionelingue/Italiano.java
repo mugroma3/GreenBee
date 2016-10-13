@@ -4,6 +4,10 @@ public class Italiano {
 
 	
 	public final static String ITALIANO =  "🇮🇹 Italiano";
+	public final static String HAI =  "Hai ";
+	public final static String COMPRATO =  "comprato ";
+	public final static String VENDUTO =  "venduto ";
+	public final static String KGDI =  "Kg di  ";
 	public final static String CONTATTI= "Contatti";
 	public final static String MERCATO= "Mercato";
 	public final static String MERCATOVUOTO= "Mercato vuoto";
@@ -21,6 +25,7 @@ public class Italiano {
 	public final static String PUNTIRESIDUI = "Punti Residui";
 	public final static String PUNTIATTUALI = "Punti Attuali";
 	public final static String SEGENT= "Segnala ingresso";
+	public final static String STORICOVUOTO = "Non hai ancora fatto un acquisto";
 	public final static String CONFENT= "Segnalazione ingresso confermata";
 	public final static String ERRENT= "Sembrerebbe che sei già dentro l'orto";
 	public final static String SEGUSC= "Segnala  uscita";
