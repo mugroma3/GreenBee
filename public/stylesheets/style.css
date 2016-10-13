@@ -1,5 +1,4 @@
 body {
-    /*font: 18px Georgia, serif;*/
     font: 18px Arial, Helvetica, sans-serif;
     padding-top: 50px;
 }
@@ -169,10 +168,7 @@ over-ride "Weak" message, show font in dark grey
 /*
 *   chat css
 */
-body{
-    margin-top:20px;
-    background:#ebeef0;
-}
+
 .panel {
     box-shadow: 0 2px 0 rgba(0,0,0,0.075);
     border-radius: 0;
