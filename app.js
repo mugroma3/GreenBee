@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
+var socket_io = require("socket.io");
+var passportSocketIo = require('passport.socketio');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/ortoBioDB'); //Localhost/nomeDB
@@ -19,15 +21,16 @@ function defaultContentTypeMiddleware (req, res, next) {
   }
 }
 
+var app = express();
 
-
+// Socket.io
+var io = socket_io();
+app.io = io;
 
 var routes = require('./routes/index');
 var api = require('./routes/apiRoutes');
 var routesAdmin = require('./routes/adminRoutes');
-var routesUser = require('./routes/userRoutes');
-
-var app = express();
+var routesUser = require('./routes/userRoutes')(io);
 
 var passport = require('passport');
 var expressSession = require('express-session');
@@ -47,10 +50,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 
+var sessionStore = new (require('express-sessions'))({
+  storage: 'mongodb',
+  instance: mongoose, // optional
+  host: 'localhost', // optional
+  port: 27017, // optional
+  db: 'ortoBioDBSession', // optional
+  collection: 'sessions', // optional
+  expire: 86400 // optional
+});
+
 //Configure Passport
 app.use(expressSession({secret: 'MugLab',
                         resave: false,
-                        saveUninitialized: false}));
+                        saveUninitialized: false,
+                        store : sessionStore}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -128,6 +142,14 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+io.use(passportSocketIo.authorize({
+  key: 'connect.sid',
+  secret: 'MugLab',
+  store: sessionStore,
+  passport: passport,
+  cookieParser: cookieParser
+}));
 
 
 module.exports = app;
