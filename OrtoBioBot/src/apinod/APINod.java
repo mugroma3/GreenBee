@@ -160,11 +160,8 @@ public class APINod {
 	
 	public List<Task> getTask() {
 		String json = API.getAlServer(urlListTask);
-		System.out.println(json);
-		List<Task> zz = gson.fromJson(json, new TypeToken<ArrayList<Task>>() {
+		return gson.fromJson(json, new TypeToken<ArrayList<Task>>() {
 		}.getType());
-		System.out.println("asertvh");
-		return zz;
 	}
 	
 	public Task completeTask(long id, RichiestaTask rt){

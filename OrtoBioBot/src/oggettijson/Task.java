@@ -6,7 +6,7 @@ public class Task {
 	private String nome;
 	private int ricompensa;
 	private String data;
-	private int scadenza;
+	private String scadenza;
 	
 	
 	public String get_id() {
@@ -33,10 +33,10 @@ public class Task {
 	public void setData(String data) {
 		this.data = data;
 	}
-	public int getScadenza() {
+	public String getScadenza() {
 		return scadenza;
 	}
-	public void setScadenza(int scadenza) {
+	public void setScadenza(String scadenza) {
 		this.scadenza = scadenza;
 	}
 	

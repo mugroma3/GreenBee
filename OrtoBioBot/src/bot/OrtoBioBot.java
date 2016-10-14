@@ -273,7 +273,15 @@ public class OrtoBioBot extends Bot {
 				return;
 			}
 
+			
+			if (stato.getSezione() == SezioniBot.TASK) {
+				stato.paginaCompitiIndietro();
+				sendMessage(NumericKeyboardFactory.getIstance().getCompitiBrowseMessage(arg0.getChat().getId(), stato));
+				return;
+			}
 			return;
+			
+			
 		}
 
 		if (text.equals(RIGHT)) {
@@ -286,6 +294,12 @@ public class OrtoBioBot extends Bot {
 			if (stato.getSezione() == SezioniBot.MARKETSTORICO) {
 				stato.paginaStoricoAvanti();
 				sendMessage(NumericKeyboardFactory.getIstance().getMarketStoricoBrowseMessage(arg0.getChat().getId(), stato));
+				return;
+			}
+			
+			if (stato.getSezione() == SezioniBot.TASK) {
+				stato.paginaCompitiAvanti();
+				sendMessage(NumericKeyboardFactory.getIstance().getCompitiBrowseMessage(arg0.getChat().getId(), stato));
 				return;
 			}
 			return;
@@ -308,6 +322,12 @@ public class OrtoBioBot extends Bot {
 			if(stato.getSezione() == SezioniBot.MARKETSTORICO)
 			{
 				storicoMarket(arg0, stato);
+				return;
+			}
+			
+			if(stato.getSezione() == SezioniBot.TASK)
+			{
+				visualCompiti(arg0, stato);
 				return;
 			}
 			return;
@@ -626,7 +646,6 @@ public class OrtoBioBot extends Bot {
 	{
 		
 		stato.setCompiti(APINod.getIstance(arg0.getFrom().getId()).getTask());
-		System.out.println("hujgtfdft");
 		if (stato.getCompiti().size() == 0) {
 			if (stato.getLingua() == Lingue.ITALIANO)
 				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.STORICOVUOTO));
