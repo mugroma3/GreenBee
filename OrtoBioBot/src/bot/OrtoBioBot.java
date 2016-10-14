@@ -111,12 +111,12 @@ public class OrtoBioBot extends Bot {
 
 		keyboard = new ArrayList<List<KeyboardButton>>();
 		menuMercato = new ReplyKeyboardMarkupWithButtons(keyboard);
-		menuMercato.addLine(Italiano.CONSULTA, Italiano.AGGIUNGI, Italiano.STORICO, BACK);
+		menuMercato.addLine(Italiano.CONSULTA,  Italiano.STORICO, BACK);
 		menuMercato.setResizeKeyboard(true);
 
 		keyboard = new ArrayList<List<KeyboardButton>>();
 		marketMenu = new ReplyKeyboardMarkupWithButtons(keyboard);
-		marketMenu.addLine(English.BROWSE, English.ADD, English.HISTORY, BACK);
+		marketMenu.addLine(English.BROWSE, English.HISTORY, BACK);
 		marketMenu.setResizeKeyboard(true);
 
 		keyboard = new ArrayList<List<KeyboardButton>>();
@@ -193,7 +193,7 @@ public class OrtoBioBot extends Bot {
 
 		if (text.equals(Italiano.COMPITI) || text.equals(English.TASK)) {
 			if (stato.getSezione() == SezioniBot.MENU)
-				inviaMenuCompiti(arg0, stato);
+				visualCompiti(arg0, stato);
 			else
 				inviaMenu(arg0, stato);
 			return;
@@ -218,7 +218,7 @@ public class OrtoBioBot extends Bot {
 		if (arg0.getReplyToMessage() != null && (arg0.getReplyToMessage().getText().equals(English.SELEZIONAQUANTITA)
 				|| arg0.getReplyToMessage().getText().equals(Italiano.SELEZIONAQUANTITA))) {
 			if (isNumeric(text)) {
-				Transazione tr = APINod.getIstance().addTransazione(arg0.getFrom().getId(), new RichiestaTransazione(
+				Transazione tr = APINod.getIstance(arg0.getFrom().getId()).addTransazione(arg0.getFrom().getId(), new RichiestaTransazione(
 						TipoTransazione.acquisto, stato.getSelezionato().getNome(), Integer.valueOf(text)));
 				if(tr.getOggetto() == null)
 				{
@@ -564,15 +564,15 @@ public class OrtoBioBot extends Bot {
 	}
 
 	private void checkInOrto(Message arg0, StatoUtente stato) {
-		stato.setInOrto(APINod.getIstance().isNellOrto(arg0.getFrom().getId()));
+		stato.setInOrto(APINod.getIstance(arg0.getFrom().getId()).isNellOrto(arg0.getFrom().getId()));
 	}
 
 	private boolean addIngresso(Message arg0, StatoUtente stato) {
-		return APINod.getIstance().addIngresso(arg0.getFrom().getId());
+		return APINod.getIstance(arg0.getFrom().getId()).addIngresso(arg0.getFrom().getId());
 	}
 
 	private boolean addUscita(Message arg0, StatoUtente stato) {
-		return APINod.getIstance().addUscita(arg0.getFrom().getId());
+		return APINod.getIstance(arg0.getFrom().getId()).addUscita(arg0.getFrom().getId());
 	}
 
 	private boolean checkRisp(String text) {
@@ -580,7 +580,7 @@ public class OrtoBioBot extends Bot {
 	}
 
 	private void consultaMarket(Message arg0, StatoUtente stato) {
-		stato.setMagazzino(APINod.getIstance().getMagazzino());
+		stato.setMagazzino(APINod.getIstance(arg0.getFrom().getId()).getMagazzino());
 		if (stato.getMagazzino().size() == 0) {
 			if (stato.getLingua() == Lingue.ITALIANO)
 				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.MERCATOVUOTO));
@@ -609,7 +609,7 @@ public class OrtoBioBot extends Bot {
 	public void storicoMarket(Message arg0, StatoUtente stato)
 	{
 		
-		stato.setStorico(APINod.getIstance().getStorico(arg0.getFrom().getId()));
+		stato.setStorico(APINod.getIstance(arg0.getFrom().getId()).getStorico(arg0.getFrom().getId()));
 		if (stato.getStorico().size() == 0) {
 			if (stato.getLingua() == Lingue.ITALIANO)
 				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.STORICOVUOTO));
@@ -622,4 +622,22 @@ public class OrtoBioBot extends Bot {
 		sendMessage(NumericKeyboardFactory.getIstance().getMarketStoricoBrowseMessage(arg0.getChat().getId(), stato));
 	}
 
+	public void visualCompiti(Message arg0, StatoUtente stato)
+	{
+		
+		stato.setCompiti(APINod.getIstance(arg0.getFrom().getId()).getTask());
+		System.out.println("hujgtfdft");
+		if (stato.getCompiti().size() == 0) {
+			if (stato.getLingua() == Lingue.ITALIANO)
+				sendMessage(new MessageToSend(arg0.getChat().getId(), Italiano.STORICOVUOTO));
+			else
+				sendMessage(new MessageToSend(arg0.getChat().getId(), English.STORICOVUOTO));
+			inviaMenuMercato(arg0, stato);
+			return;
+		}
+		stato.setSezione(SezioniBot.TASK);
+		sendMessage(NumericKeyboardFactory.getIstance().getCompitiBrowseMessage(arg0.getChat().getId(), stato));
+	}
+
+	
 }

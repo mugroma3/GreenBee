@@ -6,6 +6,7 @@ import gestionelingue.English;
 import gestionelingue.Italiano;
 import gestionelingue.Lingue;
 import oggettijson.ItemMag;
+import oggettijson.Task;
 import oggettijson.TipoTransazione;
 import oggettijson.Transazione;
 
@@ -17,12 +18,14 @@ public class StatoUtente {
 	private ItemMag selezionato;
 	private GestorePagine<ItemMag> magazzino;
 	private GestorePagine<Transazione> storicoM; 
+	private GestorePagine<Task> compiti; 
 	
 	public StatoUtente() 
 	{
 		this.sezione = SezioniBot.SCEGLILINGUA;
 		magazzino = new GestorePagine<>();
 		storicoM = new GestorePagine<>();
+		compiti = new GestorePagine<>();
 	}
 	
 	public SezioniBot getSezione() 
@@ -54,6 +57,16 @@ public class StatoUtente {
 		return storicoM.paginaIndietro();
 	}
 	
+	public int paginaCompitiIndietro()
+	{
+		return compiti.paginaIndietro();
+	}
+	
+	public int paginaCompitiAvanti()
+	{
+		return compiti.paginaAvanti();
+	}
+	
 	public Lingue getLingua() 
 	{
 		return lingua;
@@ -82,6 +95,12 @@ public class StatoUtente {
 	{
 		return storicoM.getRaccoglitore();
 	}
+	
+	public List<Task> getCompiti()
+	{
+		return compiti.getRaccoglitore();
+	}
+	
 	public void setMagazzino(List<ItemMag> mag) {
 		int i = 0;
 		while(i < mag.size())
@@ -99,6 +118,11 @@ public class StatoUtente {
 		storicoM.setRaccoglitore(sto);
 	}
 	
+	public void setCompiti(List<Task> sto)
+	{
+		compiti.setRaccoglitore(sto);
+	}
+	
 	public ItemMag getItemMagFromIndexPage(int index)
 	{
 		return magazzino.getItemMagFromInexPage(index);
@@ -107,6 +131,11 @@ public class StatoUtente {
 	public Transazione getItemStoriFromIndexPage(int index)
 	{
 		return storicoM.getItemMagFromInexPage(index);
+	}
+	
+	public Task getItemCompFromIndexPage(int index)
+	{
+		return compiti.getItemMagFromInexPage(index);
 	}
 	
 	public String[] buildItemMagStringArray()
@@ -170,6 +199,30 @@ public class StatoUtente {
 		return ask;
 	}
 	
+	
+	public String[] buildItemCompitiStringArray()
+	{
+		if(compiti.size() == 0)
+			return new String[0];
+		int begin = compiti.getPagina() * NumericKeyboardFactory.PAGESIZE;
+		int end = Math.min(begin + NumericKeyboardFactory.PAGESIZE, compiti.size());
+		int len = Math.min(end - begin, NumericKeyboardFactory.PAGESIZE);
+		String [] ask = new String[len];
+		int c = 0;
+		String r = Italiano.RICOMPENSA;
+		
+		if(lingua == Lingue.INGLESE)
+			r = English.REWARD;
+		
+		
+		for(int i = begin; i < end && c < NumericKeyboardFactory.PAGESIZE; i++)
+		{
+			Task tr = compiti.get(i);
+			ask[c] = tr.getNome() + "; " + r + tr.getRicompensa();
+			c++;
+		}
+		return ask;
+	}
 	
 	public ItemMag getSelezionato() {
 		return selezionato;

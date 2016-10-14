@@ -6,6 +6,8 @@ public class English {
 	public final static String LANGUAGECHOOSEN = "";
 	public final static String CONTACT= "Contact";
 	public final static String MARKET= "Market";
+	public final static String REWARD = "Reward: ";
+	public final static String NOCOMPITI = "Non ci sono compiti";
 	public final static String EMPTYMARKET= "Empty market";
 	public final static String SELEZIONAQUANTITA= "How much";
 	public final static String TASK= "Task";

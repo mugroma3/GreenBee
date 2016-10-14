@@ -7,7 +7,9 @@ public class Italiano {
 	public final static String TASKCOMPLETO = "Hai effettuato: ";
 	public final static String TASKGUADAGNO = "Ben fatto! Ecco quanti BioCoin hai guadagnato: ";
 	public final static String TASKRICHIESTA = "Ecco la lista delle cose da fare:";
+	public final static String RICOMPENSA = "Ricompensa: ";
 	public final static String HAI =  "Hai ";
+	public final static String NOCOMPITI = "Non ci sono compiti";
 	public final static String COMPRATO =  "comprato ";
 	public final static String VENDUTO =  "venduto ";
 	public final static String KGDI =  "Kg di  ";

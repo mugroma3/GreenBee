@@ -8,9 +8,6 @@ public class Task {
 	private String data;
 	private int scadenza;
 	
-	public Task(){
-		
-	}
 	
 	public String get_id() {
 		return _id;

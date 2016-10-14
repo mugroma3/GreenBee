@@ -4,9 +4,13 @@ package apinod;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.reflect.TypeToken;
+
 import oggettijson.ItemMag;
 import oggettijson.Punti;
+import oggettijson.RichiestaTask;
 import oggettijson.RichiestaTransazione;
+import oggettijson.Task;
 import oggettijson.TipoTransazione;
 import oggettijson.Transazione;
 
@@ -18,6 +22,10 @@ public class TruffaBaruffa extends APINod{
 
 	public TruffaBaruffa(String tb) {
 		super(tb);
+		
+		resultMag = new ArrayList<>();
+		resultTrans = new ArrayList<>();
+		
 		ItemMag t1=new ItemMag();
 		ItemMag t2=new ItemMag();
 		ItemMag t3=new ItemMag();
@@ -170,6 +178,16 @@ public class TruffaBaruffa extends APINod{
 	public Punti getPunti(long id)
 	{
 		return this.p;
+	}
+	
+	//TODO fare la truffa
+	@Override
+	public List<Task> getTask() {
+		return new ArrayList<Task>();
+	}
+	
+	public Task completeTask(long id, RichiestaTask rt){
+		return new Task();
 	}
 
 }

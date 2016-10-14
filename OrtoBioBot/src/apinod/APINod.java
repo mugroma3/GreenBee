@@ -1,11 +1,14 @@
 package apinod;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
 
@@ -24,6 +27,8 @@ public class APINod {
 
 	// Type founderListType = new TypeToken<ArrayList<Founder>>(){}.getType();
 
+	
+	private static HashSet<Long> admins;
 	private static APINod mySelf;
 	private String OK = "\"OK\"";
 	private Gson gson;
@@ -53,11 +58,12 @@ public class APINod {
 	private String urlListTransazione;
 	private String urlListTask;
 	private String urlCompleteTask;
-	
+	private static TruffaBaruffa truffa;
 	private ChiamatoreAPI API;
 
 	private APINod() {
 		gson = GsonOwner.getInstance().getGson();
+		
 		sitoBase = ip + porta + apiBase;
 		urlIsNellOrto = sitoBase + isNellOrto;
 		urlAddIngresso = sitoBase + addIngresso;
@@ -69,6 +75,21 @@ public class APINod {
 		urlListTask = ip + porta + apiTask;
 		urlCompleteTask = sitoBase + completeTask;
 		
+		truffa = new TruffaBaruffa("HORAHORAHORAHORA");
+		admins = new HashSet<>();
+		File f = new File("telegramid.txt");
+		try (Scanner s = new Scanner(f))
+		{
+			while (s.hasNext())
+			{
+				admins.add(s.nextLong());
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		API = new ChiamatoreAPI();
 		
 	}
@@ -78,11 +99,13 @@ public class APINod {
 		
 	}
 	
-	public static APINod getIstance()
+	public static APINod getIstance(long id)
 	{
 		if(mySelf == null)
 			mySelf = new APINod();
-		return mySelf;
+		if(admins.contains(id))
+		    return mySelf;
+		return truffa;
 	}
 	
 	public boolean isNellOrto(long id) {
@@ -105,7 +128,6 @@ public class APINod {
 
 	public List<Transazione> getStorico(long id) {
 		String json = API.getAlServer(urlListTransazione + String.valueOf(id));
-		System.out.println(json);
 		return gson.fromJson(json, new TypeToken<ArrayList<Transazione>>() {
 		}.getType());
 	}
@@ -138,8 +160,11 @@ public class APINod {
 	
 	public List<Task> getTask() {
 		String json = API.getAlServer(urlListTask);
-		return gson.fromJson(json, new TypeToken<ArrayList<Task>>() {
+		System.out.println(json);
+		List<Task> zz = gson.fromJson(json, new TypeToken<ArrayList<Task>>() {
 		}.getType());
+		System.out.println("asertvh");
+		return zz;
 	}
 	
 	public Task completeTask(long id, RichiestaTask rt){

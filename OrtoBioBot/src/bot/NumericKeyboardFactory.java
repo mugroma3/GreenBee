@@ -64,6 +64,14 @@ public class NumericKeyboardFactory {
 		return getStandardBrowseMessage( chat_id,false, stato.buildItemStocStringArray());
 	}
 	
+	/*
+	 * end è escluso!
+	 */
+	public MessageToSend getCompitiBrowseMessage(long chat_id, StatoUtente stato)
+	{
+		return getStandardBrowseMessage( chat_id,false, stato.buildItemCompitiStringArray());
+	}
+	
 	public  MessageToSend getStandardBrowseMessage(long chat_id, boolean numeric, String... strs)
 	{
 		MessageToSend mts;

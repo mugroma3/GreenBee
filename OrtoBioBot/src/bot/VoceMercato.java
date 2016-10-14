@@ -58,11 +58,11 @@ public class VoceMercato {
 			if (oggetto.getImmagine() == null) {
 				bot.sendChatAction(new ChatActionToSend(m.getChat().getId(), ActionToSend.UPLOADPHOTO));
 				bot.sendPhotoFile(
-						new PhotoFileToSend(m.getChat().getId(), APINod.getIstance().saveImage(oggetto.getImmagine())));
+						new PhotoFileToSend(m.getChat().getId(), APINod.getIstance(m.getFrom().getId()).saveImage(oggetto.getImmagine())));
 			}
 		} else
 			bot.sendPhotobyReference(new PhotoReferenceToSend(m.getChat().getId(), oggetto.getTelegramRefImg()));
-		Punti p = APINod.getIstance().getPunti(m.getFrom().getId());
+		Punti p = APINod.getIstance(m.getFrom().getId()).getPunti(m.getFrom().getId());
 		if (p.getPunti() < oggetto.getCosto())
 			ricco = false;
 		if (stato.getLingua() == Lingue.INGLESE) {
