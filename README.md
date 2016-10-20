@@ -2,9 +2,9 @@
 
 ## Description of the branches
 
-* **kappaServer**: the web app code; there you can find all the source code about GreenBee website (with the simple _Procfile_ for deploying the project on Heroku).
-* **BotTelegram**: the source code of the Telegram bot, developed with the _Botticelli_ framework.
-* **dockerize**: a version of the project deployable to _Docker_; it contains the web app code and the Dockerfile files.
+* [**kappaServer**](https://github.com/mugroma3/GreenBee/tree/kappaServer): the web app code; there you can find all the source code about GreenBee website (with the simple _Procfile_ for deploying the project on Heroku).
+* [**BotTelegram**](https://github.com/mugroma3/GreenBee/tree/BotTelegram): the source code of the Telegram bot, developed with the _Botticelli_ framework.
+* [**dockerize**](https://github.com/mugroma3/GreenBee/tree/dockerize): a version of the project deployable to _Docker_; it contains the web app code and the Dockerfile files.
 
 ## RePhone code
 
