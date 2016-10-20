@@ -1,6 +1,6 @@
 # GreenBee: a smart urban social garden
 
-[!GreenBee logo](http://muglab.uniroma3.it/wp-content/uploads/2016/10/LogoLeaf6-300x300.png)
+[!GreenBee logo](images/logo.png)
 
 ## Description of the branches
 
