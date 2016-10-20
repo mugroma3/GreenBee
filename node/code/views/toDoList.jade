@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                h1.text-success.text-center Ecco la lista delle cose da fare
+                br
+                br
+                table.table.table-striped
+                    tr.success
+                        th Cosa Fare
+                        th Ricompensa
+                        th Data di inserimento
+                        th Opzioni
+                    each schdeule in toDoList
+                        tr
+                            td #{schdeule.nome}
+                            td #{schdeule.ricompensa}
+                            td #{schdeule.scadenza.toDateString()}
+                            td
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#completeSchdeuleModal#{schdeule._id}').btn.btn-info
+                                    | Completa Azione
+                                div(class='modal fade' tabindex='-1' role='dialog' id='completeSchdeuleModal#{schdeule._id}' aria-labelledby='completeSchdeuleModalLabel#{schdeule._id}')
+                                    div(class='modal-dialog' role='document')
+                                        form(role='form', action="/user/completeSchedule",method="post").form-inline
+                                            .modal-content
+                                                .modal-header.text-center
+                                                    h2 Si è scelto di completare questa azione:
+                                                .modal-body.text-center
+                                                    .row
+                                                        h3 #{schdeule.nome}
+                                                .modal-footer
+                                                    button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                    input(type="hidden" name="schedule" value="#{schdeule._id}")
+                                                    button(type='submit' class='btn btn-success')
+                                                        | Conferma

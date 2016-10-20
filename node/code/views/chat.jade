@@ -1,0 +1,49 @@
+extends layout
+block content
+    .row
+        .container
+            .col-xs-12.col-sm-12.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+                .panel.fontChat
+                    // Heading
+                    .panel-heading
+                        .panel-control
+                            .btn-group
+                        h3.panel-title Benvenuto nella Chat
+                    // Widget body
+                    #demo-chat-body.collapse.in
+                        .nano.has-scrollbar(style='height:380px')
+                            .nano-content.pad-all(tabindex='0', style='right: -17px;')
+                                ul.list-unstyled.media-block
+                                    #messages
+                            .nano-pane
+                                .nano-slider(style='height: 141px; transform: translate(0px, 0px);')
+                        // Widget footer
+                        .panel-footer
+                            .row
+                                form(action='')
+                                    .col-xs-9
+                                        input#m.form-control.chat-input(type='text', placeholder='Enter your text')
+                                    .col-xs-3
+                                        button.btn.btn-primary.btn-block(type='submit') Send
+
+
+    script(src='https://cdn.socket.io/socket.io-1.4.5.js')
+    script.
+        var socket = io();
+        $('form').submit(function () {
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+        socket.on('chat message', function (msg) {
+            addChatMessage(msg);
+        });
+        function addChatMessage(msg){
+            if(msg.username=='#{user.username}'){
+                $('#messages').append("<li class='mar-btm' ><div class='media-right text-success'>"+msg.username+"</div><div class='media-body pad-hor speech-right'><div class='speech text-default'><p>"+msg.message+"</p></div></div></li>");
+            } else {
+                $('#messages').append("<li class='mar-btm' ><div class='media-left text-success'>"+msg.username+"</div><div class='media-body pad-hor'><div class='speech text-default'><p>"+msg.message+"</p></div></div></li>");
+            }
+            
+            //$('#messages').append("<div><font color='blue'> <b>"+msg.username+":</b></font> <font color='grey'>"+msg.message+"</font></div>");
+        };

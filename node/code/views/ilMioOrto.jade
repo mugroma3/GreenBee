@@ -1,0 +1,81 @@
+extends layout
+
+block content
+    .row
+        br
+        .col-xs-12.col-sm-12.col-md-4.col-lg-4
+            center
+                form(role='form', action="/user/addColtivazione",method="post").form-inline
+                    .form-group
+                        label(for='inputOggetto')
+                            | Aggiungi una coltivazione &nbsp;&nbsp;&nbsp;
+                        select(id="inputOggetto" style="width:170px;" name="coltivazione" required).form-control
+                            option(value="" selected disabled)
+                                | Scegli Coltivazione
+                            each oggetto in magazzino
+                                option(value="#{oggetto.nome}")
+                                    | #{oggetto.nome}
+
+                        //input(type='text', name='coltivazione', placeholder='Coltivazione')
+                        | &nbsp;&nbsp;&nbsp;
+                        button(type='submit').btn.btn-success
+                            | Salva
+                br
+                table.table.table-striped
+                    tr
+                        th(colspan='2').text-center.success Le Tue Coltivazioni
+                    tr
+                        th Nome
+                        th Opzioni
+                    each coltivazione in coltivazioni
+                        tr
+                            td #{coltivazione}
+                            td
+                                button(type='button' data-toggle='modal' style='cursor:pointer;' data-backdrop="static" data-keyboard="false" data-target='#removeColtivazioneModal#{coltivazione}').btn.btn-info
+                                    | Rimuovi
+                                div(class='modal fade' tabindex='-1' role='dialog' id='removeColtivazioneModal#{coltivazione}' aria-labelledby='removeColtivazioneModalLabel#{coltivazione}')
+                                    div(class='modal-dialog' role='document')
+                                        form(role='form', action="/user/removeColtivazione",method="post").form-inline
+                                            .modal-content
+                                                .modal-header.text-center
+                                                    h2 Si è scelto di eliminare questa coltivazione:
+                                                .modal-body.text-center
+                                                    .row
+                                                        h3 #{coltivazione}
+                                                .modal-footer
+                                                    button(type='button' class='btn btn-danger pull-left' data-dismiss='modal') Annulla
+                                                    input(type="hidden" name="coltivazione" value="#{coltivazione}")
+                                                    button(type='submit' class='btn btn-success')
+                                                        | Conferma
+        .col-xs-12.col-sm-12.col-md-4.col-lg-4
+            br
+            .table.text-center
+                table.table.table-striped
+                    tr
+                        th(colspan="4").success.text-center
+                            | Le Mie Transazioni
+                    tr
+                        th.text-center Trasazione
+                        th.text-center Oggetto
+                        th.text-center Quantità
+                    each transazione in user.transazioni
+                        tr
+                            td #{transazione.tipoTransazione}
+                            td #{transazione.oggetto}
+                            td #{transazione.quantita}
+        .col-xs-12.col-sm-12.col-md-4.col-lg-4
+            br
+            .table.text-center
+                table.table.table-striped
+                    tr
+                        th(colspan="4").success.text-center
+                            | Le Mie Azioni Svolte
+                    tr
+                        th.text-center Azione
+                        th.text-center Ricompensa
+                        th.text-center Data
+                    each azione in user.azioni
+                        tr
+                            td #{azione.nome}
+                            td #{azione.ricompensa}
+                            td #{azione.dataCompletamento.toDateString()}

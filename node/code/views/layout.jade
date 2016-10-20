@@ -1,0 +1,93 @@
+doctype html
+html
+    head
+        script(src='/bootstrap-3.3.7/js/jquery-3.1.1.min.js')
+        script(src='/bootstrap-3.3.7/js/bootstrap.min.js')
+        script(src='/javaScript/script.js')
+        script(src='/canvasjs-1.9.2/canvasjs.min.js')
+        title= title
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='/bootstrap-3.3.7/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        meta(charset='UTF-8')
+        meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    body
+        nav.navbar.navbar-default.navbar-fixed-top
+            div.container-fluid
+                div.navbar-header
+                    button(type='button',class='navbar-toggle collapsed',data-toggle='collapse',data-target='#collapse1',aria-expanded='false')
+                        span.sr-only
+                            | Toggle Navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a(href='/').navbar-brand
+                        img(alt='Brand' src='/img/LogoLeaf50.png')
+                div(id='collapse1').collapse.navbar-collapse
+                    ul.nav.navbar-nav
+                        if user
+                            li(id='market')
+                                a(href='/user/market')
+                                    | Market
+                            li(id='ilMioOrto')
+                                a(href='/user/ilMioOrto')
+                                    | Il Mio Orto
+                            li(id='toDoList')
+                                a(href='/user/toDoList')
+                                    | Cosa c'è da fare
+                            li(id='chat')
+                                a(href='/user/chat')
+                                    | Chat
+                            if user.admin
+                                li.dropdown
+                                    a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+                                        | Amministrazione
+                                        span.caret
+                                    ul.dropdown-menu
+                                        li(id='centralina')
+                                            a(href='/admin/centralina')
+                                                | Analisi Orto
+                                        li(id='gestisciUtenti')
+                                            a(href='/admin/userList')
+                                                | Gestisci Utenti
+                                        li(id='prezzario')
+                                            a(href='/admin/prezzario')
+                                                | Prezzario
+                                        li(id='toDoListAdmin')
+                                            a(href='/admin/toDoListAdmin')
+                                                | Gesctisci Schedule
+
+                    ul(class="nav navbar-nav navbar-right")
+                        if authMessage
+                            li(id='failed')
+                                a(href='#' style="cursor:text;")
+                                    |  #{authMessage}
+                        if user
+                            li(id='welcome')
+                                a(href='#' style="cursor:text;")
+                                    | Ciao #{user.nome}
+                            li
+                                | &nbsp;&nbsp;&nbsp;
+                                input(type="button" onclick="location.href='/user/logout'" value="LogOut").btn.btn-default.navbar-btn
+                                | &nbsp;&nbsp;
+                        else
+                            li.dropdown
+                                a(href='#',data-toggle='dropdown').dropdown-toggle
+                                    | Login
+                                    span.caret
+                                ul(id='login-dp').dropdown-menu
+                                    li
+                                        .row
+                                            .col-md-12
+                                                form(role='form' method='post' action='/login' accept-charset='UTF-8' id='login-nav').form
+                                                    .form-group
+                                                        label(class="sr-only" for="username") Username
+                                                        input.form-control(type='text',id='username',name="username",placeholder='Enter Username',required)
+                                                    .form-group
+                                                        label(class="sr-only" for="password") Password
+                                                        input.form-control(type='password',name="password",placeholder='Enter Password',required)
+                                                    .form-group
+                                                        button(type='submit').btn.btn-success.btn-block
+                                                            | Sign In
+        block content
