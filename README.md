@@ -12,5 +12,5 @@ docker build -t nodemaker --file=./node/Dockerfile .
 
 docker run --name greenbeedb -d -p 27017:27017 mongomaker
 
-docker run --name greenbeeserver -d -p 8888:3000 --link greenbeedb:greenbeedb nodemaker
+docker run --name greenbeeserver -d -p 3000:3000 --link greenbeedb:greenbeedb nodemaker
 ```
