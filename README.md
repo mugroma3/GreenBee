@@ -7,6 +7,7 @@ Technologies:
 * MongoDB
 * Node.js
   * Express
+  * Passport
   * Jade
     * Bootstrap
     * Canvas.js
