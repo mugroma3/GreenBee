@@ -1,3 +1,4 @@
+//kudos to @Kidel
 
 module.exports = {
 
