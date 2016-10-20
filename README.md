@@ -1,4 +1,4 @@
-# ![GreenBee logo](/images/logo.png?raw=true) GreenBee: a smart urban social garden
+# ![GreenBee logo](/images/logo.png?raw=true) GreenBee: a smart social urban garden
 
 ## Description of the branches
 
